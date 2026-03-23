@@ -17,6 +17,8 @@ def validate_opt_num( opt, opt_menu ):
 
     return flag    
 
+
+
 def validate_user( username ):
     flag = False
     for user in users:
@@ -25,7 +27,7 @@ def validate_user( username ):
     
     return flag
 
-def validate_password( username, password ):
+def validate_user_password( username, password ):
     flag = False
     for user in users:
         if user["username"] == username and user["password"] == password:
@@ -33,24 +35,26 @@ def validate_password( username, password ):
     
     return flag
 
-
-
+def validate_string_length( password ):
+    flag = False
+    if len(password) > 3 and len(password) <= 20:
+        flag = True
+    
+    return flag
 
  
-def validate_string( string ):
+def validate_alphabetic_string( string ):
     flag = False
 
-    if not re.match( r"^[a-zA-Z]+$", string ):
-        print()
-        print( "❌ ERROR: Por favor ingrese caracteres alfabeticos." )
-    else:
-        if len(string) < 3 or len(string) > 20:
-            print()
-            print( "❌ ERROR: Por favor ingrese una cadena de entre 3 a 20 caracteres." )
-        else: 
-            flag = True
+    if re.match( r"^[a-zA-Z]+$", string ) and (len(string) > 3 or len(string) <= 20):
+        flag = True
 
     return flag
+
+
+
+
+
 
 
 def show_menu( menu ):
@@ -77,31 +81,60 @@ def login ():
 
     while not flag_username:
 
-        if not validate_string( username ):
+        if not validate_alphabetic_string( username ) or not validate_string_length( username ):
+            print()
+            print( "❌ ERROR: Por favor ingrese entre 3 a 20 caracteres alfabeticos." )
             username = input( "Ingrese el nombre de usuario nuevamente aqui: " )
         elif not validate_user( username ):
             print()
             print( "❌ ERROR: El usuario", username, "no existe." )
             username = input( "Ingrese el nombre de usuario nuevamente aqui:" )
-        elif validate_string( username ) and validate_user( username ):
+        elif validate_alphabetic_string( username ) and validate_user( username ):
             flag_username = True
 
     print()
     password = input("🔒 Ingrese su contraseña: ")
     while not flag_password:
 
-        if not validate_password( username, password ):
+        if not validate_user_password( username, password ):
             print()
             print( "❌ ERROR: Contraseña incorrecta." )
             password = input( "Ingrese la contraseña nuevamente aqui: " )
         else:
             flag_password = True
 
-    return
+    print()
+    print("✅ Bienvenidx a MealPlan!")
 
 
 def singup ():
-    return
+    flag = False
+
+    print()
+    username = input("👩 Ingrese un nombre de usuario (solo caracteres alfabeticos): ")
+
+    while not flag:
+        if not validate_alphabetic_string( username ):
+            print()
+            print( "❌ ERROR: Por favor ingrese entre 3 a 20 caracteres alfabeticos." )
+            username = input( "Ingrese el nombre de usuario nuevamente aqui: " )
+        elif validate_user( username ):
+            print()
+            print( "❌ ERROR: ya existe un usuario con el nombre", username, "." )
+            username = input( "Ingrese otro nombre de usuario aqui: " )
+        else:
+            flag = True
+
+
+    print()
+    password = input("👩 Ingrese su contraseña: ")
+    while not validate_string_length( password ):
+        print()
+        print( "❌ ERROR: Por favor ingrese entre 3 a 20 caracteres." )
+        password = input( "Ingrese una contraseña neuva nuevamente aqui: " )
+
+    print()
+    print("✅ Registro exitoso. Bienvenidx a MealPlan!")
 
 
 #programa principal
@@ -124,12 +157,10 @@ ascii_art = r"""
 session_menu_opts = [ "Ya tengo una cuenta :)", "No tengo cuenta :(" ]
 users = [
     {
-        "name": "cristina",
         "username": "crisvlasova",
         "password": "cris"
     },
     {
-        "name": "thiago",
         "username": "thiagocaimer",
         "password": "thiago"
     },
