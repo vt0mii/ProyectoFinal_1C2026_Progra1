@@ -139,7 +139,7 @@ print()
 print()
 print(ascii_art)
 print()
-print( "Bienvenido a iPlanMeal, por favor inicie sesion:" )
+print( "Bienvenido a MealPlan, por favor inicie sesion:" )
 print()
 
 session_menu_opt = show_menu( session_menu_opts )
@@ -148,6 +148,6 @@ if session_menu_opt == 1:
 elif session_menu_opt == 2:
     singup()
 else:
-    print("Gracias por confiar en iMealPlan! Hasta luego!")
+    print("Gracias por confiar en MealPlan! Hasta luego!")
 
 print()
