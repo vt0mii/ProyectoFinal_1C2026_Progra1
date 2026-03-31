@@ -1,6 +1,7 @@
-import constants as c
+import lib.constants as c
 import validators as v
 import auth as a
+import lib.colors as cor
 
 def options_menu(menu) -> int:
     opt = -1
@@ -19,7 +20,7 @@ def options_menu(menu) -> int:
 def run():
     print()
     print()
-    print(c.ASCII_ART)
+    print(f'{cor.BOLD}{c.ASCII_ART}{cor.END}')
     print()
     print("Bienvenido a MealPlan, por favor inicie sesion:")
 
