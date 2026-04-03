@@ -1,7 +1,8 @@
 import lib.constants as c
-import validators as v
-import auth as a
+import components.validators as v
+import components.auth as a
 import lib.colors as cor
+import db.matrices as mat
 
 def options_menu(menu) -> int:
     opt = -1
@@ -17,7 +18,13 @@ def options_menu(menu) -> int:
 
     return int(opt)
 
+def data_load():
+    mat.crear_usuario("tomiicotos", "tomi", "admin")
+    mat.crear_usuario("crisvlasova", "cris", "admin")
+    mat.crear_usuario("thiagocaimer", "thiago")
+
 def run():
+    data_load()
     print()
     print()
     print(f'{cor.BOLD}{c.ASCII_ART}{cor.END}')

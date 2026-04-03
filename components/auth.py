@@ -1,4 +1,4 @@
-import validators as v
+import components.validators as v
 import lib.colors as cor
 
 def login():
