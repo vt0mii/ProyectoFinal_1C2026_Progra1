@@ -1,18 +1,18 @@
 import json
 import re
 import lib.colors as cor
-from db.matrices import usuarios_db
+from db.matrices import usuarios
 
 # Validaciones
 def validate_user(username) -> bool:
-    for user in usuarios_db:
-        if user[0] == username:
+    for user in usuarios:
+        if user[1] == username:
             return True
     return False
 
 def validate_credentials(username, password) -> bool:
-    for user in usuarios_db:
-        if user[0] == username and user[1] == password:
+    for user in usuarios:
+        if user[1] == username and user[2] == password:
             return True
     return False
 
