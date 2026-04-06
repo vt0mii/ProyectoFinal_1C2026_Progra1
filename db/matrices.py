@@ -5,6 +5,7 @@ planes_semanales = []
 recetas_ingredientes = []
 recetas = []
 plan_receta = []
+cache_user = []
 
 # Matrices Constantes
 dias = [[1, "Lunes"],[2, "Martes"],[3,"Miercoles"],[4, "Jueves"],[5, "Viernes"],[6, "Sabado"],[7, "Domingo"]]
@@ -30,8 +31,11 @@ def actualizar_password(id, old, new):
         return True
     return False
 
-def obtener_usuario(id):
-    return usuarios[id]
+def obtener_usuario(username):
+    for i in usuarios:
+        if i[1] == username:
+            return i
+    return None
 
 # CRUD Ingredientes
 def crear_ingrediente(nombre, id_unidad):
