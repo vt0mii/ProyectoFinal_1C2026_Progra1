@@ -1,5 +1,6 @@
 import components.validators as v
 import lib.colors as cor
+import db.matrices as m
 
 def login():
     flag_username = False
@@ -12,7 +13,6 @@ def login():
             print(f'{cor.RED}❌ ERROR: Por favor ingrese entre 3 a 20 caracteres alfabeticos.')
             username = input("Ingrese el nombre de usuario nuevamente aqui: ")
         elif not v.validate_user(username):
-            print()
             print(f'{cor.RED}❌ ERROR: El usuario {username} no existe.')
             username = input("Ingrese el nombre de usuario nuevamente aqui:")
         else:
@@ -22,21 +22,20 @@ def login():
     password = input("🔒 Ingrese su contraseña: ")
     while not flag_password:
         if not v.validate_credentials(username, password):
-            print()
             print(f'{cor.RED}❌ ERROR: Contraseña incorrecta.')
             password = input("Ingrese la contraseña nuevamente: ")
         else:
             flag_password = True
-
-    print()
+    
+    m.cache_user = m.obtener_usuario(username)
     print("✅ Bienvenidx a MealPlan!")
 
 def singup():
-    flag = False
+    flag_username = False
     username = input("👩 Ingrese un nombre de usuario (solo caracteres alfabeticos): ")
 
     # Chequeo username
-    while not flag:
+    while not flag_username:
         if not v.validate_alphabetic_string(username):
             print()
             print(f'{cor.RED}❌ ERROR: Por favor ingrese entre 3 a 20 caracteres alfabeticos.')
@@ -55,5 +54,5 @@ def singup():
         print(f'{cor.RED}❌ ERROR: Por favor ingrese entre 3 a 20 caracteres.')
         password = input("Ingrese una contraseña nueva nuevamente aqui: ")
 
-    print()
+    m.crear_usuario(username, password)
     print("✅ Registro exitoso. Bienvenidx a MealPlan!")

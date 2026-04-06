@@ -14,4 +14,6 @@ ASCII_ART = r"""
     ,-//?I;`  ;(xx]`   "<rffr+"   '+f/\|\\|\|/}" +f//t()(tj1rt{, 'l{ttf-:  '!ffff[:"           ,<f/t\i` +f//t()(tr1jt[,  it/t(;,  ;l{t/f>`   
    I{ffftft_'  :Yn^   I)jrxxjj1"    "~xpqqqQ}l.   I[Lbbpc-:lrjj-.!\jjrjj{; _jjxxrjf[,          ?jjrjjf~  l}0bdpu-"!rjj_ !/jjjjf-  _fjjrjti   
 """
-MENU_OPTIONS = [ "Ya tengo una cuenta :)", "No tengo cuenta :(" ]
+MENU_OPTIONS = ["Ya tengo una cuenta :)", "No tengo cuenta :("]
+USER_OPTIONS = ["Mis planes semanakes", "Mis ingredientes"]
+ADMIN_OPTIONS = []
