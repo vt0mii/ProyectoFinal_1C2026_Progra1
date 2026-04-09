@@ -1,9 +1,8 @@
 import lib.colors as col
 import lib.constants as c
-import components.validators as v
+import components.validation as v
 import components.auth as a
-from db.matrices import cache_user
-import components.listas as l
+from db.data import user_cache
 
 def options_menu(menu) -> int:
     opt = -1
@@ -36,8 +35,13 @@ def main_menu():
 def user_menu():
     opt = options_menu(c.USER_OPTIONS)
     if opt == 1:
-        l.mostrar_planes(cache_user)
+        # mostrar_planes(cache_user)
+        return 0
     elif opt == 2:
-        l.mostrar_ingredientes(cache_user)
+        # mostrar_ingredientes(cache_user)
+        return 0
+    elif opt == 3:
+        # mostrar_recetas(cache_user)
+        return 0
     else:
         print("Gracias por confiar en MealPlan! Hasta luego!")
