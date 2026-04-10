@@ -175,6 +175,10 @@ def get_user(userid):
         return users[userid]
     return None
 
+def get_user_by_name(username):
+    results = list(filter(lambda item: item[1]["username"] == username, users.items()))
+    return results[0] if results else None
+
 
 ## Recipe Plan
 
