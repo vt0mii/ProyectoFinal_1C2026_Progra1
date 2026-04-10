@@ -1,7 +1,4 @@
-import db.data as mat
-
-def run():
-    return 0
+import menu as m
 
 if __name__ == "__main__":
-    run()
+    m.main_menu()

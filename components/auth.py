@@ -1,58 +1,82 @@
-import components.validation as v
-import lib.colors as cor
-import db.data_crud as f
+from components.validation import *
+from db.data_crud import add_user, get_user_by_name
+import db.data as data
 
 def login():
-    flag_username = False
-    flag_password = False
-    
-    # Chequear Username
-    username = input("👩 Ingrese su nombre de usuario: ")
-    while not flag_username:
-        if not v.validate_alphabetic_string(username) or not v.validate_string_length(username):
-            print(f'{cor.RED}❌ ERROR: Por favor ingrese entre 3 a 20 caracteres alfabeticos.')
-            username = input("Ingrese el nombre de usuario nuevamente aqui: ")
-        elif not v.user_exists_name(username):
-            print(f'{cor.RED}❌ ERROR: El usuario {username} no existe.')
-            username = input("Ingrese el nombre de usuario nuevamente aqui:")
+    valid_username = False
+    valid_password = False
+
+    # Username
+    username = input("Ingrese su Username o X para cancelar la operacion: ")
+    while not valid_username:
+        if username.lower() == "x":
+            print('Operacion Cancelada, volviendo...')
+            return False
+        elif not validate_username(username):
+            username = input(
+                "Por favor ingrese entre 3 a 20 caracteres alfabeticos, intente nuevamente: "
+            )
+        elif not user_exists_name(username):
+            username = input(
+                "El username proporcionado no existe, intente nuevamente: "
+            )
         else:
-            flag_username = True
+            valid_username = True
 
-    # Chequear Password
-    password = input("🔒 Ingrese su contraseña: ")
-    while not flag_password:
-        if not v.validate_credentials(username, password):
-            print(f'{cor.RED}❌ ERROR: Contraseña incorrecta.')
-            password = input("Ingrese la contraseña nuevamente: ")
+    # Password
+    password = input("Ingrese su contraseña o X para cancelar la operacion: ")
+    while not valid_password:
+        if password.lower() == "x":
+            print('Operacion Cancelada, volviendo...')
+            return False
+        elif not validate_string_length(password):
+            password = input(
+                "Por favor ingrese entre 3 a 20 caracteres, intente nuevamente: "
+            )
+        elif not validate_credentials(username, password):
+            password = input("Contraseña incorrecta, intente nuevamente: ")
         else:
-            flag_password = True
-    
-    # user_cache = f.get_user(userid) 
-    print("✅ Bienvenidx a MealPlan!")
+            valid_password = True
+            
+    data.user_cache = get_user_by_name(username)
+    return True
 
-def singup():
-    flag_username = False
-    username = input("👩 Ingrese un nombre de usuario (solo caracteres alfabeticos): ")
+def signup():
+    valid_username = False
+    valid_password = False
 
-    # Chequeo username
-    while not flag_username:
-        if not v.validate_alphabetic_string(username):
-            print()
-            print(f'{cor.RED}❌ ERROR: Por favor ingrese entre 3 a 20 caracteres alfabeticos.')
-            username = input("Ingrese el nombre de usuario nuevamente aqui: ")
-        elif v.user_exists_name(username):
-            print()
-            print(f'{cor.RED}❌ ERROR: ya existe un usuario con el nombre {username}.')
-            username = input("Ingrese otro nombre de usuario aqui: ")
+    # Username
+    print("El username debe ser alfabetico con un largo entre 3 y 20 caracteres. Ingrese X para cancelar la operacion")
+    username = input("Ingrese su username: ")
+    while not valid_username:
+        if username.lower() == "x":
+            print('Operacion Cancelada, volviendo...')
+            return False
+        elif not validate_username(username):
+            username = input(
+                "El username proporcionado no cumple con los requisitos, intente nuevamente: "
+            )
+        elif user_exists_name(username):
+            username = input(
+                "El username proporcionado ya existe, intente nuevamente: "
+            )
         else:
-            flag = True
+            valid_username = True
 
-    # Chequeo Password
-    password = input("👩 Ingrese su contraseña: ")
-    while not v.validate_string_length(password):
-        print()
-        print(f'{cor.RED}❌ ERROR: Por favor ingrese entre 3 a 20 caracteres.')
-        password = input("Ingrese una contraseña nueva nuevamente aqui: ")
-
-    f.add_user(username, password)
-    print("✅ Registro exitoso. Bienvenidx a MealPlan!")
+    # Password
+    print("La contraseña debe tener un largo entre 3 y 20 caracteres. Ingrese X para cancelar la operacion")
+    password = input("Ingrese su Contraseña: ")
+    while not valid_password:
+        if password.lower() == "x":
+            print('Operacion Cancelada, volviendo...')
+            return False
+        elif not validate_string_length(password):
+            password = input(
+                "El password no cumple con los requisitos, intente nuevamente: "
+            )
+        else:
+            valid_password = True
+            
+    add_user(username, password)
+    data.user_cache = get_user_by_name(username)
+    return True
