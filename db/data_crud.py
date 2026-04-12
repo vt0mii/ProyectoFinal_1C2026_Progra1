@@ -1,4 +1,4 @@
-from data import *
+from .data import *
 from components.validation import *
 
 # CRUD Tuplas
