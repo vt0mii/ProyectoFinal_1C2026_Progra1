@@ -18,12 +18,13 @@ def menu_options(menu):
 
 def main_menu():    
     result = False
-    
-    print('Bienvenido a MealPlan!')
-    while not result:
+    flag = True
+    print(ASCII_ART)
+    print('Bienvenido a MealPlan! Elija la opcion para ingresar:')
+    while flag and not result:
         selected = menu_options(MENU_OPTIONS)
         if selected == 0:
-            break
+            flag = False
         if selected == 1:
             result = login()
         elif selected == 2:
