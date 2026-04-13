@@ -15,5 +15,8 @@ ASCII_ART = r"""
    I{ffftft_'  :Yn^   I)jrxxjj1"    "~xpqqqQ}l.   I[Lbbpc-:lrjj-.!\jjrjj{; _jjxxrjf[,          ?jjrjjf~  l}0bdpu-"!rjj_ !/jjjjf-  _fjjrjti   
 """
 MENU_OPTIONS = ["Ya tengo una cuenta :)", "No tengo cuenta :("]
-USER_OPTIONS = ["Mis planes semanales", "Mis ingredientes"]
+USER_OPTIONS = ["Gestionar Plan", "Mis recetas", "Mis ingredientes"]
+INGREDIENT_OPTIONS = ["Agregar ingrediente", "Eliminar ingrediente", "Editar ingrediente"]
+PLAN_OPTIONS = ["Añadir receta al plan", "Quitar receta del plan", "Reemplazar receta"]
+RECIPE_OPTIONS = ["Agregar receta", "Eliminar receta", "Editar receta"]
 ADMIN_OPTIONS = []
