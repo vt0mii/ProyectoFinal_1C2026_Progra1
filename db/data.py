@@ -1,5 +1,5 @@
 # Sesion actual
-user_cache = {}
+user_cache = (0,{})
 
 # Data Estatica
 units = [(0, "ml"), (1, "l"), (2, "mg"), (3, "g"), (4, "u"), (5, "A gusto")]

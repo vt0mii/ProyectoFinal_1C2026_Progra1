@@ -112,7 +112,7 @@ def add_ingredient_to_recipe(userid, recipeid, ingredientid, quantity):
 
 def delete_ingredient_from_recipe(userid, recipeid, ingredientid):
     if is_ingredient_owner(userid, ingredientid) and is_recipe_owner(userid, recipeid):
-        target = get_ingredient_from_recipe(ingredientid, recipeid)
+        target = get_ingredient_from_recipe(recipeid, ingredientid)
         if target is not None:
             recipe_ingredients.remove(target)
             return True
