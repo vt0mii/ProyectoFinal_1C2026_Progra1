@@ -100,6 +100,12 @@ def get_ingredient(ingredientid):
     results = list(filter(lambda i: i[0] == ingredientid, ingredients))
     return results[0] if results else None
 
+def get_user_ingredients(userid):
+    ing = []
+    if user_exists_id(userid):
+        ing = [i for i in ingredients if i[1] == userid]
+    return ing if len(ing) > 0 else None
+
 
 ## Ingredientes en Recetas
 def add_ingredient_to_recipe(userid, recipeid, ingredientid, quantity):

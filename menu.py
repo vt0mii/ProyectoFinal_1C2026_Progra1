@@ -8,7 +8,7 @@ import components.display as d
 def menu_options(menu):
     for i in range(len(menu)):
         print(f'{i + 1} - {menu[i]}')
-    print('0 - Cancelar')
+    print('0 - Volver/Salir')
     
     option = input('Ingrese la opcion deseada: ')
     while not v.validate_menu_option(option, menu):
@@ -32,11 +32,67 @@ def main_menu():
             
         if result:
             user_menu()
+            result = False
         
     print('Gracias por usar MealPlan. Hasta Luego!')
         
 def user_menu():
-    if data.user_cache[1]["level"] == "user":
-        d.display_plan(data.user_cache[0])
-    elif data.user_cache[1]["level"] == "admin":
-        d.display_plan(data.user_cache[0])
+    user_id = int(data.user_cache[0])
+    
+    flag = True
+    while flag:
+        print(f"\n--- PANEL DE USUARIO ---")
+        d.display_plan(user_id)
+        selected = menu_options(USER_OPTIONS)
+        
+        if selected == 0:
+            flag = False
+        elif selected == 1:
+            plan_menu(user_id)
+        elif selected == 2:
+            recetas_menu(user_id)
+        elif selected == 3:
+            ingredientes_menu(user_id)
+
+def plan_menu(user_id):
+    flag = True
+    while flag:
+        
+        print("\n[ GESTIÓN DE PLAN SEMANAL ]")
+        selected = menu_options(PLAN_OPTIONS)
+        
+        if selected == 0:
+            flag = False
+        elif selected == 1:
+            print("Función para añadir receta") 
+        elif selected == 2:
+            print("Función para quitar receta")
+        elif selected == 3:
+            print("Funcion para editar receta")
+
+def ingredientes_menu(user_id):
+    flag = True
+    while flag:
+        print("\n[ MIS INGREDIENTES ]")
+        mis_ingredientes = f.get_user_ingredients(user_id)
+        
+        if mis_ingredientes:
+            for indice, ing in enumerate(mis_ingredientes):
+                print(f"{indice + 1}. {ing[2]} ({f.get_unit_by_id(ing[3])})")
+        print()
+        selected = menu_options(INGREDIENT_OPTIONS)
+        
+        if selected == 0:
+            flag = False
+        elif selected == 1:
+            nombre = input("Nombre del ingrediente: ")
+            for u in data.units:
+                print(f"{u[0]} - {u[1]}")
+            unit_id = int(input("Seleccione ID de unidad: "))
+            f.add_ingredient(user_id, nombre, unit_id)
+        elif selected == 2:
+            pass
+        
+def recetas_menu(user_id):
+    print("\n[ MIS RECETAS ]")
+    pass
