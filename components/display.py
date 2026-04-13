@@ -9,8 +9,7 @@ def display_plan(userid):
         return
 
     ancho_col = 22
-    tipos_comida = ["desayuno", "almuerzo", "merienda", "cena"]
-
+    tipos_comida = get_mealtype_list()
     user = get_user(uid)
     plan = get_user_plan(uid)
 
@@ -18,41 +17,34 @@ def display_plan(userid):
         print(f"\n[!] No se pudo obtener el plan del usuario {uid}.")
         return
 
-    print(f"\n{'='*ancho_col*7}")
-    if user:
-        print(f"PLAN SEMANAL DE: {user['username'].upper()}".center(ancho_col * 7))
-    else:
-        print(f"PLAN SEMANAL DE: DESCONOCIDO".center(ancho_col * 7))
-    print(f"{'='*ancho_col*7}\n")
+    ancho_total = ancho_col * 7
+    nombre_usuario = user['username'].upper() if user else "DESCONOCIDO"
 
-    cabecera = ""
-    for i in range(7):
-        nombre_dia = get_days_by_id(i)
-        txt_dia = nombre_dia.upper() if nombre_dia else f"DIA {i}"
-        cabecera += f"{txt_dia:<{ancho_col}}"
+    print(f"\n{'=' * ancho_total}")
+    print(f"{'PLAN SEMANAL DE: ' + nombre_usuario:^{ancho_total}}")
+    print(f"{'=' * ancho_total}\n")
 
+    cabecera = "".join(
+        f"{(get_days_by_id(i) or f'DIA {i}').upper():<{ancho_col}}"
+        for i in range(7)
+    )
     print(cabecera)
-    print("-" * (ancho_col * 7))
+    print(f"{'-' * ancho_total}")
 
     for meal in tipos_comida:
-        fila_texto = ""
+        fila = ""
         for i in range(7):
-
             recipe_ids = plan[str(i)][meal]
-
             if recipe_ids:
                 receta_data = get_recipe(recipe_ids[0])
                 if receta_data:
                     nombre = receta_data[2]
-                    if len(nombre) > (ancho_col - 3):
-                        nombre = nombre[: ancho_col - 5] + ".."
+                    nombre = f"{nombre[:ancho_col - 5]}.." if len(nombre) > ancho_col - 3 else nombre
                 else:
                     nombre = "ID No Encontrado"
             else:
                 nombre = "---"
+            fila += f"{nombre:<{ancho_col}}"
+        print(f"{fila} | {meal.upper()}")
 
-            fila_texto += f"{nombre:<{ancho_col}}"
-
-        print(f"{fila_texto} | {meal.upper()}")
-
-    print("-" * (ancho_col * 7))
+    print(f"{'-' * ancho_total}")
