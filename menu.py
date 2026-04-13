@@ -25,7 +25,7 @@ def main_menu():
         selected = menu_options(MENU_OPTIONS)
         if selected == 0:
             flag = False
-        if selected == 1:
+        elif selected == 1:
             result = login()
         elif selected == 2:
             result = signup()

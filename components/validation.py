@@ -27,4 +27,4 @@ validate_username = lambda username: validate_string_length(username) and re.mat
 validate_string_length = lambda username: 3 <= len(username) <= 20
 
 # Valida que el input sea un numero y verifica que la opcion este en el menu
-validate_menu_option = lambda option, menu: re.match(r"^\d+$", option) and int(option) <= len(menu)
+validate_menu_option = lambda option, menu: re.match(r"^\d+$", option) and int(option) < len(menu)
