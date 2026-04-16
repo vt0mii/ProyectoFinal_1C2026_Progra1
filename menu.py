@@ -11,6 +11,7 @@ def menu_options(menu):
     print('0 - Volver/Salir')
     
     option = input('Ingrese la opcion deseada: ')
+    print()
     while not v.validate_menu_option(option, menu):
         option = input('Error. Ingrese la opcion nuevamente: ')
         
@@ -29,9 +30,10 @@ def main_menu():
             result = login()
         elif selected == 2:
             result = signup()
-            
+
         if result:
             user_menu()
+            print()
             result = False
         
     print('Gracias por usar MealPlan. Hasta Luego!')
@@ -41,7 +43,7 @@ def user_menu():
     
     flag = True
     while flag:
-        print(f"\n--- PANEL DE USUARIO ---")
+        print(f"\n\n---------- PANEL DE USUARIO -----------")
         d.display_plan(user_id)
         selected = menu_options(USER_OPTIONS)
         
@@ -58,7 +60,7 @@ def plan_menu(user_id):
     flag = True
     while flag:
         
-        print("\n[ GESTIÓN DE PLAN SEMANAL ]")
+        print("\n\n-------- GESTIÓN DE PLAN SEMANAL -------")
         selected = menu_options(PLAN_OPTIONS)
         
         if selected == 0:
@@ -73,7 +75,7 @@ def plan_menu(user_id):
 def ingredientes_menu(user_id):
     flag = True
     while flag:
-        print("\n[ MIS INGREDIENTES ]")
+        print("\n\n----------- MIS INGREDIENTES -----------")
         mis_ingredientes = f.get_user_ingredients(user_id)
         
         if mis_ingredientes:
@@ -91,7 +93,20 @@ def ingredientes_menu(user_id):
             unit_id = int(input("Seleccione ID de unidad: "))
             f.add_ingredient(user_id, nombre, unit_id)
         elif selected == 2:
-            pass
+            if mis_ingredientes:
+                print("Mis ingredientes:")
+                for index, ing in enumerate(mis_ingredientes):
+                    print(f"{index + 1}. {ing[2]} ({f.get_unit_by_id(ing[3])})")
+                ingredient_id = int(input("Por favor ingrese el numero del ingrediente a eliminar: "))
+                ingredient_name = mis_ingredientes[ingredient_id-1][2]
+
+                ingredient_deleted = f.delete_ingredient(user_id, mis_ingredientes[ingredient_id-1][0])
+                if ingredient_deleted == True:
+                    print(f"El ingrediente {ingredient_name} ha sido eliminado correctamente.")
+                else:
+                    print(f"Error al eliminar el ingrediente {ingredient_name}.")
+            else:
+                print("No hay ingredientes para eliminar.")
         
 def recetas_menu(user_id):
     print("\n[ MIS RECETAS ]")

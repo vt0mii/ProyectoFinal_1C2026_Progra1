@@ -42,8 +42,16 @@ recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantit
 
 # Diccionarios
 users = {  # userid : {}
-    "0": {"username": "tomiicotos", "password": "tomi", "level": "admin"},
-    "1": {"username": "test", "password": "test", "level": "user"},
+    "0": {
+        "username": "tomiicotos",
+        "password": "tomi",
+        "level": "admin"
+    },
+    "1": {
+        "username": "test",
+        "password": "test",
+        "level": "user"
+    },
 }
 
 recipe_plan = {  # userid: { day_id : { mealtype} }
