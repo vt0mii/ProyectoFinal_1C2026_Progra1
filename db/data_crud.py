@@ -69,6 +69,17 @@ def get_recipe(recipeid):
 
 
 ## Ingredientes
+
+def list_ingredients(user_id):
+    if user_exists_id(user_id):
+        my_ingredients = get_user_ingredients(user_id)
+        if my_ingredients:
+            for index, ing in enumerate(my_ingredients):
+                print(f"{index + 1}. {ing[2]} ({get_unit_by_id(ing[3])})")
+        return True
+    return False
+
+
 def add_ingredient(userid, title, unit_id):
     if user_exists_id(userid):
         newid = max((i[0] for i in ingredients), default=-1) + 1
