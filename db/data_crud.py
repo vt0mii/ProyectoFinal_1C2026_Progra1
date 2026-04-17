@@ -33,6 +33,17 @@ def get_mealtype_list():
 
 
 ## Recetas
+
+def list_recipes(user_id):
+    if user_exists_id(user_id):
+        my_recipes = get_user_recipes(user_id)
+        if my_recipes:
+            for index, ing in enumerate(my_recipes):
+                print(f"{index + 1}. {ing[2]}")
+        return True
+    return False
+
+
 def add_recipe(user_id, title, instructions):
     if user_exists_id(user_id):
         newid = max((r[0] for r in recipes), default=-1) + 1
@@ -66,6 +77,12 @@ def get_recipe(recipe_id):
 
     results = list(filter(criteria, recipes))
     return results[0] if results else None
+
+def get_user_recipes(user_id):
+    ing = []
+    if user_exists_id(user_id):
+        ing = [i for i in recipes if i[1] == user_id]
+    return ing if len(ing) > 0 else None
 
 
 ## Ingredientes
