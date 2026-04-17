@@ -157,6 +157,12 @@ def recetas_menu(user_id):
             flag = False
         elif selected == 1:
             print("Función para añadir receta")
+            print("--------------AÑADIR RECETAS-------------") 
+            print()
+            title = (input("Porfavor Ingrese el nombre de la receta "))
+            print()
+            instructions = str(input("Porfavor Ingrese el nombre de la receta "))
+            f.add_recipe(user_id,title,instructions)
         elif selected == 2:
             print("Función para quitar receta")
 
