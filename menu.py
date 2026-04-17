@@ -108,15 +108,15 @@ def ingredientes_menu(user_id):
         elif selected == 3:  # Editar Ingrediente
             if mis_ingredientes:
                 print("Mis ingredientes:")
-                d.display_ingredients(user_id)
-
-                opt = input("Por favor ingrese el numero del ingrediente a editar: ")
-                while not v.validate_menu_option(opt, mis_ingredientes):
-                    opt = input("Numero invalido, ingrese nuevamente: ")
-                pos = int(opt) - 1
-
-                old_ingredient = mis_ingredientes[pos]
-                ingredient_id = old_ingredient[0]
+                ingredient_opt = (
+                    menu_options(
+                        [i[2] for i in mis_ingredientes],
+                        "Por favor ingrese el numero del ingrediente a eliminar: ",
+                    )
+                    - 1
+                )
+                selected = mis_ingredientes[ingredient_opt]
+                ingredient_id = selected[0]
 
                 new_ingredient_name = input(
                     "Ingrese el nuevo nombre o presione enter para no modificar: "
@@ -128,8 +128,8 @@ def ingredientes_menu(user_id):
                 if len(new_ingredient_name) == 0 and len(new_ingredient_unit_id) == 0:
                     print("No se ha modificado el ingrediente.")
                 else:
-                    ingredient_name = old_ingredient[2]
-                    ingredient_unit = old_ingredient[3]
+                    ingredient_name = selected[2]
+                    ingredient_unit = selected[3]
 
                     if len(new_ingredient_name) > 0:
                         ingredient_name = new_ingredient_name
@@ -140,7 +140,7 @@ def ingredientes_menu(user_id):
                         user_id, ingredient_id, ingredient_name, ingredient_unit
                     )
                     print(
-                        f"El ingrediente {old_ingredient[2]} ha sido modificado correctamente."
+                        f"El ingrediente {selected[2]} ha sido modificado correctamente."
                     )
             else:
                 print("No hay ingredientes para editar.")
