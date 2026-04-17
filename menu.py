@@ -77,22 +77,20 @@ def ingredientes_menu(user_id):
     while flag:
         print("\n\n----------- MIS INGREDIENTES -----------")
         mis_ingredientes = f.get_user_ingredients(user_id)
-        
-        if mis_ingredientes:
-            for indice, ing in enumerate(mis_ingredientes):
-                print(f"{indice + 1}. {ing[2]} ({f.get_unit_by_id(ing[3])})")
-        print()
+    
         selected = menu_options(INGREDIENT_OPTIONS)
         
         if selected == 0:
             flag = False
-        elif selected == 1:
+        if selected == 1:
+            f.list_ingredients(user_id)
+        elif selected == 2:
             nombre = input("Nombre del ingrediente: ")
             for u in data.units:
                 print(f"{u[0]} - {u[1]}")
             unit_id = int(input("Seleccione ID de unidad: "))
             f.add_ingredient(user_id, nombre, unit_id)
-        elif selected == 2:
+        elif selected == 3:
             if mis_ingredientes:
                 print("Mis ingredientes:")
                 for index, ing in enumerate(mis_ingredientes):
@@ -108,7 +106,7 @@ def ingredientes_menu(user_id):
             else:
                 print("No hay ingredientes para eliminar.")
         
-        elif selected == 3:
+        elif selected == 4:
             if mis_ingredientes:
                 print("Mis ingredientes:")
                 for index, ing in enumerate(mis_ingredientes):
@@ -124,7 +122,6 @@ def ingredientes_menu(user_id):
                 else:
                     ingredient_name = mis_ingredientes[ingredient_id-1][2]
                     ingredient_unit_id = data.units[int(new_ingredient_unit_id)][0]
-                    print(ingredient_unit_id)
 
                     if len(new_ingredient_name) > 0:
                         ingredient_name = new_ingredient_name
