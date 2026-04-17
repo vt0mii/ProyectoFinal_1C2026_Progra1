@@ -18,13 +18,13 @@ def display_ingredients(user_id):
         if my_ingredients:
             num = 1
             for ing in my_ingredients:
-                print(f'{ing[0]}. {ing[2]} ({get_unit_by_id(ing[3])})')
+                print(f'ID {ing[0]:<2}| {ing[2]} ({get_unit_by_id(ing[3])})')
                 num += 1
         return True
     return False
 
 def display_plan(userid):
-    uid = str(userid)
+    uid = userid
     if not is_plan_owner(uid):
         print(f"\n[!] El usuario {uid} no tiene un plan.")
         return

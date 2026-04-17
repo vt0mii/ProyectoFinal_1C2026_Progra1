@@ -27,7 +27,13 @@ validate_username = lambda username: validate_string_length(username) and valida
 validate_string_length = lambda username: 3 <= len(username) <= 20
 
 # Valida que el input sea un numero y verifica que la opcion este en el menu
-validate_menu_option = lambda option, menu: re.match(r"^\d+$", option) and int(option) <= len(menu)
+validate_menu_option = lambda option, menu: re.match(r"^\d+$", option) and int(option) <= len(menu) and int(option) >= 0
 
 # Valida que lo ingresado sea alfabetico
-validate_alphabetic = lambda txt: re.match(r"^[a-zA-Z]+$", txt)
+validate_alphabetic = lambda txt: re.match(r"^[a-zA-Z ]+$", txt)
+
+# Validar la opcion extra de "enter" al editar
+validate_edit_unit = lambda option, menu:  re.match(r"^\d*$", option) and int(option) <= len(menu) and int(option) >= 0
+
+# Validar la opcion extra de "enter" al editar
+validate_edit_name = lambda option:  re.match(r"^[a-zA-Z ]*$", option)
