@@ -23,8 +23,11 @@ validate_credentials = lambda username, password: any(
 )
 
 # Valida que el username cumpla con los requisitos
-validate_username = lambda username: validate_string_length(username) and re.match(r"^[a-zA-Z]+$", username)
+validate_username = lambda username: validate_string_length(username) and validate_alphabetic(username)
 validate_string_length = lambda username: 3 <= len(username) <= 20
 
 # Valida que el input sea un numero y verifica que la opcion este en el menu
 validate_menu_option = lambda option, menu: re.match(r"^\d+$", option) and int(option) <= len(menu)
+
+# Valida que lo ingresado sea alfabetico
+validate_alphabetic = lambda txt: re.match(r"^[a-zA-Z]+$", txt)

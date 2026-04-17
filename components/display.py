@@ -18,7 +18,7 @@ def display_ingredients(user_id):
         if my_ingredients:
             num = 1
             for ing in my_ingredients:
-                print(f'{num}. {ing[2]} ({get_unit_by_id(ing[3])})')
+                print(f'{ing[0]}. {ing[2]} ({get_unit_by_id(ing[3])})')
                 num += 1
         return True
     return False
