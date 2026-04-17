@@ -80,20 +80,19 @@ def ingredientes_menu(user_id):
     
         selected = menu_options(INGREDIENT_OPTIONS)
         
+        if mis_ingredientes:
+            f.list_ingredients(user_id)
+        else:
+            print("No hay ingredientes para mostrar.")
         if selected == 0:
             flag = False
-        if selected == 1:
-            if mis_ingredientes:
-                f.list_ingredients(user_id)
-            else:
-                print("No hay ingredientes para mostrar.")
-        elif selected == 2:
+        elif selected == 1:
             nombre = input("Nombre del ingrediente: ")
             for u in data.units:
                 print(f"{u[0]} - {u[1]}")
             unit_id = int(input("Seleccione ID de unidad: "))
             f.add_ingredient(user_id, nombre, unit_id)
-        elif selected == 3:
+        elif selected == 2:
             if mis_ingredientes:
                 print("Mis ingredientes:")
                 for index, ing in enumerate(mis_ingredientes):
@@ -109,7 +108,7 @@ def ingredientes_menu(user_id):
             else:
                 print("No hay ingredientes para eliminar.")
         
-        elif selected == 4:
+        elif selected == 3:
             if mis_ingredientes:
                 print("Mis ingredientes:")
                 for index, ing in enumerate(mis_ingredientes):
@@ -134,8 +133,6 @@ def ingredientes_menu(user_id):
                     f.update_ingredient(user_id, ingredient_unit_id, ingredient_name, ingredient_unit)
 
                     print("El ingrediente", mis_ingredientes[ingredient_id-1], "ha sido modificado correctamente.")
-
-
                 
 
 

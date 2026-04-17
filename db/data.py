@@ -21,6 +21,18 @@ recipes = [  # Su estructura es id, user_id, title, instructions
         0,
         "Ensalada de Zanahoria y Huevo",
         "Rallar la zanahoria, hervir un huevo 12min aprox., cortarlo y condimentar todo con aceite, sal y limon.",
+    ],
+    [
+        1,
+        1,
+        "Zanahoria rallada",
+        "Rallar la zanahoria.",
+    ],
+    [
+        2,
+        1,
+        "Tomate relleno",
+        "Lorem Ipsum.",
     ]
 ]
 
@@ -30,6 +42,8 @@ ingredients = [  # Su estructura es id, user_id, name, unit_id
     [2, 0, "Aceite", 0],
     [3, 0, "Sal", 5],
     [4, 0, "Limon", 5],
+    [5, 1, "Zanahoria", 1],
+    [6, 1, "Tomate", 1],
 ]
 
 recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantity
@@ -38,6 +52,7 @@ recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantit
     [2, 0, 2, 20],
     [3, 0, 3, None],
     [4, 0, 4, None],
+    [5, 1, 5, 1],
 ]
 
 # Diccionarios
