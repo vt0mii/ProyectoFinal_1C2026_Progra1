@@ -2,6 +2,7 @@ from components.validation import *
 from db.data_crud import add_user, get_user_by_name
 import db.data as data
 
+
 def login():
     valid_username = False
     valid_password = False
@@ -10,7 +11,7 @@ def login():
     username = input("Ingrese su Username o X para cancelar la operacion: ")
     while not valid_username:
         if username.lower() == "x":
-            print('Operacion Cancelada, volviendo...')
+            print("Operacion Cancelada, volviendo...")
             return False
         elif not validate_username(username):
             username = input(
@@ -27,7 +28,7 @@ def login():
     password = input("Ingrese su contraseña o X para cancelar la operacion: ")
     while not valid_password:
         if password.lower() == "x":
-            print('Operacion Cancelada, volviendo...')
+            print("Operacion Cancelada, volviendo...")
             return False
         elif not validate_string_length(password):
             password = input(
@@ -37,20 +38,23 @@ def login():
             password = input("Contraseña incorrecta, intente nuevamente: ")
         else:
             valid_password = True
-            
+
     data.user_cache = get_user_by_name(username)
     return True
+
 
 def signup():
     valid_username = False
     valid_password = False
 
     # Username
-    print("El username debe ser alfabetico con un largo entre 3 y 20 caracteres. Ingrese X para cancelar la operacion")
+    print(
+        "El username debe ser alfabetico con un largo entre 3 y 20 caracteres. Ingrese X para cancelar la operacion"
+    )
     username = input("Ingrese su username: ")
     while not valid_username:
         if username.lower() == "x":
-            print('Operacion Cancelada, volviendo...')
+            print("Operacion Cancelada, volviendo...")
             return False
         elif not validate_username(username):
             username = input(
@@ -64,11 +68,13 @@ def signup():
             valid_username = True
 
     # Password
-    print("La contraseña debe tener un largo entre 3 y 20 caracteres. Ingrese X para cancelar la operacion")
+    print(
+        "La contraseña debe tener un largo entre 3 y 20 caracteres. Ingrese X para cancelar la operacion"
+    )
     password = input("Ingrese su Contraseña: ")
     while not valid_password:
         if password.lower() == "x":
-            print('Operacion Cancelada, volviendo...')
+            print("Operacion Cancelada, volviendo...")
             return False
         elif not validate_string_length(password):
             password = input(
@@ -76,7 +82,15 @@ def signup():
             )
         else:
             valid_password = True
-            
+
     add_user(username, password)
+    new_user = get_user_by_name(username)
+    new_user_id = ""
+    if new_user:
+        new_user_id = str(new_user[0])
+    recipe_plan[new_user_id] = {
+        str(day): {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
+        for day in range(7)
+    }
     data.user_cache = get_user_by_name(username)
     return True

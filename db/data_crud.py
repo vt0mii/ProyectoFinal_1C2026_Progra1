@@ -116,7 +116,7 @@ def get_ingredient(ingredient_id):
 def get_user_ingredients(user_id):
     ing = []
     if user_exists_id(user_id):
-        ing = [i for i in ingredients if i[1] == user_id]
+        ing = [i for i in ingredients if i[1] == int(user_id)]
     return ing if len(ing) > 0 else None
 
 
