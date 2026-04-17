@@ -20,7 +20,7 @@ def menu_options(menu, message="Ingrese la opcion deseada: "):
 
 
 def user_menu():
-    user_id = int(data.user_cache[0])
+    user_id = str(data.user_cache[0])
 
     flag = True
     while flag:
@@ -72,7 +72,7 @@ def ingredientes_menu(user_id):
 
         elif selected == 1:  # Agregar Ingrediente
             nombre = input("Nombre del ingrediente: ")
-            while not validate_alphabetic(nombre):
+            while not v.validate_alphabetic(nombre):
                 nombre = input("Error, ingrese un nombre valido: ")
 
             unit_id = (
@@ -88,7 +88,7 @@ def ingredientes_menu(user_id):
                 print("Mis ingredientes:")
                 ingredient_opt = (
                     menu_options(
-                        [i[1] for i in data.units],
+                        [i[2] for i in mis_ingredientes],
                         "Por favor ingrese el numero del ingrediente a eliminar: ",
                     )
                     - 1
@@ -110,37 +110,40 @@ def ingredientes_menu(user_id):
                 print("Mis ingredientes:")
                 d.display_ingredients(user_id)
 
-                ingredient_id = int(
-                    input("Por favor ingrese el numero del ingrediente a editar: ")
-                )
+                opt = input("Por favor ingrese el numero del ingrediente a editar: ")
+                while not v.validate_menu_option(opt, mis_ingredientes):
+                    opt = input("Numero invalido, ingrese nuevamente: ")
+                pos = int(opt) - 1
+
+                old_ingredient = mis_ingredientes[pos]
+                ingredient_id = old_ingredient[0]
+
                 new_ingredient_name = input(
-                    "Ingrese el nuevo nombre a modificar o presione enter para saltear este paso: "
+                    "Ingrese el nuevo nombre o presione enter para no modificar: "
                 )
                 new_ingredient_unit_id = input(
-                    "Ingrese el numero de la unidad o presione enter para saltear este paso: "
+                    "Ingrese el numero de la unidad o presione enter para no modificar: "
                 )
 
                 if len(new_ingredient_name) == 0 and len(new_ingredient_unit_id) == 0:
                     print("No se ha modificado el ingrediente.")
                 else:
-                    old_ingredient = f.get_ingredient(ingredient_id)
-                    if old_ingredient:
-                        ingredient_name = old_ingredient[2]
-                        ingredient_unit = old_ingredient[3]
-                        if len(new_ingredient_name) > 0:
-                            ingredient_name = new_ingredient_name
-                        if len(new_ingredient_unit_id) > 0:
-                            ingredient_unit = int(new_ingredient_unit_id)
+                    ingredient_name = old_ingredient[2]
+                    ingredient_unit = old_ingredient[3]
 
-                        f.update_ingredient(
-                            user_id, ingredient_id, ingredient_name, ingredient_unit
-                        )
+                    if len(new_ingredient_name) > 0:
+                        ingredient_name = new_ingredient_name
+                    if len(new_ingredient_unit_id) > 0:
+                        ingredient_unit = int(new_ingredient_unit_id) - 1
 
-                    print(
-                        "El ingrediente",
-                        mis_ingredientes[ingredient_id - 1],
-                        "ha sido modificado correctamente.",
+                    f.update_ingredient(
+                        user_id, ingredient_id, ingredient_name, ingredient_unit
                     )
+                    print(
+                        f"El ingrediente {old_ingredient[2]} ha sido modificado correctamente."
+                    )
+            else:
+                print("No hay ingredientes para editar.")
 
 
 def recetas_menu(user_id):
