@@ -83,7 +83,10 @@ def ingredientes_menu(user_id):
         if selected == 0:
             flag = False
         if selected == 1:
-            f.list_ingredients(user_id)
+            if mis_ingredientes:
+                f.list_ingredients(user_id)
+            else:
+                print("No hay ingredientes para mostrar.")
         elif selected == 2:
             nombre = input("Nombre del ingrediente: ")
             for u in data.units:
