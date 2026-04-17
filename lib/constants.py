@@ -16,7 +16,7 @@ ASCII_ART = r"""
 """
 MENU_OPTIONS = ["Ya tengo una cuenta :)", "No tengo cuenta :("]
 USER_OPTIONS = ["Gestionar Plan", "Mis recetas", "Mis ingredientes"]
-INGREDIENT_OPTIONS = ["Ver todos los ingredientes", "Agregar ingrediente", "Eliminar ingrediente", "Editar ingrediente"]
+INGREDIENT_OPTIONS = ["Agregar ingrediente", "Eliminar ingrediente", "Editar ingrediente"]
 PLAN_OPTIONS = ["Añadir receta al plan", "Quitar receta del plan", "Reemplazar receta"]
 RECIPE_OPTIONS = ["Agregar receta", "Eliminar receta", "Editar receta"]
 ADMIN_OPTIONS = []
