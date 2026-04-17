@@ -1,6 +1,27 @@
 from db.data_crud import *
 from components.validation import *
 
+def display_recipes(user_id):
+    if user_exists_id(user_id):
+        my_recipes = get_user_recipes(user_id)
+        if my_recipes:
+            num = 1
+            for rec in my_recipes:
+                print(f'{num}. {rec[2]}')
+                num += 1
+        return True
+    return False
+
+def display_ingredients(user_id):
+    if user_exists_id(user_id):
+        my_ingredients = get_user_ingredients(user_id)
+        if my_ingredients:
+            num = 1
+            for ing in my_ingredients:
+                print(f'{num}. {ing[2]} ({get_unit_by_id(ing[3])})')
+                num += 1
+        return True
+    return False
 
 def display_plan(userid):
     uid = str(userid)
