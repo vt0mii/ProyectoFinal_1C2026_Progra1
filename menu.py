@@ -16,27 +16,6 @@ def menu_options(menu):
         option = input('Error. Ingrese la opcion nuevamente: ')
         
     return int(option)
-
-def main_menu():    
-    result = False
-    flag = True
-    print(ASCII_ART)
-    print('Bienvenido a MealPlan! Elija la opcion para ingresar:')
-    while flag and not result:
-        selected = menu_options(MENU_OPTIONS)
-        if selected == 0:
-            flag = False
-        elif selected == 1:
-            result = login()
-        elif selected == 2:
-            result = signup()
-
-        if result:
-            user_menu()
-            print()
-            result = False
-        
-    print('Gracias por usar MealPlan. Hasta Luego!')
         
 def user_menu():
     user_id = int(data.user_cache[0])
@@ -81,7 +60,7 @@ def ingredientes_menu(user_id):
         selected = menu_options(INGREDIENT_OPTIONS)
         
         if mis_ingredientes:
-            f.list_ingredients(user_id)
+            d.display_ingredients(user_id)
         else:
             print("No hay ingredientes para mostrar.")
         if selected == 0:
