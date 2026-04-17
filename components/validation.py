@@ -6,10 +6,10 @@ user_exists_id = lambda userid: str(userid) in users
 user_exists_name = lambda username: any(u["username"] == username for u in users.values())
 
 # Verifica si la receta existe y pertenece al usuario
-is_recipe_owner = lambda userid, recipeid: any(r[0] == recipeid and r[1] == userid for r in recipes)
+is_recipe_owner = lambda userid, recipeid: any(r[0] == recipeid and str(r[1]) == str(userid) for r in recipes)
 
 # Verifica si el ingrediente existe y pertenece al usuario
-is_ingredient_owner = lambda userid, ingredientid: any(i[0] == ingredientid and i[1] == userid for i in ingredients)
+is_ingredient_owner = lambda userid, ingredientid: any(i[0] == ingredientid and str(i[1]) == str(userid) for i in ingredients)
 
 # Verifica si el usuario tiene un plan
 is_plan_owner = lambda userid: str(userid) in recipe_plan
