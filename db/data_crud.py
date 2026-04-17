@@ -5,23 +5,23 @@ from components.validation import *
 
 
 ## Unidades
-def get_unit_by_id(unitid):
+def get_unit_by_id(unit_id):
     for u in units:
-        if u[0] == unitid:
+        if u[0] == unit_id:
             return u[1]
     return None
 
 
-def get_mealtype_by_id(mealtypeid):
+def get_mealtype_by_id(mealtype_id):
     for m in meal_types:
-        if m[0] == mealtypeid:
+        if m[0] == mealtype_id:
             return m[1]
     return None
 
 
-def get_days_by_id(dayid):
+def get_days_by_id(day_id):
     for d in days:
-        if d[0] == dayid:
+        if d[0] == day_id:
             return d[1]
     return None
 
@@ -33,26 +33,26 @@ def get_mealtype_list():
 
 
 ## Recetas
-def add_recipe(userid, title, instructions):
-    if user_exists_id(userid):
+def add_recipe(user_id, title, instructions):
+    if user_exists_id(user_id):
         newid = max((r[0] for r in recipes), default=-1) + 1
-        recipes.append([newid, userid, title, instructions])
+        recipes.append([newid, user_id, title, instructions])
         return True
     return False
 
 
-def delete_recipe(userid, recipeid):
-    if is_recipe_owner(userid, recipeid):
-        target = get_recipe(recipeid)
+def delete_recipe(user_id, recipe_id):
+    if is_recipe_owner(user_id, recipe_id):
+        target = get_recipe(recipe_id)
         if target is not None:
             recipes.remove(target)
             return True
     return False
 
 
-def update_recipe(userid, recipeid, title, instructions):
-    if is_recipe_owner(userid, recipeid):
-        recipe = get_recipe(recipeid)
+def update_recipe(user_id, recipe_id, title, instructions):
+    if is_recipe_owner(user_id, recipe_id):
+        recipe = get_recipe(recipe_id)
         if recipe is not None:
             recipe[2] = title
             recipe[3] = instructions
@@ -60,9 +60,9 @@ def update_recipe(userid, recipeid, title, instructions):
     return False
 
 
-def get_recipe(recipeid):
+def get_recipe(recipe_id):
     def criteria(r):
-        return r[0] == recipeid
+        return r[0] == recipe_id
 
     results = list(filter(criteria, recipes))
     return results[0] if results else None
@@ -80,26 +80,26 @@ def list_ingredients(user_id):
     return False
 
 
-def add_ingredient(userid, title, unit_id):
-    if user_exists_id(userid):
+def add_ingredient(user_id, title, unit_id):
+    if user_exists_id(user_id):
         newid = max((i[0] for i in ingredients), default=-1) + 1
-        ingredients.append([newid, userid, title, unit_id])
+        ingredients.append([newid, user_id, title, unit_id])
         return True
     return False
 
 
-def delete_ingredient(userid, ingredientid):
-    if is_ingredient_owner(userid, ingredientid):
-        target = get_ingredient(ingredientid)
+def delete_ingredient(user_id, ingredient_id):
+    if is_ingredient_owner(user_id, ingredient_id):
+        target = get_ingredient(ingredient_id)
         if target is not None:
             ingredients.remove(target)
             return True
     return False
 
 
-def update_ingredient(userid, ingredientid, title, unit_id):
-    if is_ingredient_owner(userid, ingredientid):
-        ingredient = get_ingredient(ingredientid)
+def update_ingredient(user_id, ingredient_id, title, unit_id):
+    if is_ingredient_owner(user_id, ingredient_id):
+        ingredient = get_ingredient(ingredient_id)
         if ingredient is not None:
             ingredient[2] = title
             ingredient[3] = unit_id
@@ -107,29 +107,29 @@ def update_ingredient(userid, ingredientid, title, unit_id):
     return False
 
 
-def get_ingredient(ingredientid):
-    results = list(filter(lambda i: i[0] == ingredientid, ingredients))
+def get_ingredient(ingredient_id):
+    results = list(filter(lambda i: i[0] == ingredient_id, ingredients))
     return results[0] if results else None
 
-def get_user_ingredients(userid):
+def get_user_ingredients(user_id):
     ing = []
-    if user_exists_id(userid):
-        ing = [i for i in ingredients if i[1] == userid]
+    if user_exists_id(user_id):
+        ing = [i for i in ingredients if i[1] == user_id]
     return ing if len(ing) > 0 else None
 
 
 ## Ingredientes en Recetas
-def add_ingredient_to_recipe(userid, recipeid, ingredientid, quantity):
-    if is_ingredient_owner(userid, ingredientid) and is_recipe_owner(userid, recipeid):
+def add_ingredient_to_recipe(user_id, recipe_id, ingredient_id, quantity):
+    if is_ingredient_owner(user_id, ingredient_id) and is_recipe_owner(user_id, recipe_id):
         newid = max((r[0] for r in recipe_ingredients), default=-1) + 1
-        recipe_ingredients.append([newid, recipeid, ingredientid, quantity])
+        recipe_ingredients.append([newid, recipe_id, ingredient_id, quantity])
         return True
     return False
 
 
-def delete_ingredient_from_recipe(userid, recipeid, ingredientid):
-    if is_ingredient_owner(userid, ingredientid) and is_recipe_owner(userid, recipeid):
-        target = get_ingredient_from_recipe(recipeid, ingredientid)
+def delete_ingredient_from_recipe(user_id, recipe_id, ingredient_id):
+    if is_ingredient_owner(user_id, ingredient_id) and is_recipe_owner(user_id, recipe_id):
+        target = get_ingredient_from_recipe(recipe_id, ingredient_id)
         if target is not None:
             recipe_ingredients.remove(target)
             return True
@@ -137,26 +137,26 @@ def delete_ingredient_from_recipe(userid, recipeid, ingredientid):
 
 
 def update_ingredient_from_recipe(
-    userid, recipeid, ingredientid, newingredientid, quantity
+    user_id, recipe_id, ingredient_id, newingredient_id, quantity
 ):
-    if is_ingredient_owner(userid, ingredientid) and is_recipe_owner(userid, recipeid):
-        target = get_ingredient_from_recipe(recipeid, ingredientid)
+    if is_ingredient_owner(user_id, ingredient_id) and is_recipe_owner(user_id, recipe_id):
+        target = get_ingredient_from_recipe(recipe_id, ingredient_id)
         if target is not None:
-            target[2] = newingredientid
+            target[2] = newingredient_id
             target[3] = quantity
             return True
     return False
 
 
 # Esto va a ser util para el momento de mostrar todos
-def get_ingredientlist_from_recipe(recipeid):
-    results = list(filter(lambda r: r[1] == recipeid, recipe_ingredients))
+def get_ingredientlist_from_recipe(recipe_id):
+    results = list(filter(lambda r: r[1] == recipe_id, recipe_ingredients))
     return results
 
 
-def get_ingredient_from_recipe(recipeid, ingredientid):
-    ingredient_list = get_ingredientlist_from_recipe(recipeid)
-    results = list(filter(lambda i: i[2] == ingredientid, ingredient_list))
+def get_ingredient_from_recipe(recipe_id, ingredient_id):
+    ingredient_list = get_ingredientlist_from_recipe(recipe_id)
+    results = list(filter(lambda i: i[2] == ingredient_id, ingredient_list))
     return results[0] if results else None
 
 
@@ -176,23 +176,23 @@ def add_user(name, password, level="user"):
     return False
 
 
-def delete_user(userid):
-    if user_exists_id(userid):
-        users.pop(userid)
+def delete_user(user_id):
+    if user_exists_id(user_id):
+        users.pop(user_id)
         return True
     return False
 
 
-def update_user(userid, name, password, level):
-    if user_exists_id(userid):
-        users[userid] = {"username": name, "password": password, "level": level}
+def update_user(user_id, name, password, level):
+    if user_exists_id(user_id):
+        users[user_id] = {"username": name, "password": password, "level": level}
         return True
     return False
 
 
-def get_user(userid):
-    if user_exists_id(userid):
-        return users[userid]
+def get_user(user_id):
+    if user_exists_id(user_id):
+        return users[user_id]
     return None
 
 def get_user_by_name(username):
@@ -203,58 +203,58 @@ def get_user_by_name(username):
 ## Recipe Plan
 
 
-def add_recipe_to_plan(userid, recipeid, dayid, mealtypeid):
-    mealtype = get_mealtype_by_id(mealtypeid)
+def add_recipe_to_plan(user_id, recipe_id, day_id, mealtype_id):
+    mealtype = get_mealtype_by_id(mealtype_id)
     if (
-        is_plan_owner(userid)
-        and is_recipe_owner(userid, recipeid)
-        and not is_recipe_on_day(userid, recipeid, dayid, mealtype)
+        is_plan_owner(user_id)
+        and is_recipe_owner(user_id, recipe_id)
+        and not is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
     ):
-        recipe_plan[str(userid)][str(dayid)][mealtype].append(recipeid)
+        recipe_plan[str(user_id)][str(day_id)][mealtype].append(recipe_id)
         return True
     return False
 
 
-def remove_recipe_from_plan(userid, recipeid, dayid, mealtypeid):
-    mealtype = get_mealtype_by_id(mealtypeid)
+def remove_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id):
+    mealtype = get_mealtype_by_id(mealtype_id)
     if (
-        is_plan_owner(userid)
-        and is_recipe_owner(userid, recipeid)
-        and is_recipe_on_day(userid, recipeid, dayid, mealtype)
+        is_plan_owner(user_id)
+        and is_recipe_owner(user_id, recipe_id)
+        and is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
     ):
-        recipe_plan[str(userid)][str(dayid)][mealtype].remove(recipeid)
+        recipe_plan[str(user_id)][str(day_id)][mealtype].remove(recipe_id)
         return True
     return False
 
 
-def get_user_plan(userid):
-    if is_plan_owner(userid):
-        return recipe_plan[str(userid)]
+def get_user_plan(user_id):
+    if is_plan_owner(user_id):
+        return recipe_plan[str(user_id)]
     return None
 
 
-def get_recipe_from_plan(userid, recipeid, dayid, mealtypeid):
-    mealtype = get_mealtype_by_id(mealtypeid)
+def get_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id):
+    mealtype = get_mealtype_by_id(mealtype_id)
     if (
-        is_plan_owner(userid)
-        and is_recipe_owner(userid, recipeid)
-        and is_recipe_on_day(userid, recipeid, dayid, mealtype)
+        is_plan_owner(user_id)
+        and is_recipe_owner(user_id, recipe_id)
+        and is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
     ):
-        recipe = list(filter(lambda r: r[0] == recipeid, recipes))
+        recipe = list(filter(lambda r: r[0] == recipe_id, recipes))
         return recipe[0] if recipe else None
     return None
 
 
-def replace_recipe_from_plan(userid, recipeid, dayid, mealtypeid, newrecipeid):
-    mealtype = get_mealtype_by_id(mealtypeid)
+def replace_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id, newrecipe_id):
+    mealtype = get_mealtype_by_id(mealtype_id)
     if (
-        is_plan_owner(userid)
-        and is_recipe_owner(userid, recipeid)
-        and is_recipe_owner(userid, newrecipeid)
-        and is_recipe_on_day(userid, recipeid, dayid, mealtype)
-        and not is_recipe_on_day(userid, newrecipeid, dayid, mealtype)
+        is_plan_owner(user_id)
+        and is_recipe_owner(user_id, recipe_id)
+        and is_recipe_owner(user_id, newrecipe_id)
+        and is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
+        and not is_recipe_on_day(user_id, newrecipe_id, day_id, mealtype)
     ):
-        recipe_indx = recipe_plan[str(userid)][str(dayid)][mealtype].index(recipeid)
-        recipe_plan[str(userid)][str(dayid)][mealtype][recipe_indx] = newrecipeid
+        recipe_indx = recipe_plan[str(user_id)][str(day_id)][mealtype].index(recipe_id)
+        recipe_plan[str(user_id)][str(day_id)][mealtype][recipe_indx] = newrecipe_id
         return True
     return False
