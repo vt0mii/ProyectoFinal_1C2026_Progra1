@@ -141,5 +141,18 @@ def ingredientes_menu(user_id):
 
         
 def recetas_menu(user_id):
-    print("\n[ MIS RECETAS ]")
-    pass
+    flag = True
+    while flag:
+        
+        print("\n\n-------------- MIS RECETAS -------------")
+        selected = menu_options(RECIPE_OPTIONS)
+        
+        if selected == 0:
+            flag = False
+        elif selected == 1:
+            print("Función para añadir receta") 
+        elif selected == 2:
+            print("Función para quitar receta")
+            
+        elif selected == 3:
+            print("Funcion para editar receta")
