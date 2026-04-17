@@ -108,6 +108,38 @@ def ingredientes_menu(user_id):
             else:
                 print("No hay ingredientes para eliminar.")
         
+        elif selected == 3:
+            if mis_ingredientes:
+                print("Mis ingredientes:")
+                for index, ing in enumerate(mis_ingredientes):
+                    print(f"{index + 1}. {ing[2]} ({f.get_unit_by_id(ing[3])})")
+                ingredient_id = int(input("Por favor ingrese el numero del ingrediente a editar: "))
+                
+                new_ingredient_name = input("Ingrese el nuevo nombre a modificar o presione enter para saltear este paso: ")
+                new_ingredient_unit_id = input("Ingrese el numero de la unidad o presione enter para saltear este paso: ")
+
+
+                if len(new_ingredient_name) == 0 and len(new_ingredient_unit_id) == 0:
+                    print("No se ha modificado el ingrediente.")
+                else:
+                    ingredient_name = mis_ingredientes[ingredient_id-1][2]
+                    ingredient_unit_id = data.units[int(new_ingredient_unit_id)][0]
+                    print(ingredient_unit_id)
+
+                    if len(new_ingredient_name) > 0:
+                        ingredient_name = new_ingredient_name
+                    if len(new_ingredient_unit_id) > 0:
+                        ingredient_unit = int(new_ingredient_unit_id)
+                    
+                    f.update_ingredient(user_id, ingredient_unit_id, ingredient_name, ingredient_unit)
+
+                    print("El ingrediente", mis_ingredientes[ingredient_id-1], "ha sido modificado correctamente.")
+
+
+                
+
+
+        
 def recetas_menu(user_id):
     print("\n[ MIS RECETAS ]")
     pass
