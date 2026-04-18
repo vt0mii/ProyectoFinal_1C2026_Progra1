@@ -271,3 +271,17 @@ def replace_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id, newrecipe_
         recipe_plan[str(user_id)][str(day_id)][mealtype][recipe_indx] = newrecipe_id
         return True
     return False
+
+def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
+    plan = get_user_plan(user_id)
+    mealtype = get_mealtype_by_id(mealtype_id)
+    day = get_days_by_id(day_id)
+    if plan and mealtype and day:
+        recetas_id = set(plan[day][mealtype])
+        recetas_usuario = get_user_recipes(user_id)
+        if recetas_usuario:
+            recetas_filtradas = list(filter(lambda r: r[0] in recetas_id, recetas_usuario))
+            return recetas_filtradas
+    else:
+        return None    
+    
