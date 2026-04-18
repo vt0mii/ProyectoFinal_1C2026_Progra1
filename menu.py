@@ -66,8 +66,18 @@ def plan_menu(user_id):
             if mis_recetas:
                 day = menu_options(f.get_days_list(), "Por favor, seleccione el dia donde eliminar la receta: ")
                 if int(day) != 0:
+                    day_name = f.get_days_by_id(int(day))
                     mt = menu_options(f.get_mealtype_list(), "Por favor, seleccione el tipo de comida: ", False)
-                    
+                    selected_recipes = f.get_day_recipes_mealtype(user_id, int(day) - 1, int(mt) - 1)
+                    if selected_recipes:
+                        target = menu_options([r[2] for r in selected_recipes], "Selecciona la receta a eliminar: ", False)
+                        while target <= 0:
+                            target = menu_options([r[2] for r in selected_recipes], "Por favor, ingrese una receta valida: ", False)
+                        old_recipe = f.get_recipe(selected_recipes[target - 1][0])
+                        if old_recipe:
+                            f.remove_recipe_from_plan(user_id, old_recipe[0], int(day) - 1, int(mt) - 1)
+                    else:
+                        print(f"\n{f"X===X NO SE ENCUENTRAN RECETAS EN EL DIA {day_name.upper() if day_name else ""} X===X":^40}")
             else:
                 print(f"\n{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}")
 
@@ -93,7 +103,7 @@ def ingredientes_menu(user_id):
 
         elif selected == 1:  # Agregar Ingrediente
             nombre = input("Nombre del ingrediente: ")
-            while not v.validate_alphabetic(nombre):
+            while not v.validate_alphabetic(nombre) or nombre == "":
                 nombre = input("Error, ingrese un nombre valido: ")
 
             units = [i[1] for i in data.units]
@@ -101,7 +111,7 @@ def ingredientes_menu(user_id):
                 menu_options(units, "Por favor ingrese el ID de la unidad: ", False) - 1
             )
             while int(unit_id) <= 0 or int(unit_id) > len(units):
-                unit_id = input("Por favor, ingrese una opcion valida: ")
+                unit_id = int(input("Por favor, ingrese una opcion valida: "))
             f.add_ingredient(int(user_id), nombre, unit_id)
 
         elif selected == 2:  # Eliminar Ingrediente
@@ -114,15 +124,15 @@ def ingredientes_menu(user_id):
                     )
                     - 1
                 )
-                selected = mis_ingredientes[ingredient_opt]
+                selected_ing = mis_ingredientes[ingredient_opt]
 
-                ingredient_deleted = f.delete_ingredient(user_id, selected[0])
+                ingredient_deleted = f.delete_ingredient(user_id, selected_ing[0])
                 if ingredient_deleted:
                     print(
-                        f"El ingrediente {selected[2]} ha sido eliminado correctamente."
+                        f"El ingrediente {selected_ing[2]} ha sido eliminado correctamente."
                     )
                 else:
-                    print(f"Error al eliminar el ingrediente {selected[2]}.")
+                    print(f"Error al eliminar el ingrediente {selected_ing[2]}.")
             else:
                 print("No hay ingredientes para eliminar.")
 
@@ -142,7 +152,7 @@ def ingredientes_menu(user_id):
                 new_ingredient_name = input(
                     "Ingrese el nuevo nombre o presione enter para no modificar: "
                 )
-                while not v.validate_edit_name:
+                while not v.validate_edit_name(new_ingredient_name):
                     new_ingredient_name = input(
                         "Ingrese un nombre valido o presione enter para no modificar: "
                     )
@@ -155,15 +165,14 @@ def ingredientes_menu(user_id):
                     "Ingrese el numero de la unidad o presione enter para no modificar: "
                 )
 
-                while not v.validate_edit_unit:
+                while not v.validate_edit_unit(new_ingredient_unit_id):
                     new_ingredient_unit_id = input(
                         "Ingrese una opcion correcta o presione enter para no modificar: "
                     )
-
-                while int(new_ingredient_unit_id) <= 0 or int(
-                    new_ingredient_unit_id
-                ) > len(units):
-                    unit_id = input("Por favor, ingrese una opcion valida: ")
+                if new_ingredient_unit_id is not "":
+                    while int(new_ingredient_unit_id) <= 0 or int(new_ingredient_unit_id) > len(units):
+                        new_ingredient_unit_id = input("Por favor, ingrese una opcion valida: ")
+                    
                 if len(new_ingredient_name) == 0 and len(new_ingredient_unit_id) == 0:
                     print("No se ha modificado el ingrediente.")
                 else:
@@ -197,12 +206,12 @@ def recetas_menu(user_id):
         elif selected == 1:
             print("--------------AÑADIR RECETAS-------------")
             print()
-            title = input("Porfavor Ingrese el nombre de la receta ")
+            title = input("Porfavor Ingrese el nombre de la receta: ")
             while not v.validate_alphabetic(title):
-                title = input("Ingrese un nombre con letras unicamente")
+                title = input("Ingrese un nombre con letras unicamente: ")
 
             print()
-            instructions = input("Porfavor Ingrese el nombre de la receta ")
+            instructions = input("Porfavor ingrese las instrucciones de la receta: ")
             f.add_recipe(user_id, title, instructions)
         elif selected == 2:
             print("Función para quitar receta")
