@@ -33,7 +33,7 @@ validate_menu_option = lambda option, menu: re.match(r"^\d+$", option) and int(o
 validate_alphabetic = lambda txt: re.match(r"^[a-zA-Z ]+$", txt)
 
 # Validar la opcion extra de "enter" al editar
-validate_edit_unit = lambda option, menu:  re.match(r"^\d*$", option) and int(option) <= len(menu) and int(option) >= 0
+validate_edit_unit = lambda option:  re.match(r"^\d*$", option) and option.isdigit() and int(option) <= len(units) and int(option) >= 0
 
 # Validar la opcion extra de "enter" al editar
 validate_edit_name = lambda option:  re.match(r"^[a-zA-Z ]*$", option)
