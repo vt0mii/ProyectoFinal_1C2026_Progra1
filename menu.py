@@ -215,14 +215,19 @@ def recetas_menu(user_id):
             f.add_recipe(user_id, title, instructions)
             print()
             print("La receta ha sido añadida correctamente!")
-            if user_exists_id(user_id):
-                print("si")
-            
+                        
         elif selected == 2:
             print("Porfavor seleccione la receta que desea borrar")
             f.get_user_recipes(user_id)
             print()
             recipe_id =int(input("ID de la receta a borrar: "))
+            while not v.is_recipe_owner(user_id,recipe_id):
+                recipe_id = int(input("Ingrese el ID de una receta que exista"))
+            recipt_name= f.get_recipe(recipe_id) #guarda el nombre de la receta seleccionada
+            f.delete_recipe(user_id, recipe_id)
+            
+            print()
+            f"La receta de {recipt_name} ha sido eliminada correctamente"
 
 
 
