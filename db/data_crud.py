@@ -29,6 +29,9 @@ def get_days_by_id(day_id):
 def get_mealtype_list():
     return list(mt[1] for mt in meal_types)
 
+def get_days_list():
+    return list(day[1] for day in days)
+
 
 # CRUD Matrices Dinamicas
 
