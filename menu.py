@@ -204,30 +204,25 @@ def recetas_menu(user_id):
         if selected == 0:
             flag = False
         elif selected == 1:
-            print("--------------AÑADIR RECETAS-------------")
-            print()
-            title = input("Porfavor Ingrese el nombre de la receta: ")
+            title = input("Porfavor, ingrese el nombre de la receta: ")
             while not v.validate_alphabetic(title):
                 title = input("Ingrese un nombre con letras unicamente: ")
 
-            print()
-            instructions = input("Porfavor ingrese las instrucciones de la receta: ")
-            f.add_recipe(user_id, title, instructions)
-            print()
-            print("La receta ha sido añadida correctamente!")
+            instructions = input("\nPorfavor ingrese las instrucciones de la receta: ")
+            result = f.add_recipe(user_id, title, instructions)
+            if result:
+                print("La receta ha sido añadida correctamente!")
+            
                         
         elif selected == 2:
-            print("Porfavor seleccione la receta que desea borrar")
-            f.get_user_recipes(user_id)
-            print()
-            recipe_id =int(input("ID de la receta a borrar: "))
-            while not v.is_recipe_owner(user_id,recipe_id):
-                recipe_id = int(input("Ingrese el ID de una receta que exista"))
-            recipt_name= f.get_recipe(recipe_id) #guarda el nombre de la receta seleccionada
-            f.delete_recipe(user_id, recipe_id)
-            
-            print()
-            f"La receta de {recipt_name} ha sido eliminada correctamente"
+            user_recipes = f.get_user_recipes(user_id)
+            if user_recipes:
+                recipe_opt = menu_options([i[2] for i in user_recipes], "Porfavor seleccione la receta que desea borrar: ")
+                result = f.delete_recipe(user_id, user_recipes[recipe_opt - 1][0])
+                if result:
+                    print(f"\nLa receta {user_recipes[recipe_opt - 1][2]} ha sido eliminada correctamente")
+            else:
+                print(f"\n{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}")
 
 
 
