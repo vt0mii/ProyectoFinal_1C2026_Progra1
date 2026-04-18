@@ -213,8 +213,18 @@ def recetas_menu(user_id):
             print()
             instructions = input("Porfavor ingrese las instrucciones de la receta: ")
             f.add_recipe(user_id, title, instructions)
+            print()
+            print("La receta ha sido añadida correctamente!")
+            if user_exists_id(user_id):
+                print("si")
+            
         elif selected == 2:
-            print("Función para quitar receta")
+            print("Porfavor seleccione la receta que desea borrar")
+            f.get_user_recipes(user_id)
+            print()
+            recipe_id =int(input("ID de la receta a borrar: "))
+
+
 
         elif selected == 3:
             print("Funcion para editar receta")
