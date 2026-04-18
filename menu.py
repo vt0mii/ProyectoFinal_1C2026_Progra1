@@ -49,8 +49,21 @@ def plan_menu(user_id):
 
         if selected == 0:
             flag = False
+            
         elif selected == 1:
-            print("Función para añadir receta")
+            mis_recetas = f.get_user_recipes(user_id)
+            if mis_recetas:
+                day = menu_options(f.get_days_list(), "Por favor, seleccione el dia donde agregar: ")
+                if int(day) == 0:
+                    mt = menu_options(f.get_mealtype_list(), "Por favor, seleccione el tipo de comida: ", False)
+                
+                    d.display_recipes(user_id)
+                    recipe_selected = menu_options([r[2] for r in mis_recetas], "Seleccione la receta a agregar")
+                    if int(recipe_selected) != 0:
+                        f.add_recipe_to_plan(user_id, mis_recetas[recipe_selected - 1][0], day - 1, mt - 1)
+            else:
+                print(f"\n{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}")
+            
         elif selected == 2:
             print("Función para quitar receta")
         elif selected == 3:
