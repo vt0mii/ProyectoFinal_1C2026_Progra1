@@ -33,7 +33,13 @@ recipes = [  # Su estructura es id, user_id, title, instructions
         1,
         "Tomate relleno",
         "Lorem Ipsum.",
-    ]
+    ],
+    [
+        3,
+        0,
+        "Hamburguesa",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+    ],
 ]
 
 ingredients = [  # Su estructura es id, user_id, name, unit_id
@@ -44,6 +50,8 @@ ingredients = [  # Su estructura es id, user_id, name, unit_id
     [4, 0, "Limon", 5],
     [5, 1, "Zanahoria", 1],
     [6, 1, "Tomate", 1],
+    [7, 0, "Tomate", 4],
+    [8, 0, "Carne", 3],
 ]
 
 recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantity
@@ -53,6 +61,10 @@ recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantit
     [3, 0, 3, None],
     [4, 0, 4, None],
     [5, 1, 5, 1],
+    [6, 3, 8, 200],
+    [7, 3, 7, 1],
+    [8, 3, 1, 1],
+    [9, 3, 3, 1],
 ]
 
 # Diccionarios

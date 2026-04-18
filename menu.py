@@ -82,7 +82,36 @@ def plan_menu(user_id):
                 print(f"\n{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}")
 
         elif selected == 3:
-            print("Funcion para editar receta")
+            if mis_recetas:
+                day = menu_options(f.get_days_list(), "Por favor, seleccione el dia donde reemplazar la receta: ")
+                if int(day) != 0:
+                    day_name = f.get_days_by_id(int(day))
+                    mt = menu_options(f.get_mealtype_list(), "Por favor, seleccione el tipo de comida: ", False)
+                    selected_recipes = f.get_day_recipes_mealtype(user_id, int(day) - 1, int(mt) - 1)
+                    if selected_recipes:
+                        recipe_names = [r[2] for r in selected_recipes]
+                        
+                        target = menu_options([r[2] for r in selected_recipes], "Selecciona la receta a reemplazar: ", False)
+                        while target <= 0:
+                            target = menu_options(recipe_names, "Por favor, ingrese una receta valida: ", False)
+                        
+                        old_id = selected_recipes[target - 1][0] 
+                        new_recipe_list = [r for r in mis_recetas if r[0] != old_id]
+                        new_recipe_names = [r[2] for r in new_recipe_list]
+                        
+                        new_target = menu_options(new_recipe_names, "Selecciona la nueva receta: ", False)
+                        while new_target <= 0:
+                            new_target = menu_options(new_recipe_names, "Por favor, ingrese una receta valida: ", False)
+                        
+                        old_recipe = f.get_recipe(selected_recipes[target - 1][0])
+                        new_recipe = f.get_recipe(new_recipe_list[new_target - 1][0])
+                        
+                        if old_recipe and new_recipe:
+                            f.replace_recipe_from_plan(user_id, old_recipe[0], int(day) - 1, int(mt) - 1, new_recipe[0])
+                    else:
+                        print(f"\n{f"X===X NO SE ENCUENTRAN RECETAS EN EL DIA {day_name.upper() if day_name else ""} X===X":^40}")
+            else:
+                print(f"\n{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}")
 
 
 def ingredientes_menu(user_id):
