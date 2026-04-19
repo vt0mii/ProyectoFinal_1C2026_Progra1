@@ -64,7 +64,7 @@ def plan_menu(user_id):
                     )
 
                     recipe_selected = menu_options(
-                        [r[2] for r in mis_recetas], "Seleccione la receta a agregar"
+                        [r[2] for r in mis_recetas], "Seleccione la receta a agregar", False
                     )
                     f.add_recipe_to_plan(
                         user_id,
