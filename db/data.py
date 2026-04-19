@@ -70,7 +70,7 @@ recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantit
 # Diccionarios
 users = {  # userid : {}
     "0": {
-        "username": "tomiicotos",
+        "username": "tomii",
         "password": "tomi",
         "level": "admin"
     },
