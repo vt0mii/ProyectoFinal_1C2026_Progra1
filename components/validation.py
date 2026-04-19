@@ -56,4 +56,4 @@ validate_edit_unit = lambda option: (
 validate_edit_name = lambda option: re.match(r"^[a-zA-Z ]*$", option)
 
 # Valida si el usuario actual es admin
-validate_admin = user_cache[1].get("level") == "admin"
+validate_admin = lambda user: user[1].get("level") == "admin"
