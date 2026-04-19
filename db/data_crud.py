@@ -74,6 +74,14 @@ def get_recipe(recipe_id):
     return results[0] if results else None
 
 
+def get_recipe_by_name(recipe_name):
+    def criteria(r):
+        return r[2] == recipe_name
+
+    results = list(filter(criteria, recipes))
+    return results[0] if results else None
+
+
 
 def get_user_recipes(user_id):
     ing = []
