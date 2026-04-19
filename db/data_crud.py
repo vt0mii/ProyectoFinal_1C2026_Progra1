@@ -51,6 +51,16 @@ def delete_recipe(user_id, recipe_id):
     if is_recipe_owner(user_id, recipe_id):
         target = get_recipe(recipe_id)
         if target is not None:
+            huerfanos = get_ingredientlist_from_recipe(recipe_id)
+            for ri in huerfanos:
+                recipe_ingredients.remove(ri)
+
+            for uid, plan in recipe_plan.items():
+                for day in plan.values():
+                    for mealtype, recetas in day.items():
+                        if recipe_id in recetas:
+                            recetas.remove(recipe_id)
+
             recipes.remove(target)
             return True
     return False
