@@ -48,12 +48,12 @@ validate_menu_option = lambda option, menu, zero=True: (
 validate_alphabetic = lambda txt: re.match(r"^[a-zA-Z ]+$", txt)
 
 # Validar la opcion extra de "enter" al editar
-validate_edit_unit = (
-    lambda option: re.match(r"^\d*$", option)
-    and option.isdigit()
-    and int(option) <= len(units)
-    and int(option) >= 0
+validate_edit_unit = lambda option: (
+    option == "" or (option.isdigit() and 1 <= int(option) <= len(units))
 )
 
 # Validar la opcion extra de "enter" al editar
 validate_edit_name = lambda option: re.match(r"^[a-zA-Z ]*$", option)
+
+# Valida si el usuario actual es admin
+validate_admin = user_cache[1].get("level") == "admin"

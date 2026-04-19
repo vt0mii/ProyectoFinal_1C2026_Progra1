@@ -6,11 +6,12 @@ import db.data_crud as f
 import components.display as d
 from admin_menu import stats_menu, gestionar_usuarios_menu
 
+
 def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=False):
     for i in range(len(menu)):
         print(f"{i + 1} - {menu[i]}")
     if admin:
-        menu.append("ADMINMENU")
+        menu += ["ADMINMENU"]
         print(f"{len(menu)} - Admin Menu")
     if zero:
         print("0 - Volver/Salir")
@@ -35,8 +36,8 @@ def admin_menu():
             stats_menu()
         elif adm_opt == 2:
             gestionar_usuarios_menu()
-    
-    
+
+
 def user_menu():
     user_id = str(data.user_cache[0])
 
@@ -45,7 +46,7 @@ def user_menu():
 
         d.display_plan(user_id)
         print(f"\n\n---------- PANEL DE USUARIO -----------")
-        selected = menu_options(USER_OPTIONS, admin=True)
+        selected = menu_options(USER_OPTIONS, admin=v.validate_admin())
 
         if selected == 0:
             flag = False
@@ -55,9 +56,8 @@ def user_menu():
             recetas_menu(user_id)
         elif selected == 3:
             ingredientes_menu(user_id)
-        elif selected == 4:
+        elif selected == 4 and v.validate_admin():
             admin_menu()
-            
 
 
 def plan_menu(user_id):
@@ -84,7 +84,9 @@ def plan_menu(user_id):
                     )
 
                     recipe_selected = menu_options(
-                        [r[2] for r in mis_recetas], "Seleccione la receta a agregar", False
+                        [r[2] for r in mis_recetas],
+                        "Seleccione la receta a agregar",
+                        False,
                     )
                     f.add_recipe_to_plan(
                         user_id,
@@ -210,42 +212,37 @@ def ingredientes_menu(user_id):
                 nombre = input("Error, ingrese un nombre valido: ")
 
             units = [i[1] for i in data.units]
-            unit_id = (
-                menu_options(units, "Por favor ingrese el ID de la unidad: ", False)
+            unit_id = menu_options(
+                units, "Por favor ingrese el ID de la unidad: ", False
             )
             f.add_ingredient(int(user_id), nombre, unit_id - 1)
 
         elif selected == 2:  # Eliminar Ingrediente
             if mis_ingredientes:
                 print("Mis ingredientes:")
-                ingredient_opt = (
-                    menu_options(
-                        [i[2] for i in mis_ingredientes],
-                        "Por favor ingrese el numero del ingrediente a eliminar: ",
-                    )
-                    - 1
+                ingredient_opt = menu_options(
+                    [i[2] for i in mis_ingredientes],
+                    "Por favor ingrese el numero del ingrediente a eliminar: ",
                 )
-                selected_ing = mis_ingredientes[ingredient_opt]
+                if ingredient_opt != 0:
+                    selected_ing = mis_ingredientes[ingredient_opt - 1]
 
-                ingredient_deleted = f.delete_ingredient(user_id, selected_ing[0])
-                if ingredient_deleted:
-                    print(
-                        f"El ingrediente {selected_ing[2]} ha sido eliminado correctamente."
-                    )
-                else:
-                    print(f"Error al eliminar el ingrediente {selected_ing[2]}.")
+                    ingredient_deleted = f.delete_ingredient(user_id, selected_ing[0])
+                    if ingredient_deleted:
+                        print(
+                            f"El ingrediente {selected_ing[2]} ha sido eliminado correctamente."
+                        )
+                    else:
+                        print(f"Error al eliminar el ingrediente {selected_ing[2]}.")
             else:
                 print("No hay ingredientes para eliminar.")
 
         elif selected == 3:  # Editar Ingrediente
             if mis_ingredientes:
                 print("Mis ingredientes:")
-                ingredient_opt = (
-                    menu_options(
-                        [i[2] for i in mis_ingredientes],
-                        "Por favor ingrese el numero del ingrediente a editar: ",
-                    )
-                    
+                ingredient_opt = menu_options(
+                    [i[2] for i in mis_ingredientes],
+                    "Por favor ingrese el numero del ingrediente a editar: ",
                 )
                 if ingredient_opt:
                     selected = mis_ingredientes[ingredient_opt - 1]
@@ -279,7 +276,10 @@ def ingredientes_menu(user_id):
                                 "Por favor, ingrese una opcion valida: "
                             )
 
-                    if len(new_ingredient_name) == 0 and len(new_ingredient_unit_id) == 0:
+                    if (
+                        len(new_ingredient_name) == 0
+                        and len(new_ingredient_unit_id) == 0
+                    ):
                         print("No se ha modificado el ingrediente.")
                     else:
                         ingredient_name = selected[2]
@@ -294,8 +294,8 @@ def ingredientes_menu(user_id):
                             user_id, ingredient_id, ingredient_name, ingredient_unit
                         )
                         print(
-                        f"El ingrediente {selected[2]} ha sido modificado correctamente."
-                    )
+                            f"El ingrediente {selected[2]} ha sido modificado correctamente."
+                        )
             else:
                 print("No hay ingredientes para editar.")
 
