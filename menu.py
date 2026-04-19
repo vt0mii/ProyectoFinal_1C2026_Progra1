@@ -346,7 +346,7 @@ def recetas_menu(user_id):
             if user_recipes:
                 recipe_opt = menu_options(
                     [i[2] for i in user_recipes],
-                    "Porfavor seleccione la receta que desea borrar: ",
+                    "Porfavor seleccione la receta que desea eliminar: ",
                 )
                 result = f.delete_recipe(user_id, user_recipes[recipe_opt - 1][0])
                 if result:
@@ -357,4 +357,75 @@ def recetas_menu(user_id):
                 print(f"\n{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}")
 
         elif selected == 3:
-            print("Funcion para editar receta")
+            user_recipes = f.get_user_recipes(user_id)
+            if user_recipes:
+                recipe_opt = menu_options([r[2] for r in user_recipes], "Seleccione la receta a editar: ")
+                if recipe_opt:
+                    selected_recipe = user_recipes[recipe_opt - 1]
+                    branch_opt = menu_options(["Editar datos (nombre e instrucciones)", "Editar Ingredientes"], "Seleccione el item a editar: ", False)
+                    while branch_opt == 0:
+                        branch_opt = menu_options(["Editar datos (nombre e instrucciones)", "Editar Ingredientes"], "Seleccione un item valido: ", False)
+                        
+                    if branch_opt == 1:
+                        print(f"Receta: {selected_recipe[2]}\nInstrucciones: {selected_recipe[3]}")
+                        
+                        new_recipe_name = input("Ingrese el nuevo nombre o Enter para saltear: ")
+                        while not v.validate_edit_name(new_recipe_name):
+                            new_recipe_name = input("Ingrese un nombre valido o Enter para saltear: ")
+                        
+                        new_recipe_instructions = input("Ingrese las nuevas instrucciones o Enter para saltear: ")
+                        while not v.validate_edit_name(new_recipe_instructions):
+                            new_recipe_instructions = input("Ingrese unas instrucciones validas o Enter para saltear: ")
+
+                        final_name = new_recipe_name if new_recipe_name else selected_recipe[2]
+                        final_instructions = new_recipe_instructions if new_recipe_instructions else selected_recipe[3]
+
+                        f.update_recipe(user_id, selected_recipe[0], final_name, final_instructions)
+                        print(f"Se han realizado los cambios a \"{final_name}\".")
+
+                    elif branch_opt == 2:
+                        edit_ing_opt = menu_options(["Agregar Ingrediente", "Eliminar Ingrediente"])
+
+                        if edit_ing_opt == 1:
+                            mis_ingredientes = f.get_user_ingredients(user_id)
+                            if mis_ingredientes:
+                                ingredient_opt = menu_options(
+                                    [i[2] for i in mis_ingredientes],
+                                    "Seleccione el ingrediente a agregar, 0 para terminar: ",
+                                )
+                                while ingredient_opt != 0:
+                                    selected_ingredient = mis_ingredientes[ingredient_opt - 1]
+                                    unit_name = f.get_unit_by_id(selected_ingredient[3])
+                                    cantidad = float(input(f"Ingrese la cantidad en {unit_name}: "))
+                                    f.add_ingredient_to_recipe(user_id, selected_recipe[0], selected_ingredient[0], cantidad)
+                                    ingredient_opt = menu_options(
+                                        [i[2] for i in mis_ingredientes],
+                                        "Seleccione el ingrediente a agregar, 0 para terminar: ",
+                                    )
+                                print(f"Ingredientes agregados a \"{selected_recipe[2]}\".")
+                            else:
+                                print("No hay ingredientes disponibles para agregar.")
+
+                        elif edit_ing_opt == 2:
+                            recipe_ingredients = f.get_ingredientlist_from_recipe(selected_recipe[0])
+                            if recipe_ingredients:
+                                ingredient_names = []
+                                for ri in recipe_ingredients:
+                                    ing = f.get_ingredient(ri[2])
+                                    nombre = ing[2] if ing else f"ID {ri[2]}"
+                                    unit_name = f.get_unit_by_id(ing[3]) if ing else ""
+                                    cantidad = ri[3] if ri[3] is not None else "a gusto"
+                                    ingredient_names.append(f"{nombre} ({cantidad} {unit_name})")
+
+                                ingredient_opt = menu_options(
+                                    ingredient_names,
+                                    "Seleccione el ingrediente a eliminar: ",
+                                )
+                                if ingredient_opt != 0:
+                                    target_ri = recipe_ingredients[ingredient_opt - 1]
+                                    f.delete_ingredient_from_recipe(user_id, selected_recipe[0], target_ri[2])
+                                    print(f"Ingrediente eliminado de \"{selected_recipe[2]}\".")
+                            else:
+                                print("Esta receta no tiene ingredientes para eliminar.")
+            else:
+                print(f"\n{'X===X NO SE ENCUENTRAN RECETAS X===X':^40}")
