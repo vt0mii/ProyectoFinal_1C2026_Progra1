@@ -1,12 +1,19 @@
 from components.auth import login, signup
 from lib.constants import MENU_OPTIONS, ASCII_ART
-from menu import menu_options, user_menu
+from menu import plan_menu, recetas_menu, ingredientes_menu
+from admin_menu import admin_menu
+import components.validation as v
+from lib.colors import *
+import db.data as data
+from lib.constants import *
+import components.display as d 
+from lib.utils import menu_options
 
 def main_menu():    
     result = False
     flag = True
-    print(ASCII_ART)
-    print('Bienvenido a MealPlan! Elija la opcion para ingresar:')
+    print(f"{CYAN}{ASCII_ART}{END}")
+    print(f'{BOLD}Bienvenido a MealPlan! Elija la opcion para ingresar: {END}')
     while flag and not result:
         selected = menu_options(MENU_OPTIONS)
         if selected == 0:
@@ -23,5 +30,27 @@ def main_menu():
         
     print('Gracias por usar MealPlan. Hasta Luego!')
     
+def user_menu():
+    user_id = str(data.user_cache[0])
+
+    flag = True
+    while flag:
+
+        d.display_plan(user_id)
+        print(f"\n\n{CYAN}---------- PANEL DE USUARIO -----------{END}")
+        is_admin = v.validate_admin(data.user_cache)
+        selected = menu_options(USER_OPTIONS, admin=is_admin)
+
+        if selected == 0:
+            flag = False
+        elif selected == 1:
+            plan_menu(user_id)
+        elif selected == 2:
+            recetas_menu(user_id)
+        elif selected == 3:
+            ingredientes_menu(user_id)
+        elif selected == 4 and is_admin:
+            admin_menu()
+            
 if __name__ == "__main__":
     main_menu()

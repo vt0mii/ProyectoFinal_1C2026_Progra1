@@ -1,7 +1,22 @@
-from .menu import menu_options, recetas_menu, ingredientes_menu, plan_menu
+from menu import recetas_menu, ingredientes_menu, plan_menu
+from lib.utils import menu_options
 import db.data as data
 import lib.constants as c
 import db.data_crud as f
+from lib.colors import *
+
+def admin_menu():
+    flag = True
+    while flag:
+        print(f"\n\n{CYAN}---------- PANEL DE ADMIN -----------{END}")
+        adm_opt = menu_options(c.ADMIN_OPTIONS)
+
+        if adm_opt == 0:
+            flag = False
+        elif adm_opt == 1:
+            stats_menu()
+        elif adm_opt == 2:
+            gestionar_usuarios_menu()
 
 
 def stats_menu():
