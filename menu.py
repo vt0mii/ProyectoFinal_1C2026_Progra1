@@ -4,11 +4,14 @@ from components.auth import *
 import db.data as data
 import db.data_crud as f
 import components.display as d
+from admin_menu import stats_menu, gestionar_usuarios_menu
 
-
-def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True):
+def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=False):
     for i in range(len(menu)):
         print(f"{i + 1} - {menu[i]}")
+    if admin:
+        menu.append("ADMINMENU")
+        print(f"{len(menu)} - Admin Menu")
     if zero:
         print("0 - Volver/Salir")
 
@@ -20,6 +23,20 @@ def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True):
     return int(option)
 
 
+def admin_menu():
+    flag = True
+    while flag:
+        print("\n\n---------- PANEL DE ADMIN -----------")
+        adm_opt = menu_options(ADMIN_OPTIONS)
+
+        if adm_opt == 0:
+            flag = False
+        elif adm_opt == 1:
+            stats_menu()
+        elif adm_opt == 2:
+            gestionar_usuarios_menu()
+    
+    
 def user_menu():
     user_id = str(data.user_cache[0])
 
@@ -28,7 +45,7 @@ def user_menu():
 
         d.display_plan(user_id)
         print(f"\n\n---------- PANEL DE USUARIO -----------")
-        selected = menu_options(USER_OPTIONS)
+        selected = menu_options(USER_OPTIONS, admin=True)
 
         if selected == 0:
             flag = False
@@ -38,6 +55,9 @@ def user_menu():
             recetas_menu(user_id)
         elif selected == 3:
             ingredientes_menu(user_id)
+        elif selected == 4:
+            admin_menu()
+            
 
 
 def plan_menu(user_id):
