@@ -88,7 +88,7 @@ def signup():
     new_user_id = ""
     if new_user:
         new_user_id = str(new_user[0])
-        recipe_plan[new_user_id] = {
+        data.recipe_plan[new_user_id] = {
             str(day): {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
             for day in range(7)
         }

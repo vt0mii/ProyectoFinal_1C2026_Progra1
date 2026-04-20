@@ -10,7 +10,7 @@ from lib.utils import menu_options
 def plan_menu(user_id):
     flag = True
     while flag:
-
+        d.display_plan(user_id)
         print(f"\n\n{CYAN}-------- GESTIÓN DE PLAN SEMANAL -------{END}")
         selected = menu_options(PLAN_OPTIONS)
 
@@ -32,7 +32,7 @@ def plan_menu(user_id):
 
                     recipe_selected = menu_options(
                         [r[2] for r in mis_recetas],
-                        "Seleccione la receta a agregar",
+                        "Seleccione la receta a agregar: ",
                         False,
                     )
                     f.add_recipe_to_plan(
