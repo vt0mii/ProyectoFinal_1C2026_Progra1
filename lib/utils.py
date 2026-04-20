@@ -5,7 +5,7 @@ def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=F
     for i in range(len(menu)):
         print(f"{BOLD}{i + 1}{END} - {menu[i]}")
     if admin:
-        menu += ["ADMINMENU"]
+        menu = menu + ["ADMINMENU"]
         print(f"{BOLD}{len(menu)}{END} - Admin Menu")
     if zero:
         print(f"{BOLD}0{END} - Volver/Salir")

@@ -26,19 +26,18 @@ def display_ingredients(user_id):
     return False
 
 
-def display_plan(userid):
-    uid = userid
-    if not is_plan_owner(uid):
-        print(f"{RED}\n[!] El usuario {uid} no tiene un plan.{END}")
+def display_plan(user_id):
+    if not is_plan_owner(user_id):
+        print(f"{RED}\n[!] El usuario {user_id} no tiene un plan.{END}")
         return
 
     ancho_col = 22
     tipos_comida = get_mealtype_list()
-    user = get_user(uid)
-    plan = get_user_plan(uid)
+    user = get_user(user_id)
+    plan = get_user_plan(user_id)
 
     if plan is None:
-        print(f"{RED}\n[!] No se pudo obtener el plan del usuario {uid}.{END}")
+        print(f"{RED}\n[!] No se pudo obtener el plan del usuario {user_id}.{END}")
         return
 
     ancho_total = ancho_col * 7
@@ -77,7 +76,7 @@ def display_plan(userid):
                     else:
                         nombre = "ID No encontrado"
                 else:
-                    nombre = ""
+                    nombre = "---" if pos == 0 else ""
                 fila += f"{nombre:<{ancho_col}}"
 
             etiqueta = meal.upper() if pos == 0 else ""

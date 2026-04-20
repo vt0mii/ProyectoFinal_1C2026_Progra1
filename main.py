@@ -1,11 +1,10 @@
 from components.auth import login, signup
-from lib.constants import MENU_OPTIONS, ASCII_ART
+from lib.constants import MENU_OPTIONS, ASCII_ART,  USER_OPTIONS
 from menu import plan_menu, recetas_menu, ingredientes_menu
 from admin_menu import admin_menu
 import components.validation as v
 from lib.colors import *
 import db.data as data
-from lib.constants import *
 import components.display as d 
 from lib.utils import menu_options
 
