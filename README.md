@@ -1,76 +1,106 @@
-# 🥗 MealPlan
+# MealPlan
 
-Sistema de planificación de comidas semanal por usuario, desarrollado en Python. Permite registrarse, iniciar sesión, gestionar recetas con sus ingredientes y visualizar un plan semanal organizado por día y tipo de comida.
+Sistema de planificación de comidas semanal por usuario, desarrollado en Python. Permite registrarse, iniciar sesión, gestionar recetas con sus ingredientes y armar un plan semanal organizado por día y tipo de comida. Incluye un panel de administración con estadísticas y gestión de usuarios.
 
+## Cómo ejecutar
 
-## Estructura del Proyecto
+```bash
+python main.py
+```
+
+No requiere dependencias externas. Python 3.10 o superior recomendado.
+
+## Usuarios de prueba
+
+| Username | Contraseña | Nivel |
+|----------|------------|-------|
+| tomii    | tomi       | admin |
+| test     | test       | user  |
+
+## Estructura del proyecto
 
 ```
-Own/
+ProyectoFinal/
  ┣ components/
  ┃ ┣ auth.py          # Login y signup
- ┃ ┣ display.py       # Visualización del plan semanal
+ ┃ ┣ display.py       # Visualización del plan semanal en consola
  ┃ ┗ validation.py    # Validaciones y helpers de negocio
  ┣ db/
- ┃ ┣ data.py          # Datos estáticos y dinámicos (base de datos en memoria)
+ ┃ ┣ data.py          # Base de datos en memoria (estructuras de datos)
  ┃ ┗ data_crud.py     # Operaciones CRUD sobre los datos
  ┣ lib/
- ┃ ┗ constants.py     # Constantes globales (opciones de menú)
- ┣ main.py            # Punto de entrada
- ┗ menu.py            # Lógica de navegación de menús
+ ┃ ┣ colors.py        # Códigos ANSI para output con color
+ ┃ ┣ constants.py     # Constantes globales (opciones de menú)
+ ┃ ┗ utils.py         # Función reutilizable menu_options()
+ ┣ admin_menu.py      # Panel de administración y estadísticas
+ ┣ main.py            # Punto de entrada, main_menu() y user_menu()
+ ┗ menu.py            # Submenús de recetas, ingredientes y plan semanal
 ```
 
 ## Módulos
 
+### `main.py`
+Punto de entrada del programa. Contiene `main_menu()` con las opciones de login y signup, y `user_menu()` que es el panel principal post-autenticación. Detecta si el usuario tiene nivel `admin` para mostrar u ocultar la opción del panel de administración.
+
 ### `menu.py`
-Contiene la lógica de navegación. Define `main_menu()` (menú de bienvenida con login/signup) y `user_menu()` (menú post-autenticación). Las opciones se renderizan dinámicamente a partir de las constantes definidas en `lib/constants.py`.
+Contiene los submenús del usuario: `plan_menu()`, `recetas_menu()` e `ingredientes_menu()`. Cada uno maneja el flujo completo de su sección — listado, alta, baja y modificación.
+
+### `admin_menu.py`
+Panel de administración accesible solo para usuarios con nivel `admin`. Incluye:
+- Estadísticas generales, de recetas, de ingredientes y de planes
+- Gestión de usuarios: ver todos los usuarios y editar sus recetas, ingredientes o plan
 
 ### `components/auth.py`
-Maneja el flujo de registro (`signup`) e inicio de sesión (`login`). Valida username y contraseña en cada paso, y almacena el usuario autenticado en `user_cache`.
+Maneja el flujo de registro (`signup`) e inicio de sesión (`login`). Valida username y contraseña en cada paso y almacena el usuario autenticado en `user_cache`.
 
 ### `components/display.py`
-Renderiza el plan semanal del usuario en consola como una tabla de 7 columnas (días) por 4 filas (tipos de comida). Utiliza exclusivamente funciones del CRUD para acceder a los datos.
+Renderiza el plan semanal como una tabla de 7 columnas (días) por 4 filas (tipos de comida). Soporta múltiples recetas por slot mostrando una sub-fila por cada una.
 
 ### `components/validation.py`
-Centraliza todas las validaciones del sistema: existencia de usuarios, ownership de recetas e ingredientes, validez de credenciales y formato de inputs.
+Centraliza todas las validaciones del sistema: existencia de usuarios, ownership de recetas e ingredientes, validez de credenciales y formato de inputs de menú.
 
 ### `db/data.py`
-Base de datos en memoria. Contiene las estructuras de datos estáticas (unidades, tipos de comida, días) y dinámicas (usuarios, recetas, ingredientes, plan semanal). También expone `user_cache`, que almacena la sesión activa.
+Base de datos en memoria. Contiene las estructuras estáticas (unidades, tipos de comida, días) y dinámicas (usuarios, recetas, ingredientes, plan semanal). Expone `user_cache` para la sesión activa.
 
 ### `db/data_crud.py`
-Expone funciones de lectura, creación, modificación y eliminación para todas las entidades del sistema. Es la única capa que debería acceder directamente a `db/data.py`.
+Única capa que accede directamente a `db/data.py`. Expone funciones de lectura, creación, modificación y eliminación para todas las entidades, incluyendo limpieza de huérfanos al eliminar recetas.
 
+### `lib/utils.py`
+Contiene `menu_options()`, función reutilizable de navegación con soporte de colores, opción de salida configurable y validación de input. Está separada de `menu.py` para evitar imports circulares.
 
-## Base de Datos
+### `lib/constants.py`
+Define todas las listas de opciones de los menús del sistema.
 
-El sistema utiliza estructuras de datos en memoria (listas, diccionarios y tuplas). A continuación se documenta cada tabla.
+### `lib/colors.py`
+Códigos ANSI para aplicar color y formato al output en consola.
 
+## Base de datos
+
+El sistema usa estructuras en memoria. Las tablas se reinician con cada ejecución.
 
 ### `units` — Unidades de medida
 
-| id | unit    |
-|----|---------|
-| 0  | ml      |
-| 1  | l       |
-| 2  | mg      |
-| 3  | g       |
-| 4  | u       |
-| 5  | A gusto |
-
+| id | unidad   |
+|----|----------|
+| 0  | ml       |
+| 1  | l        |
+| 2  | mg       |
+| 3  | g        |
+| 4  | u        |
+| 5  | A gusto  |
 
 ### `meal_types` — Tipos de comida
 
-| id | meal_type |
+| id | tipo      |
 |----|-----------|
 | 0  | desayuno  |
 | 1  | almuerzo  |
 | 2  | merienda  |
 | 3  | cena      |
 
-
 ### `days` — Días de la semana
 
-| id | day       |
+| id | día       |
 |----|-----------|
 | 0  | Lunes     |
 | 1  | Martes    |
@@ -80,70 +110,24 @@ El sistema utiliza estructuras de datos en memoria (listas, diccionarios y tupla
 | 5  | Sabado    |
 | 6  | Domingo   |
 
+### `users` — Usuarios
 
-### `users` — Usuarios del sistema
+Diccionario `{ user_id: { username, password, level } }`.
 
-Implementado como diccionario `{ user_id: { username, password, level } }`.
-
-| id | username   | password | level |
-|----|------------|----------|-------|
-| 0  | tomiicotos | tomi     | admin |
-| 1  | test       | test     | user  |
-
-**Niveles de acceso:**
-- `user` — acceso estándar al plan semanal propio.
-- `admin` — acceso con permisos extendidos (en desarrollo).
-
+Niveles de acceso: `user` (acceso estándar) y `admin` (acceso al panel de administración).
 
 ### `recipes` — Recetas
 
-Implementado como lista de listas `[id, user_id, title, instructions]`.
-
-| id | user_id | title                          | instructions                                                                                              |
-|----|---------|--------------------------------|-----------------------------------------------------------------------------------------------------------|
-| 0  | 0       | Ensalada de Zanahoria y Huevo  | Rallar la zanahoria, hervir un huevo 12min aprox., cortarlo y condimentar todo con aceite, sal y limon.   |
-
+Lista de listas con estructura `[id, user_id, title, instructions]`.
 
 ### `ingredients` — Ingredientes
 
-Implementado como lista de listas `[id, user_id, name, unit_id]`.
-
-| id | user_id | name     | unit_id |
-|----|---------|----------|---------|
-| 0  | 0       | Zanahoria | 4      |
-| 1  | 0       | Huevo     | 4      |
-| 2  | 0       | Aceite    | 0      |
-| 3  | 0       | Sal       | 5      |
-| 4  | 0       | Limon     | 5      |
-
+Lista de listas con estructura `[id, user_id, name, unit_id]`.
 
 ### `recipe_ingredients` — Ingredientes por receta
 
-Implementado como lista de listas `[id, recipe_id, ingredient_id, quantity]`. Cuando la cantidad es indeterminada (ej. "a gusto"), `quantity` es `None`.
+Lista de listas con estructura `[id, recipe_id, ingredient_id, quantity]`. Cuando la cantidad es indeterminada, `quantity` es `None`.
 
-| id | recipe_id | ingredient_id | quantity |
-|----|-----------|---------------|----------|
-| 0  | 0         | 0             | 1        |
-| 1  | 0         | 1             | 1        |
-| 2  | 0         | 2             | 20       |
-| 3  | 0         | 3             | None     |
-| 4  | 0         | 4             | None     |
+### `recipe_plan` — Plan semanal
 
-
-### `recipe_plan` — Plan semanal por usuario
-
-Implementado como diccionario anidado `{ user_id: { day_id: { meal_type: [recipe_ids] } } }`. Cada tipo de comida contiene una lista de IDs de recetas asignadas. A continuación se muestra la versión normalizada (una fila por entrada):
-
-| user_id | day_id | meal_type | recipe_id |
-|---------|--------|-----------|-----------|
-| 0       | 0      | almuerzo  | 1         |
-| 0       | 3      | almuerzo  | 3         |
-| 0       | 6      | cena      | 0         |
-| 1       | 0      | almuerzo  | 0         |
-| 1       | 1      | merienda  | 4         |
-| 1       | 2      | desayuno  | 0         |
-| 1       | 3      | almuerzo  | 5         |
-| 1       | 4      | cena      | 0         |
-| 1       | 5      | merienda  | 2         |
-| 1       | 6      | cena      | 0         |
-
+Diccionario anidado `{ user_id: { day_id: { meal_type: [recipe_ids] } } }`. Cada slot puede contener múltiples recetas.
