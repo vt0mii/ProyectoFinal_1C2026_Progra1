@@ -272,7 +272,11 @@ def recetas_menu(user_id):
                 while ingredient_opt != 0:
                     selected_ingredient = mis_ingredientes[ingredient_opt - 1]
                     unit_name = f.get_unit_by_id(selected_ingredient[3])
-                    cantidad = float(input(f"Ingrese la cantidad en {unit_name}: "))
+                    try:
+                        cantidad = float(input(f"Ingrese la cantidad en {unit_name}: "))
+                    except ValueError:
+                        print("Ingrese un numero valido.")
+                        continue
                     ingredient_opts.append((selected_ingredient, cantidad))
 
                     ingredient_opt = menu_options(

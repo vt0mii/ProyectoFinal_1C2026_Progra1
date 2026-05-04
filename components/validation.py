@@ -38,11 +38,7 @@ validate_username = lambda username: validate_string_length(
 validate_string_length = lambda username: 3 <= len(username) <= 20
 
 # Valida que el input sea un numero y verifica que la opcion este en el menu
-validate_menu_option = lambda option, menu, zero=True: (
-    re.match(r"^\d+$", option)
-    and int(option) <= len(menu)
-    and (int(option) >= 0 if zero else int(option) >= 1)
-)
+
 
 # Valida que lo ingresado sea alfabetico
 validate_alphabetic = lambda txt: re.match(r"^[a-zA-Z ]+$", txt)

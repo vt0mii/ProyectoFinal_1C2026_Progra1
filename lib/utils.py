@@ -10,9 +10,11 @@ def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=F
     if zero:
         print(f"{BOLD}0{END} - Volver/Salir")
 
-    option = input(f"{LIGHT_BLUE}{message}{END}")
-    print()
-    while not v.validate_menu_option(option, menu, zero):
-        option = input(f"{RED}Error. Ingrese la opcion nuevamente: {END}")
-
-    return int(option)
+    while True:
+        try:
+            option = int(input(message))
+            if (zero and option >= 0 and option <= len(menu)) or (not zero and option >= 1 and option <= len(menu)):
+                return option
+            print("Opcion fuera de rango.")
+        except ValueError:
+            print("Ingrese un numero valido.")

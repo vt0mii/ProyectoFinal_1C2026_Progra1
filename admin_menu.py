@@ -78,8 +78,13 @@ def stats_recetas():
         uid = str(r[1])
         conteo_por_usuario[uid] = conteo_por_usuario.get(uid, 0) + 1
 
-    max_uid = max(conteo_por_usuario, key=lambda k: conteo_por_usuario[k])
-    min_uid = min(conteo_por_usuario, key=lambda k: conteo_por_usuario[k])
+    try:
+        max_uid = max(conteo_por_usuario, key=lambda k: conteo_por_usuario[k])
+        min_uid = min(conteo_por_usuario, key=lambda k: conteo_por_usuario[k])
+    except ValueError:
+        print("No hay suficientes datos para calcular estadisticas.")
+        return
+        
     max_user = f.get_user(max_uid)
     min_user = f.get_user(min_uid)
     max_nombre = max_user["username"] if max_user else max_uid
