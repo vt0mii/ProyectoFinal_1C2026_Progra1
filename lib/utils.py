@@ -15,6 +15,6 @@ def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=F
             option = int(input(message))
             if (zero and option >= 0 and option <= len(menu)) or (not zero and option >= 1 and option <= len(menu)):
                 return option
-            print("Opcion fuera de rango.")
+            print(f"{RED}Opcion fuera de rango.{END}")
         except ValueError:
-            print("Ingrese un numero valido.")
+            print(f"{RED}Ingrese un numero valido.{END}")

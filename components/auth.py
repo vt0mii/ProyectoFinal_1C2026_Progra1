@@ -1,7 +1,7 @@
 from components.validation import *
 from db.data_crud import add_user, get_user_by_name
 import db.data as data
-
+from lib.colors import *
 
 def login():
     valid_username = False
@@ -11,15 +11,15 @@ def login():
     username = input("Ingrese su Username o X para cancelar la operacion: ")
     while not valid_username:
         if username.lower() == "x":
-            print("Operacion Cancelada, volviendo...")
+            print(f"{RED}Operacion Cancelada, volviendo...{END}")
             return False
         elif not validate_username(username):
             username = input(
-                "Por favor ingrese entre 3 a 20 caracteres alfabeticos, intente nuevamente: "
+                f"{RED}Por favor ingrese entre 3 a 20 caracteres alfabeticos, intente nuevamente: {END}"
             )
         elif not user_exists_name(username):
             username = input(
-                "El username proporcionado no existe, intente nuevamente: "
+                f"{RED}El username proporcionado no existe, intente nuevamente: {END}"
             )
         else:
             valid_username = True
