@@ -255,6 +255,28 @@ def recetas_menu(user_id):
         if selected == 0:
             flag = False
         elif selected == 1:
+            user_recipes = f.get_user_recipes(user_id)
+            if user_recipes:
+                recipe_opt = menu_options(
+                    [r[2] for r in user_recipes],
+                    "Seleccione la receta a ver: ",
+                )
+                if recipe_opt != 0:
+                    receta = user_recipes[recipe_opt - 1]
+                    nombres_ingredientes = f.get_recipe_ingredient_names(receta[0])
+                    print(f"\n{CYAN}========== {receta[2].upper()} =========={END}")
+                    print(f"{LIGHT_BLUE}Instrucciones:{END} {receta[3]}")
+                    print(f"{LIGHT_BLUE}Ingredientes:{END}")
+                    if nombres_ingredientes:
+                        for nombre in nombres_ingredientes:
+                            print(f"  - {nombre}")
+                    else:
+                        print(f"  {RED}Sin ingredientes cargados.{END}")
+                    input(f"\n{LIGHT_BLUE}Presione Enter para continuar...{END}")
+            else:
+                print(f"\n{RED}{'X===X NO SE ENCUENTRAN RECETAS X===X':^40}{END}")
+                
+        elif selected == 2:
             title = input(f"{LIGHT_BLUE}Porfavor, ingrese el nombre de la receta: {END}")
             while not v.validate_alphabetic(title) or title == "":
                 title = input(f"{LIGHT_BLUE}Ingrese un nombre valido: {END}")
@@ -300,7 +322,7 @@ def recetas_menu(user_id):
                     f"{RED}{"No puedes crear una receta sin ingredientes.\nAgrega algunos primero":^40}{END}"
                 )
 
-        elif selected == 2:
+        elif selected == 3:
             user_recipes = f.get_user_recipes(user_id)
             if user_recipes:
                 recipe_opt = menu_options(
@@ -315,7 +337,7 @@ def recetas_menu(user_id):
             else:
                 print(f"\n{RED}{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}{END}")
 
-        elif selected == 3:
+        elif selected == 4:
             user_recipes = f.get_user_recipes(user_id)
             if user_recipes:
                 recipe_opt = menu_options(

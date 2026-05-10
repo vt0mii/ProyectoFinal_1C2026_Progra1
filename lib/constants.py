@@ -22,7 +22,7 @@ INGREDIENT_OPTIONS = [
     "Editar ingrediente",
 ]
 PLAN_OPTIONS = ["Añadir receta al plan", "Quitar receta del plan", "Reemplazar receta"]
-RECIPE_OPTIONS = ["Agregar receta", "Eliminar receta", "Editar receta"]
+RECIPE_OPTIONS = ["Ver detalle", "Agregar receta", "Eliminar receta", "Editar receta"]
 ADMIN_OPTIONS = ["Estadisticas generales", "Gestionar usuarios"]
 STATS_OPTIONS = [
     "Resumen general",

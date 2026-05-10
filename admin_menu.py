@@ -4,6 +4,7 @@ import db.data as data
 import lib.constants as c
 import db.data_crud as f
 from lib.colors import *
+from functools import reduce
 
 def admin_menu():
     flag = True
@@ -43,7 +44,12 @@ def stats_resumen_general():
     total_ings = len(data.ingredients)
     total_ri = len(data.recipe_ingredients)
     total_con_plan = len(data.recipe_plan)
-
+    total_asignaciones_plan = reduce(
+        lambda acc, uid: acc + f.contar_recetas_en_plan(uid),
+        data.recipe_plan.keys(),
+        0
+    )
+    
     largo = 40
     print("\n===== RESUMEN GENERAL =====")
     print(f"{'Usuarios registrados':<{largo}}: {total_usuarios}")
@@ -51,6 +57,7 @@ def stats_resumen_general():
     print(f"{'Recetas totales':<{largo}}: {total_recetas}")
     print(f"{'Ingredientes totales':<{largo}}: {total_ings}")
     print(f"{'Asignaciones receta-ingrediente':<{largo}}: {total_ri}")
+    print(f"{'Recetas asignadas en planes':<{largo}}: {total_asignaciones_plan}")
 
     if total_usuarios > 0:
         print(
@@ -73,10 +80,11 @@ def stats_recetas():
     total = len(data.recipes)
     W = 35
 
-    conteo_por_usuario = {}
-    for r in data.recipes:
-        uid = str(r[1])
-        conteo_por_usuario[uid] = conteo_por_usuario.get(uid, 0) + 1
+    conteo_por_usuario = reduce(
+        lambda acc, uid: acc.update({uid: acc.get(uid, 0) + 1}) or acc,
+        map(lambda r: str(r[1]), data.recipes),
+        {}
+    )
 
     try:
         max_uid = max(conteo_por_usuario, key=lambda k: conteo_por_usuario[k])

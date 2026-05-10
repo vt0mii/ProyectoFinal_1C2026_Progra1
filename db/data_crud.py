@@ -1,5 +1,6 @@
 from db.data import *
 from components.validation import *
+from functools import reduce
 
 # CRUD Tuplas
 
@@ -27,10 +28,11 @@ def get_days_by_id(day_id):
 
 
 def get_mealtype_list():
-    return list(mt[1] for mt in meal_types)
+    return list(map(lambda mt: mt[1], meal_types))
+
 
 def get_days_list():
-    return list(day[1] for day in days)
+    return list(map(lambda day: day[1], days))
 
 
 # CRUD Matrices Dinamicas
@@ -90,7 +92,6 @@ def get_recipe_by_name(recipe_name):
 
     results = list(filter(criteria, recipes))
     return results[0] if results else None
-
 
 
 def get_user_recipes(user_id):
@@ -290,6 +291,7 @@ def replace_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id, newrecipe_
         return True
     return False
 
+
 def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
     plan = get_user_plan(user_id)
     mealtype = get_mealtype_by_id(mealtype_id)
@@ -297,8 +299,43 @@ def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
         recetas_id = set(plan[str(day_id)][mealtype])
         recetas_usuario = get_user_recipes(user_id)
         if recetas_usuario:
-            recetas_filtradas = list(filter(lambda r: r[0] in recetas_id, recetas_usuario))
+            recetas_filtradas = list(
+                filter(lambda r: r[0] in recetas_id, recetas_usuario)
+            )
             return recetas_filtradas
     else:
-        return None    
-    
+        return None
+
+
+# Extras
+
+
+def get_recipe_ingredient_names(recipe_id):
+    ri_list = get_ingredientlist_from_recipe(recipe_id)
+    ingredientes_receta = list(
+        filter(lambda i: i[0] in map(lambda ri: ri[2], ri_list), ingredients)
+    )
+    return list(map(lambda i: f"{i[2]} ({get_unit_by_id(i[3])})", ingredientes_receta))
+
+
+def calcular_cantidad_total_receta(recipe_id):
+    ri_list = get_ingredientlist_from_recipe(recipe_id)
+    cantidades = list(
+        map(lambda ri: ri[3], filter(lambda ri: ri[3] is not None, ri_list))
+    )
+    if not cantidades:
+        return 0
+    return reduce(lambda acc, cantidad: acc + cantidad, cantidades)
+
+
+def contar_recetas_en_plan(user_id):
+    plan = get_user_plan(user_id)
+    if not plan:
+        return 0
+    recetas_por_dia = list(
+        map(
+            lambda day: reduce(lambda acc, lista: acc + len(lista), day.values(), 0),
+            plan.values(),
+        )
+    )
+    return reduce(lambda acc, n: acc + n, recetas_por_dia, 0)
