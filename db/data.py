@@ -70,12 +70,12 @@ recipe_ingredients = [  # Su estructura es id, recipe_id, ingredient_id, quantit
 
 # Diccionarios
 users = {  # userid : {}
-    "0": {
+    0: {
         "username": "tomii",
         "password": "tomi",
         "level": "admin"
     },
-    "1": {
+    1: {
         "username": "test",
         "password": "test",
         "level": "user"
@@ -83,22 +83,22 @@ users = {  # userid : {}
 }
 
 recipe_plan = {  # userid: { day_id : { mealtype} }
-    "0": {
-        "0": {"desayuno": [], "almuerzo": [0], "merienda": [], "cena": []},
-        "1": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "2": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "3": {"desayuno": [], "almuerzo": [0], "merienda": [], "cena": []},
-        "4": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "5": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "6": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": [0]},
+    0: {
+        0: {"desayuno": [], "almuerzo": [0], "merienda": [], "cena": []},
+        1: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        2: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        3: {"desayuno": [], "almuerzo": [0], "merienda": [], "cena": []},
+        4: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        5: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        6: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": [0]},
     },
-    "1": {
-        "0": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "1": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "2": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "3": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "4": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "5": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
-        "6": {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+    0: {
+        0: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        1: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        2: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        3: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        4: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        5: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+        6: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
     }
 }

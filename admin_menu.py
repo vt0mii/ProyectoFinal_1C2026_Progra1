@@ -201,7 +201,7 @@ def stats_planes():
 
     for uid, plan in data.recipe_plan.items():
         for day_id, mealtypes in plan.items():
-            day_name = f.get_days_by_id(int(day_id)) or day_id
+            day_name = str(f.get_days_by_id(int(day_id)) or day_id)
             for mealtype, recetas in mealtypes.items():
                 total_slots += 1
                 if recetas:

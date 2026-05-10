@@ -85,11 +85,9 @@ def signup():
 
     add_user(username, password)
     new_user = get_user_by_name(username)
-    new_user_id = ""
     if new_user:
-        new_user_id = str(new_user[0])
-        data.recipe_plan[new_user_id] = {
-            str(day): {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
+        data.recipe_plan[new_user[0]] = {
+            day: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
             for day in range(7)
         }
     data.user_cache = get_user_by_name(username)

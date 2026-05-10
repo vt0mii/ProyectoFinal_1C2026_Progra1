@@ -30,11 +30,11 @@ def main_menu():
     print('Gracias por usar MealPlan. Hasta Luego!')
     
 def user_menu():
-    user_id = str(data.user_cache[0])
+    user_id = data.user_cache[0]
 
     flag = True
     while flag:
-
+        
         d.display_plan(user_id)
         print(f"\n\n{CYAN}---------- PANEL DE USUARIO -----------{END}")
         is_admin = v.validate_admin(data.user_cache)

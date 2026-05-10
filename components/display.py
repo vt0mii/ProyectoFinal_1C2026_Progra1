@@ -54,7 +54,7 @@ def display_plan(user_id):
     print(f"{'-' * ancho_total}")
 
     for meal in tipos_comida:
-        max_recetas = max(len(plan[str(i)][meal]) for i in range(7))
+        max_recetas = max(len(plan[i][meal]) for i in range(7))
         if max_recetas == 0:
             fila = "".join(f"{'---':<{ancho_col}}" for _ in range(7))
             print(f"{fila} | {meal.upper()}")
@@ -63,7 +63,7 @@ def display_plan(user_id):
         for pos in range(max_recetas):
             fila = ""
             for i in range(7):
-                recipe_ids = plan[str(i)][meal]
+                recipe_ids = plan[i][meal]
                 if pos < len(recipe_ids):
                     receta_data = get_recipe(recipe_ids[pos])
                     if receta_data:

@@ -198,7 +198,7 @@ def get_ingredient_from_recipe(recipe_id, ingredient_id):
 def add_user(name, password, level="user"):
     if not user_exists_name(name):
         newid = (max(int(id) for id in users.keys()) + 1) if users else 0
-        users[str(newid)] = {
+        users[newid] = {
             "username": name,
             "password": password,
             "level": level,
@@ -242,7 +242,7 @@ def add_recipe_to_plan(user_id, recipe_id, day_id, mealtype_id):
         and is_recipe_owner(user_id, recipe_id)
         and not is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
     ):
-        recipe_plan[str(user_id)][str(day_id)][mealtype].append(recipe_id)
+        recipe_plan[int(user_id)][int(day_id)][str(mealtype)].append(recipe_id)
         return True
     return False
 
@@ -254,14 +254,14 @@ def remove_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id):
         and is_recipe_owner(user_id, recipe_id)
         and is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
     ):
-        recipe_plan[str(user_id)][str(day_id)][mealtype].remove(recipe_id)
+        recipe_plan[int(user_id)][int(day_id)][str(mealtype)].remove(recipe_id)
         return True
     return False
 
 
 def get_user_plan(user_id):
     if is_plan_owner(user_id):
-        return recipe_plan[str(user_id)]
+        return recipe_plan[int(user_id)]
     return None
 
 
@@ -286,8 +286,8 @@ def replace_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id, newrecipe_
         and is_recipe_on_day(user_id, recipe_id, day_id, mealtype)
         and not is_recipe_on_day(user_id, newrecipe_id, day_id, mealtype)
     ):
-        recipe_indx = recipe_plan[str(user_id)][str(day_id)][mealtype].index(recipe_id)
-        recipe_plan[str(user_id)][str(day_id)][mealtype][recipe_indx] = newrecipe_id
+        recipe_indx = recipe_plan[int(user_id)][int(day_id)][str(mealtype)].index(recipe_id)
+        recipe_plan[int(user_id)][int(day_id)][str(mealtype)][recipe_indx] = newrecipe_id
         return True
     return False
 
@@ -296,7 +296,7 @@ def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
     plan = get_user_plan(user_id)
     mealtype = get_mealtype_by_id(mealtype_id)
     if plan and mealtype:
-        recetas_id = set(plan[str(day_id)][mealtype])
+        recetas_id = set(plan[int(day_id)][mealtype])
         recetas_usuario = get_user_recipes(user_id)
         if recetas_usuario:
             recetas_filtradas = list(
