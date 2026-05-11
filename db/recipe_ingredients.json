@@ -1,0 +1,68 @@
+[
+    {
+        "id": 0,
+        "recipe_id": 0,
+        "ingredient_id": 0,
+        "quantity": 1
+    },
+    {
+        "id": 1,
+        "recipe_id": 0,
+        "ingredient_id": 1,
+        "quantity": 1
+    },
+    {
+        "id": 2,
+        "recipe_id": 0,
+        "ingredient_id": 2,
+        "quantity": 20
+    },
+    {
+        "id": 3,
+        "recipe_id": 0,
+        "ingredient_id": 3,
+        "quantity": null
+    },
+    {
+        "id": 4,
+        "recipe_id": 0,
+        "ingredient_id": 4,
+        "quantity": null
+    },
+    {
+        "id": 5,
+        "recipe_id": 1,
+        "ingredient_id": 5,
+        "quantity": 1
+    },
+    {
+        "id": 6,
+        "recipe_id": 3,
+        "ingredient_id": 8,
+        "quantity": 200
+    },
+    {
+        "id": 7,
+        "recipe_id": 3,
+        "ingredient_id": 7,
+        "quantity": 1
+    },
+    {
+        "id": 8,
+        "recipe_id": 3,
+        "ingredient_id": 1,
+        "quantity": 1
+    },
+    {
+        "id": 9,
+        "recipe_id": 3,
+        "ingredient_id": 3,
+        "quantity": 1
+    },
+    {
+        "id": 10,
+        "recipe_id": 2,
+        "ingredient_id": 6,
+        "quantity": 1
+    }
+]

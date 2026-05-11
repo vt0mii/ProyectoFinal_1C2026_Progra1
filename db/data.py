@@ -92,7 +92,7 @@ recipe_plan = {  # userid: { day_id : { mealtype} }
         5: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
         6: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": [0]},
     },
-    0: {
+    1: {
         0: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
         1: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
         2: {"desayuno": [], "almuerzo": [], "merienda": [], "cena": []},

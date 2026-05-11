@@ -1,0 +1,26 @@
+[
+    {
+        "id": 0,
+        "user_id": 0,
+        "title": "Ensalada de Zanahoria y Huevo",
+        "instructions": "Rallar la zanahoria, hervir un huevo 12min aprox., cortarlo y condimentar todo con aceite, sal y limon."
+    },
+    {
+        "id": 1,
+        "user_id": 1,
+        "title": "Zanahoria rallada",
+        "instructions": "Rallar la zanahoria."
+    },
+    {
+        "id": 2,
+        "user_id": 1,
+        "title": "Tomate relleno",
+        "instructions": "Lorem Ipsum."
+    },
+    {
+        "id": 3,
+        "user_id": 0,
+        "title": "Hamburguesa",
+        "instructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+    }
+]

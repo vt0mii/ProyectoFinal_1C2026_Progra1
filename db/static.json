@@ -1,0 +1,25 @@
+{
+    "units": [
+        {"id": 0, "name": "ml"},
+        {"id": 1, "name": "l"},
+        {"id": 2, "name": "mg"},
+        {"id": 3, "name": "g"},
+        {"id": 4, "name": "u"},
+        {"id": 5, "name": "A gusto"}
+    ],
+    "meal_types": [
+        {"id": 0, "name": "desayuno"},
+        {"id": 1, "name": "almuerzo"},
+        {"id": 2, "name": "merienda"},
+        {"id": 3, "name": "cena"}
+    ],
+    "days": [
+        {"id": 0, "name": "Lunes"},
+        {"id": 1, "name": "Martes"},
+        {"id": 2, "name": "Miercoles"},
+        {"id": 3, "name": "Jueves"},
+        {"id": 4, "name": "Viernes"},
+        {"id": 5, "name": "Sabado"},
+        {"id": 6, "name": "Domingo"}
+    ]
+}

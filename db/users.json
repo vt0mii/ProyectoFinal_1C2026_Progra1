@@ -1,0 +1,14 @@
+[
+    {
+        "user_id": 0,
+        "username": "tomii",
+        "password": "tomi",
+        "level": "admin"
+    },
+    {
+        "user_id": 1,
+        "username": "test",
+        "password": "test",
+        "level": "user"
+    }
+]
