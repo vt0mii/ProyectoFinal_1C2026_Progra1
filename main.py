@@ -4,9 +4,10 @@ from menu import plan_menu, recetas_menu, ingredientes_menu
 from admin_menu import admin_menu
 import components.validation as v
 from lib.colors import *
-import db.data as data
 import components.display as d 
 from lib.utils import menu_options
+
+user_cache = (0,{})
 
 def main_menu():    
     result = False
@@ -30,14 +31,14 @@ def main_menu():
     print('Gracias por usar MealPlan. Hasta Luego!')
     
 def user_menu():
-    user_id = data.user_cache[0]
+    user_id = user_cache[0]
 
     flag = True
     while flag:
         
         d.display_plan(user_id)
         print(f"\n\n{CYAN}---------- PANEL DE USUARIO -----------{END}")
-        is_admin = v.validate_admin(data.user_cache)
+        is_admin = v.validate_admin(user_cache)
         selected = menu_options(USER_OPTIONS, admin=is_admin)
 
         if selected == 0:

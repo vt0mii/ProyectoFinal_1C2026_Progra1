@@ -1,34 +1,59 @@
-from db.data import *
 import re
+from db.data_crud import load_file
 
-# Verifica si el usuario existe
-user_exists_id = lambda userid: int(userid) in users
-user_exists_name = lambda username: any(
-    u["username"] == username for u in users.values()
-)
+static = load_file("static.json")
+if static:
+    units = static["units"]
+    meal_types = static["meal_types"]
+    days = static["days"]
+else:
+    units = []
+    meal_types = []
+    days = []
+
+users = load_file("users.json")
+recipes = load_file("recipes.json")
+ingredients = load_file("ingredients.json")
+recipe_ingredients = load_file("recipe_ingredients.json")
+recipe_plan = load_file("recipe_plan.json")
+
+
+# Verifica si el usuario existe por id
+user_exists_id = lambda userid: any(u["user_id"] == int(userid) for u in users)
+
+# Verifica si el usuario existe por nombre
+user_exists_name = lambda username: any(u["username"] == username for u in users)
 
 # Verifica si la receta existe y pertenece al usuario
 is_recipe_owner = lambda userid, recipeid: any(
-    r[0] == recipeid and r[1] == int(userid) for r in recipes
+    r["id"] == recipeid and r["user_id"] == int(userid) for r in recipes
 )
 
 # Verifica si el ingrediente existe y pertenece al usuario
 is_ingredient_owner = lambda userid, ingredientid: any(
-    i[0] == ingredientid and i[1] == int(userid) for i in ingredients
+    i["id"] == ingredientid and i["user_id"] == int(userid) for i in ingredients
 )
 
 # Verifica si el usuario tiene un plan
-is_plan_owner = lambda userid: int(userid) in recipe_plan
+is_plan_owner = lambda userid: any(p["user_id"] == int(userid) for p in recipe_plan)
 
-# Verifica si la receta no se encuentra ya asignada en el dia y tipo de comida
-is_recipe_on_day = (
-    lambda userid, recipeid, day_id, mealtype: recipeid
-    in recipe_plan[int(userid)][int(day_id)][mealtype]
-)
+
+# Verifica si la receta ya está asignada en el día y tipo de comida
+def is_recipe_on_day(userid, recipeid, day_id, mealtype):
+    plan_entry = next((p for p in recipe_plan if p["user_id"] == int(userid)), None)
+    if plan_entry is None:
+        return False
+    day_entry = next(
+        (d for d in plan_entry["plan"] if d["day_id"] == int(day_id)), None
+    )
+    if day_entry is None:
+        return False
+    return recipeid in day_entry[mealtype]
+
 
 # Valida si las credenciales son correctas
 validate_credentials = lambda username, password: any(
-    u["username"] == username and u["password"] == password for u in users.values()
+    u["username"] == username and u["password"] == password for u in users
 )
 
 # Valida que el username cumpla con los requisitos
@@ -50,4 +75,4 @@ validate_edit_unit = lambda option: (
 validate_edit_name = lambda option: re.match(r"^[a-zA-Z ]*$", option)
 
 # Valida si el usuario actual es admin
-validate_admin = lambda user: user[1].get("level") == "admin"
+validate_admin = lambda user: user.get("level") == "admin"
