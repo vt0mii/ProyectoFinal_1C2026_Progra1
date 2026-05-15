@@ -48,6 +48,7 @@ def add_recipe(user_id, title, instructions):
                 "instructions": instructions,
             }
         )
+        save_file("recipes.json", recipes)
         return True
     return False
 
@@ -56,19 +57,20 @@ def delete_recipe(user_id, recipe_id):
     if is_recipe_owner(user_id, recipe_id):
         target = get_recipe(recipe_id)
         if target is not None:
-            # Eliminar recipe_ingredients huérfanos
             huerfanos = get_ingredientlist_from_recipe(recipe_id)
             for ri in huerfanos:
                 recipe_ingredients.remove(ri)
+            save_file("recipe_ingredients.json", recipe_ingredients)
 
-            # Limpiar del plan de todos los usuarios
             for entry in recipe_plan:
                 for day in entry["plan"]:
                     for mealtype in ["desayuno", "almuerzo", "merienda", "cena"]:
                         if recipe_id in day[mealtype]:
                             day[mealtype].remove(recipe_id)
+            save_file("recipe_plan.json", recipe_plan)
 
             recipes.remove(target)
+            save_file("recipes.json", recipes)
             return True
     return False
 
@@ -79,6 +81,7 @@ def update_recipe(user_id, recipe_id, title, instructions):
         if recipe is not None:
             recipe["title"] = title
             recipe["instructions"] = instructions
+            save_file("recipes.json", recipes)
             return True
     return False
 
@@ -109,6 +112,7 @@ def add_ingredient(user_id, title, unit_id):
         ingredients.append(
             {"id": newid, "user_id": user_id, "name": title, "unit_id": unit_id}
         )
+        save_file("ingredients.json", ingredients)
         return True
     return False
 
@@ -118,6 +122,7 @@ def delete_ingredient(user_id, ingredient_id):
         target = get_ingredient(ingredient_id)
         if target is not None:
             ingredients.remove(target)
+            save_file("ingredients.json", ingredients)
             return True
     return False
 
@@ -128,6 +133,7 @@ def update_ingredient(user_id, ingredient_id, title, unit_id):
         if ingredient is not None:
             ingredient["name"] = title
             ingredient["unit_id"] = unit_id
+            save_file("ingredients.json", ingredients)
             return True
     return False
 
@@ -160,6 +166,7 @@ def add_ingredient_to_recipe(user_id, recipe_id, ingredient_id, quantity):
                 "quantity": quantity,
             }
         )
+        save_file("recipe_ingredients.json", recipe_ingredients)
         return True
     return False
 
@@ -171,6 +178,7 @@ def delete_ingredient_from_recipe(user_id, recipe_id, ingredient_id):
         target = get_ingredient_from_recipe(recipe_id, ingredient_id)
         if target is not None:
             recipe_ingredients.remove(target)
+            save_file("recipe_ingredients.json", recipe_ingredients)
             return True
     return False
 
@@ -185,6 +193,7 @@ def update_ingredient_from_recipe(
         if target is not None:
             target["ingredient_id"] = newingredient_id
             target["quantity"] = quantity
+            save_file("recipe_ingredients.json", recipe_ingredients)
             return True
     return False
 
@@ -210,6 +219,7 @@ def add_user(name, password, level="user"):
         users.append(
             {"user_id": newid, "username": name, "password": password, "level": level}
         )
+        save_file("users.json", users)
         return True
     return False
 
@@ -218,6 +228,7 @@ def delete_user(user_id):
     target = get_user(user_id)
     if target is not None:
         users.remove(target)
+        save_file("users.json", users)
         return True
     return False
 
@@ -228,6 +239,7 @@ def update_user(user_id, name, password, level):
         target["username"] = name
         target["password"] = password
         target["level"] = level
+        save_file("users.json", users)
         return True
     return False
 
@@ -255,6 +267,25 @@ def get_day_from_plan(plan, day_id):
     return results[0] if results else None
 
 
+def add_user_plan(user_id):
+    recipe_plan.append(
+        {
+            "user_id": int(user_id),
+            "plan": [
+                {
+                    "day_id": day_id,
+                    "desayuno": [],
+                    "almuerzo": [],
+                    "merienda": [],
+                    "cena": [],
+                }
+                for day_id in range(7)
+            ],
+        }
+    )
+    save_file("recipe_plan.json", recipe_plan)
+
+
 def add_recipe_to_plan(user_id, recipe_id, day_id, mealtype_id):
     mealtype = get_mealtype_by_id(mealtype_id)
     if (
@@ -266,6 +297,7 @@ def add_recipe_to_plan(user_id, recipe_id, day_id, mealtype_id):
         day = get_day_from_plan(plan, day_id)
         if day:
             day[mealtype].append(recipe_id)
+            save_file("recipe_plan.json", recipe_plan)
             return True
     return False
 
@@ -281,6 +313,7 @@ def remove_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id):
         day = get_day_from_plan(plan, day_id)
         if day:
             day[mealtype].remove(recipe_id)
+            save_file("recipe_plan.json", recipe_plan)
             return True
     return False
 
@@ -317,6 +350,7 @@ def replace_recipe_from_plan(user_id, recipe_id, day_id, mealtype_id, newrecipe_
         if day:
             idx = day[mealtype].index(recipe_id)
             day[mealtype][idx] = newrecipe_id
+            save_file("recipe_plan.json", recipe_plan)
             return True
     return False
 
