@@ -48,7 +48,7 @@ def display_plan(user_id):
     print(f"{CYAN}{'=' * ancho_total}{END}\n")
 
     cabecera = "".join(
-        f"{(get_days_by_id(i) or f'DIA {i}').upper():<{ancho_col}}" for i in range(7)
+        f"{(get_day_by_id(i) or f'DIA {i}').upper():<{ancho_col}}" for i in range(7)
     )
     print(cabecera)
     print(f"{'-' * ancho_total}")

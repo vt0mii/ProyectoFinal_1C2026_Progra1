@@ -52,7 +52,7 @@ def plan_menu(user_id):
                     "Por favor, seleccione el dia donde eliminar la receta: ",
                 )
                 if int(day) != 0:
-                    day_name = f.get_days_by_id(int(day))
+                    day_name = f.get_day_by_id(int(day))
                     mt = menu_options(
                         f.get_mealtype_list(),
                         "Por favor, seleccione el tipo de comida: ",
@@ -87,7 +87,7 @@ def plan_menu(user_id):
                     "Por favor, seleccione el dia donde reemplazar la receta: ",
                 )
                 if int(day) != 0:
-                    day_name = f.get_days_by_id(int(day))
+                    day_name = f.get_day_by_id(int(day))
                     mt = menu_options(
                         f.get_mealtype_list(),
                         "Por favor, seleccione el tipo de comida: ",
