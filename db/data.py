@@ -1,6 +1,8 @@
 import json
 import os
 
+user_cache = (0, {})
+
 
 def load_file(filename):
     with open(f"./{filename}", encoding="utf-8") as f:
