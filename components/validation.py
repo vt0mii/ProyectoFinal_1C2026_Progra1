@@ -1,22 +1,5 @@
 import re
-from db.data_crud import load_file
-
-static = load_file("static.json")
-if static:
-    units = static["units"]
-    meal_types = static["meal_types"]
-    days = static["days"]
-else:
-    units = []
-    meal_types = []
-    days = []
-
-users = load_file("users.json")
-recipes = load_file("recipes.json")
-ingredients = load_file("ingredients.json")
-recipe_ingredients = load_file("recipe_ingredients.json")
-recipe_plan = load_file("recipe_plan.json")
-
+from db.data import *
 
 # Verifica si el usuario existe por id
 user_exists_id = lambda userid: any(u["user_id"] == int(userid) for u in users)
