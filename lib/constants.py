@@ -30,9 +30,15 @@ STATS_OPTIONS = [
     "Estadisticas de ingredientes",
     "Estadisticas de planes",
 ]
+
 GESTIONAR_USUARIOS_OPTIONS = [
     "Ver todos los usuarios",
+    "Editar datos de un usuario",
     "Editar recetas de un usuario",
     "Editar ingredientes de un usuario",
     "Editar plan de un usuario",
+]
+EDITAR_USUARIO_OPTIONS = [
+    "Editar nombre, contraseña o nivel",
+    "Eliminar usuario",
 ]

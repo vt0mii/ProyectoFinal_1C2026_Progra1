@@ -2,13 +2,14 @@ from db.data_crud import *
 from components.validation import *
 from lib.colors import *
 
+
 def display_recipes(user_id):
     if user_exists_id(user_id):
         my_recipes = get_user_recipes(user_id)
         if my_recipes:
             num = 1
             for rec in my_recipes:
-                print(f"{BOLD}{num}.{END} {rec[2]}")
+                print(f"{BOLD}{num}.{END} {rec['title']}")
                 num += 1
         return True
     return False
@@ -20,7 +21,9 @@ def display_ingredients(user_id):
         if my_ingredients:
             num = 1
             for ing in my_ingredients:
-                print(f"{BOLD}ID {ing[0]:<2}{END}| {ing[2]} ({get_unit_by_id(ing[3])})")
+                print(
+                    f"{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])})"
+                )
                 num += 1
         return True
     return False
@@ -67,7 +70,7 @@ def display_plan(user_id):
                 if pos < len(recipe_ids):
                     receta_data = get_recipe(recipe_ids[pos])
                     if receta_data:
-                        nombre = receta_data[2]
+                        nombre = receta_data["title"]
                         nombre = (
                             f"{nombre[:ancho_col - 3]}.."
                             if len(nombre) > ancho_col - 3
