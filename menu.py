@@ -275,20 +275,6 @@ def recetas_menu(user_id):
         elif selected == 1:
             user_recipes = f.get_user_recipes(user_id)
             if user_recipes:
-                busqueda = input(
-                    f"{LIGHT_BLUE}Buscar por nombre (Enter para ver todas): {END}"
-                ).strip()
-                if busqueda:
-                    receta_encontrada = f.get_recipe_by_name(busqueda)
-                    if receta_encontrada and receta_encontrada["user_id"] == int(
-                        user_id
-                    ):
-                        user_recipes = [receta_encontrada]
-                    else:
-                        print(
-                            f"{RED}No se encontró ninguna receta con ese nombre.{END}"
-                        )
-                        continue
 
                 recipe_opt = menu_options(
                     [r["title"] for r in user_recipes],
