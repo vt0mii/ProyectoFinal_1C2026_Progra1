@@ -91,11 +91,6 @@ def get_recipe(recipe_id):
     return results[0] if results else None
 
 
-def get_recipe_by_name(recipe_name):
-    results = list(filter(lambda r: r["title"] == recipe_name, recipes))
-    return results[0] if results else None
-
-
 def get_user_recipes(user_id):
     if user_exists_id(user_id):
         ing = [r for r in recipes if r["user_id"] == int(user_id)]
