@@ -2,11 +2,11 @@ import json
 import os
 
 user_cache = (0, {})
-
+root = os.path.dirname(__file__)
 
 def load_file(filename):
     try:
-        with open(f"./{filename}", encoding="utf-8") as f:
+        with open(os.path.join(root, filename), encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, OSError) as e:
         print("Ha ocurrido un error: ", e)
@@ -15,13 +15,10 @@ def load_file(filename):
 
 def save_file(filename, data):
     try:
-        with open(f"./{filename}", "w", encoding="utf-8") as f:
+        with open(os.path.join(root, filename), "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
     except (FileNotFoundError, OSError) as e:
         print("Ha ocurrido un error: ", e)
-
-
-static = load_file("static.json")
 
 static = load_file("static.json") or {}
 units = static.get("units", [])
