@@ -10,5 +10,23 @@
         "username": "test",
         "password": "test",
         "level": "user"
-    }
+    },
+    {
+        "user_id": 2,
+        "username": "lucas",
+        "password": "1234",
+        "level": "user"
+    },
+    {
+        "user_id": 3,
+        "username": "martina",
+        "password": "abcd",
+        "level": "user"
+    },
+    {
+        "user_id": 4,
+        "username": "sofia",
+        "password": "pass",
+        "level": "user"
+    }   
 ]
