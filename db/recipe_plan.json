@@ -22,5 +22,43 @@
             {"day_id": 5, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
             {"day_id": 6, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
         ]
+    },
+    
+    {
+        "user_id": 2,
+        "plan": [
+            {"day_id": 0, "desayuno": [4], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 1, "desayuno": [], "almuerzo": [5], "merienda": [], "cena": []},
+            {"day_id": 2, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 3, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 4, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 5, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 6, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
+        ]
+    },
+    {
+        "user_id": 3,
+        "plan": [
+            {"day_id": 0, "desayuno": [], "almuerzo": [6], "merienda": [], "cena": []},
+            {"day_id": 1, "desayuno": [], "almuerzo": [], "merienda": [], "cena": [7]},
+            {"day_id": 2, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 3, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 4, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 5, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 6, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
+        ]
+    },
+    {
+        "user_id": 4,
+        "plan": [
+            {"day_id": 0, "desayuno": [], "almuerzo": [], "merienda": [], "cena": [8]},
+            {"day_id": 1, "desayuno": [], "almuerzo": [9], "merienda": [], "cena": []},
+            {"day_id": 2, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 3, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 4, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 5, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []},
+            {"day_id": 6, "desayuno": [], "almuerzo": [], "merienda": [], "cena": []}
+        ]
     }
+    
 ]
