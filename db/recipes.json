@@ -22,5 +22,35 @@
         "user_id": 0,
         "title": "Hamburguesa",
         "instructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+    },
+    {
+        "id": 4,
+        "user_id": 2,
+        "name": "Tostadas con huevo"
+    },
+    {
+        "id": 5,
+        "user_id": 2,
+        "name": "Ensalada simple"
+    },
+    {
+        "id": 6,
+        "user_id": 3,
+        "name": "Arroz con tomate"
+    },
+    {
+        "id": 7,
+        "user_id": 3,
+        "name": "Sandwich mixto"
+    },
+    {
+        "id": 8,
+        "user_id": 4,
+        "name": "Pure con huevo"
+    },
+    {
+        "id": 9,
+        "user_id": 4,
+        "name": "Fideos con manteca"
     }
 ]
