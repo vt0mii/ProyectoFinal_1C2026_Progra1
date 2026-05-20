@@ -52,5 +52,47 @@
         "user_id": 0,
         "name": "Carne",
         "unit_id": 3
+    },
+    {
+        "id": 9,
+        "user_id": 2,
+        "name": "Pan",
+        "unit_id": 4
+    },
+    {
+        "id": 10,
+        "user_id": 2,
+        "name": "Lechuga",
+        "unit_id": 4
+    },
+    {
+        "id": 11,
+        "user_id": 3,
+        "name": "Arroz",
+        "unit_id": 3
+    },
+    {
+        "id": 12,
+        "user_id": 3,
+        "name": "Jamon",
+        "unit_id": 3
+    },
+    {
+        "id": 13,
+        "user_id": 4,
+        "name": "Papa",
+        "unit_id": 4
+    },
+    {
+        "id": 14,
+        "user_id": 4,
+        "name": "Fideos",
+        "unit_id": 3
+    },
+    {
+        "id": 15,
+        "user_id": 4,
+        "name": "Manteca",
+        "unit_id": 3
     }
 ]
