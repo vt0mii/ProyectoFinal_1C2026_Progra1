@@ -5,7 +5,7 @@ from admin_menu import admin_menu
 import components.validation as v
 from lib.colors import *
 import components.display as d
-from lib.utils import menu_options
+from lib.utils import menu_options, shopping_list
 import db.data as data
 
 
@@ -49,7 +49,9 @@ def user_menu():
             recetas_menu(user_id)
         elif selected == 3:
             ingredientes_menu(user_id)
-        elif selected == 4 and is_admin:
+        elif selected == 4:
+            shopping_list(user_id)
+        elif selected == 5 and is_admin:
             admin_menu()
 
 
