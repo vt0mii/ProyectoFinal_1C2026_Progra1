@@ -55,6 +55,11 @@ validate_edit_unit = lambda option: (
 )
 
 # Validar la opcion extra de "enter" al editar
+validate_edit_category = lambda option: (
+    option == "" or (option.isdigit() and 1 <= int(option) <= len(categories))
+)
+
+# Validar la opcion extra de "enter" al editar
 validate_edit_name = lambda option: re.match(r"^[a-zA-Z ]*$", option)
 
 # Valida si el usuario actual es admin

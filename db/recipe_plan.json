@@ -66,9 +66,15 @@
         "plan": [
             {
                 "day_id": 0,
-                "desayuno": [],
-                "almuerzo": [],
-                "merienda": [],
+                "desayuno": [
+                    2
+                ],
+                "almuerzo": [
+                    1
+                ],
+                "merienda": [
+                    2
+                ],
                 "cena": []
             },
             {

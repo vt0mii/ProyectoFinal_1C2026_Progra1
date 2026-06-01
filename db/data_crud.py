@@ -26,12 +26,23 @@ def get_day_by_id(day_id):
     return None
 
 
+def get_category_by_id(category_id):
+    for c in categories:
+        if c["id"] == category_id:
+            return c["name"]
+    return None
+
+
 def get_mealtype_list():
     return list(map(lambda mt: mt["name"], meal_types))
 
 
 def get_days_list():
     return list(map(lambda day: day["name"], days))
+
+
+def get_category_list():
+    return list(map(lambda category: category["name"], categories))
 
 
 # CRUD Recetas
@@ -101,11 +112,17 @@ def get_user_recipes(user_id):
 # CRUD Ingredientes
 
 
-def add_ingredient(user_id, title, unit_id):
+def add_ingredient(user_id, title, unit_id, category_id):
     if user_exists_id(user_id):
         newid = max((i["id"] for i in ingredients), default=-1) + 1
         ingredients.append(
-            {"id": newid, "user_id": user_id, "name": title, "unit_id": unit_id}
+            {
+                "id": newid,
+                "user_id": user_id,
+                "name": title,
+                "unit_id": unit_id,
+                "category": category_id,
+            }
         )
         save_file("ingredients.json", ingredients)
         return True
@@ -122,12 +139,13 @@ def delete_ingredient(user_id, ingredient_id):
     return False
 
 
-def update_ingredient(user_id, ingredient_id, title, unit_id):
+def update_ingredient(user_id, ingredient_id, title, unit_id, category_id):
     if is_ingredient_owner(user_id, ingredient_id):
         ingredient = get_ingredient(ingredient_id)
         if ingredient is not None:
             ingredient["name"] = title
             ingredient["unit_id"] = unit_id
+            ingredient["category"] = category_id
             save_file("ingredients.json", ingredients)
             return True
     return False

@@ -20,8 +20,10 @@ def display_ingredients(user_id):
         my_ingredients = get_user_ingredients(user_id)
         if my_ingredients:
             for ing in my_ingredients:
+                category_name = get_category_by_id(ing.get("category"))
+                category = f" - {category_name}" if category_name else ""
                 print(
-                    f"{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])})"
+                    f"{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])}){category}"
                 )
         return True
     return False

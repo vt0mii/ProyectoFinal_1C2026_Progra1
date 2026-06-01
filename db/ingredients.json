@@ -3,96 +3,126 @@
         "id": 0,
         "user_id": 0,
         "name": "Zanahoria",
-        "unit_id": 4
+        "unit_id": 4,
+        "category": 4
     },
     {
         "id": 1,
         "user_id": 0,
         "name": "Huevo",
-        "unit_id": 4
+        "unit_id": 4,
+        "category": 1
     },
     {
         "id": 2,
         "user_id": 0,
         "name": "Aceite",
-        "unit_id": 0
+        "unit_id": 0,
+        "category": 5
     },
     {
         "id": 3,
         "user_id": 0,
         "name": "Sal",
-        "unit_id": 5
+        "unit_id": 5,
+        "category": 6
     },
     {
         "id": 4,
         "user_id": 0,
         "name": "Limon",
-        "unit_id": 5
+        "unit_id": 5,
+        "category": 3
     },
     {
         "id": 5,
         "user_id": 1,
         "name": "Zanahoria",
-        "unit_id": 1
+        "unit_id": 1,
+        "category": 4
     },
     {
         "id": 6,
         "user_id": 1,
         "name": "Tomate",
-        "unit_id": 1
+        "unit_id": 1,
+        "category": 4
     },
     {
         "id": 7,
         "user_id": 0,
         "name": "Tomate",
-        "unit_id": 4
+        "unit_id": 4,
+        "category": 4
     },
     {
         "id": 8,
         "user_id": 0,
         "name": "Carne",
-        "unit_id": 3
+        "unit_id": 3,
+        "category": 0
     },
     {
         "id": 9,
         "user_id": 2,
         "name": "Pan",
-        "unit_id": 4
+        "unit_id": 4,
+        "category": 5
     },
     {
         "id": 10,
         "user_id": 2,
         "name": "Lechuga",
-        "unit_id": 4
+        "unit_id": 4,
+        "category": 4
     },
     {
         "id": 11,
         "user_id": 3,
         "name": "Arroz",
-        "unit_id": 3
+        "unit_id": 3,
+        "category": 5
     },
     {
         "id": 12,
         "user_id": 3,
         "name": "Jamon",
-        "unit_id": 3
+        "unit_id": 3,
+        "category": 0
     },
     {
         "id": 13,
         "user_id": 4,
         "name": "Papa",
-        "unit_id": 4
+        "unit_id": 4,
+        "category": 4
     },
     {
         "id": 14,
         "user_id": 4,
         "name": "Fideos",
-        "unit_id": 3
+        "unit_id": 3,
+        "category": 5
     },
     {
         "id": 15,
         "user_id": 4,
         "name": "Manteca",
-        "unit_id": 3
+        "unit_id": 3,
+        "category": 2
+    },
+    {
+        "id": 16,
+        "user_id": 1,
+        "name": "Huevo",
+        "unit_id": 4,
+        "category": 1
+    },
+    {
+        "id": 17,
+        "user_id": 1,
+        "name": "Aceite",
+        "unit_id": 0,
+        "category": 5
     }
 ]

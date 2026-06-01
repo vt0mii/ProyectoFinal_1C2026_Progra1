@@ -25,7 +25,7 @@ def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=F
             print(f"{RED}Ingrese un numero valido.{END}")
 
 
-def shopping_list(user_id):
+def show_shopping_list(user_id):
     plan = get_user_plan(user_id)
     meal_types = get_mealtype_list()
 
@@ -71,3 +71,47 @@ def shopping_list(user_id):
     for item in result:
         print(f"* {item['name']} {item['quantity']}")
     input(f"\n{LIGHT_BLUE}Presione Enter para continuar...{END}")
+
+def get_shopping_list(user_id):
+    plan = get_user_plan(user_id)
+    meal_types = get_mealtype_list()
+
+    if not plan or not meal_types:
+        print(f"{RED}Ha ocurrido un error.{END}")
+        return None
+
+    recipe_list = [
+        recipe for day in plan for mt in meal_types for recipe in (day.get(mt) or [])
+    ]
+
+    ingredients_by_id = {i["id"]: i for i in data.ingredients}
+    units_by_id = {u["id"]: u["name"] for u in data.units}
+
+    totals = {}
+    for recipe_id in recipe_list:
+        for ri in data.recipe_ingredients:
+            if ri["recipe_id"] == recipe_id:
+                ingredient = ingredients_by_id[ri["ingredient_id"]]
+                name = ingredient["name"]
+                unit = units_by_id[ingredient["unit_id"]]
+
+                if name not in totals:
+                    totals[name] = {"quantity": 0, "unit": unit, "to_taste": False}
+
+                if ri["quantity"] is None:
+                    totals[name]["to_taste"] = True
+                else:
+                    totals[name]["quantity"] += ri["quantity"]
+
+    result = []
+    for name, info in totals.items():
+        if info["to_taste"] and info["quantity"] == 0:
+            quantity_str = "A gusto"
+        elif info["to_taste"]:
+            quantity_str = f"{info['quantity']} {info['unit']} + A gusto"
+        else:
+            quantity_str = f"{info['quantity']} {info['unit']}"
+
+        result.append({"name": name, "quantity": quantity_str})
+    
+    return result

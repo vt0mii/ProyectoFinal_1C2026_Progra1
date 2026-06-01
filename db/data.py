@@ -24,6 +24,7 @@ static = load_file("static.json") or {}
 units = static.get("units", [])
 meal_types = static.get("meal_types", [])
 days = static.get("days", [])
+categories = static.get("categories", [])
 
 users = load_file("users.json") or []
 recipes = load_file("recipes.json") or []

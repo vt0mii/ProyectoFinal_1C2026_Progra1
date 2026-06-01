@@ -21,5 +21,14 @@
         {"id": 4, "name": "Viernes"},
         {"id": 5, "name": "Sabado"},
         {"id": 6, "name": "Domingo"}
+    ],
+    "categories": [
+        {"id": 0, "name": "Carnes"},
+        {"id": 1, "name": "Derivado de Animal"},
+        {"id": 2, "name": "Lacteo"},
+        {"id": 3, "name": "Fruta"},
+        {"id": 4, "name": "Verdura"},
+        {"id": 5, "name": "Almacen"},
+        {"id": 6, "name": "Especias"}
     ]
 }

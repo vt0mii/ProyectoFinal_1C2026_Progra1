@@ -174,7 +174,12 @@ def ingredientes_menu(user_id):
             unit_id = menu_options(
                 units, "Por favor ingrese el ID de la unidad: ", False
             )
-            f.add_ingredient(int(user_id), nombre, unit_id - 1)
+
+            categories = f.get_category_list()
+            category_id = menu_options(
+                categories, "Por favor ingrese el ID de la categoria: ", False
+            )
+            f.add_ingredient(int(user_id), nombre, unit_id - 1, category_id - 1)
 
         elif selected == 2:  # Eliminar Ingrediente
             if mis_ingredientes:
@@ -239,22 +244,43 @@ def ingredientes_menu(user_id):
                                 f"{LIGHT_BLUE}Por favor, ingrese una opcion valida: {END}"
                             )
 
+                    categories = f.get_category_list()
+                    for i in range(len(categories)):
+                        print(f"{i + 1} - {categories[i]}")
+
+                    new_ingredient_category_id = input(
+                        f"{LIGHT_BLUE}Ingrese el numero de la categoria o presione enter para no modificar: {END}"
+                    )
+
+                    while not v.validate_edit_category(new_ingredient_category_id):
+                        new_ingredient_category_id = input(
+                            f"{LIGHT_BLUE}Ingrese una opcion correcta o presione enter para no modificar: {END}"
+                        )
+
                     if (
                         len(new_ingredient_name) == 0
                         and len(new_ingredient_unit_id) == 0
+                        and len(new_ingredient_category_id) == 0
                     ):
                         print("No se ha modificado el ingrediente.")
                     else:
                         ingredient_name = selected["name"]
                         ingredient_unit = selected["unit_id"]
+                        ingredient_category = selected.get("category")
 
                         if len(new_ingredient_name) > 0:
                             ingredient_name = new_ingredient_name
                         if len(new_ingredient_unit_id) > 0:
                             ingredient_unit = int(new_ingredient_unit_id) - 1
+                        if len(new_ingredient_category_id) > 0:
+                            ingredient_category = int(new_ingredient_category_id) - 1
 
                         f.update_ingredient(
-                            user_id, ingredient_id, ingredient_name, ingredient_unit
+                            user_id,
+                            ingredient_id,
+                            ingredient_name,
+                            ingredient_unit,
+                            ingredient_category,
                         )
                         print(
                             f"{GREEN}El ingrediente {selected['name']} ha sido modificado correctamente.{LIGHT_BLUE}"

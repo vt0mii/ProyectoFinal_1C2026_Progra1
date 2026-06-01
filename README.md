@@ -31,7 +31,7 @@ ProyectoFinal/
  ┣ lib/
  ┃ ┣ colors.py        # Códigos ANSI para output con color
  ┃ ┣ constants.py     # Constantes globales (opciones de menú)
- ┃ ┗ utils.py         # menu_options() y shopping_list()
+ ┃ ┗ utils.py         # menu_options() y show_shopping_list()
  ┣ admin_menu.py      # Panel de administración y estadísticas
  ┣ main.py            # Punto de entrada, main_menu() y user_menu()
  ┗ menu.py            # Submenús de recetas, ingredientes y plan semanal
