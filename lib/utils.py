@@ -12,7 +12,7 @@ def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=F
 
     while True:
         try:
-            option = int(input(message))
+            option = int(input(f'{BOLD}{message}{END}'))
             if (zero and option >= 0 and option <= len(menu)) or (not zero and option >= 1 and option <= len(menu)):
                 return option
             print(f"{RED}Opcion fuera de rango.{END}")

@@ -368,16 +368,22 @@ def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
 # Extras
 
 
-def get_recipe_ingredient_names(recipe_id):
+def get_recipe_ingredient_data(recipe_id):
     ri_list = get_ingredientlist_from_recipe(recipe_id)
-    ids_en_receta = set(map(lambda ri: ri["ingredient_id"], ri_list))
-    ingredientes_receta = list(filter(lambda i: i["id"] in ids_en_receta, ingredients))
-    return list(
-        map(
-            lambda i: f"{i['name']} ({get_unit_by_id(i['unit_id'])})",
-            ingredientes_receta,
-        )
-    )
+    
+    ingredients_by_id = {i["id"]: i for i in ingredients}
+    
+    result = []
+    for ri in ri_list:
+        ingredient = ingredients_by_id[ri["ingredient_id"]]
+        unit = get_unit_by_id(ingredient["unit_id"])
+        
+        if not ri['quantity']:
+            result.append(f"{ingredient['name']}: {unit}")
+        else:
+            result.append(f"{ingredient['name']}: {ri['quantity']} ({unit})")
+    
+    return result
 
 
 def calcular_cantidad_total_receta(recipe_id):

@@ -1,7 +1,7 @@
 import json
 import os
 
-user_cache = (0, {})
+user_cache = {}
 root = os.path.dirname(__file__)
 
 def load_file(filename):

@@ -39,7 +39,6 @@ def login():
             password = input("Contraseña incorrecta, intente nuevamente: ")
         else:
             valid_password = True
-
     data.user_cache = get_user_by_name(username)
     return True
 

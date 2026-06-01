@@ -282,8 +282,7 @@ def recetas_menu(user_id):
                 )
                 if recipe_opt != 0:
                     receta = user_recipes[recipe_opt - 1]
-                    nombres_ingredientes = f.get_recipe_ingredient_names(receta["id"])
-                    cantidad_total = f.calcular_cantidad_total_receta(receta["id"])
+                    nombres_ingredientes = f.get_recipe_ingredient_data(receta["id"])
                     print(
                         f"\n{CYAN}========== {receta['title'].upper()} =========={END}"
                     )
@@ -292,9 +291,6 @@ def recetas_menu(user_id):
                     if nombres_ingredientes:
                         for nombre in nombres_ingredientes:
                             print(f"  - {nombre}")
-                        print(
-                            f"{LIGHT_BLUE}Cantidad total medible:{END} {cantidad_total}"
-                        )
                     else:
                         print(f"  {RED}Sin ingredientes cargados.{END}")
                     input(f"\n{LIGHT_BLUE}Presione Enter para continuar...{END}")

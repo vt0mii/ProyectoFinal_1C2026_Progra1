@@ -57,7 +57,7 @@
         "id": 9,
         "recipe_id": 3,
         "ingredient_id": 3,
-        "quantity": 1
+        "quantity": null
     },
     {
         "id": 10,

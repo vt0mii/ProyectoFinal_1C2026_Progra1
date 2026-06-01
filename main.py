@@ -6,7 +6,7 @@ import components.validation as v
 from lib.colors import *
 import components.display as d
 from lib.utils import menu_options
-from db.data import user_cache
+import db.data as data
 
 
 def main_menu():
@@ -32,16 +32,15 @@ def main_menu():
 
 
 def user_menu():
-    user_id = user_cache[0]
+    user_id = data.user_cache.get('user_id')
 
     flag = True
     while flag:
 
         d.display_plan(user_id)
         print(f"\n\n{CYAN}---------- PANEL DE USUARIO -----------{END}")
-        is_admin = v.validate_admin(user_cache)
+        is_admin = v.validate_admin(data.user_cache)
         selected = menu_options(USER_OPTIONS, admin=is_admin)
-
         if selected == 0:
             flag = False
         elif selected == 1:
