@@ -57,14 +57,14 @@ def delete_recipe(user_id, recipe_id):
     if is_recipe_owner(user_id, recipe_id):
         target = get_recipe(recipe_id)
         if target is not None:
-            huerfanos = get_ingredientlist_from_recipe(recipe_id)
-            for ri in huerfanos:
+            orphan_ingredients = get_ingredientlist_from_recipe(recipe_id)
+            for ri in orphan_ingredients:
                 recipe_ingredients.remove(ri)
             save_file("recipe_ingredients.json", recipe_ingredients)
 
             for entry in recipe_plan:
                 for day in entry["plan"]:
-                    for mealtype in ["desayuno", "almuerzo", "merienda", "cena"]:
+                    for mealtype in get_mealtype_list():
                         if recipe_id in day[mealtype]:
                             day[mealtype].remove(recipe_id)
             save_file("recipe_plan.json", recipe_plan)
@@ -358,10 +358,10 @@ def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
     day = get_day_from_plan({"plan": plan, "user_id": user_id}, day_id)
     if day is None:
         return None
-    recetas_id = set(day[mealtype])
-    recetas_usuario = get_user_recipes(user_id)
-    if recetas_usuario:
-        return list(filter(lambda r: r["id"] in recetas_id, recetas_usuario))
+    recipe_ids = set(day[mealtype])
+    user_recipes = get_user_recipes(user_id)
+    if user_recipes:
+        return list(filter(lambda r: r["id"] in recipe_ids, user_recipes))
     return []
 
 
@@ -370,44 +370,44 @@ def get_day_recipes_mealtype(user_id, day_id, mealtype_id):
 
 def get_recipe_ingredient_data(recipe_id):
     ri_list = get_ingredientlist_from_recipe(recipe_id)
-    
-    ingredients_by_id = {i["id"]: i for i in ingredients}
-    
+
+    ingredients_id = {i["id"]: i for i in ingredients}
+
     result = []
     for ri in ri_list:
-        ingredient = ingredients_by_id[ri["ingredient_id"]]
+        ingredient = ingredients_id[ri["ingredient_id"]]
         unit = get_unit_by_id(ingredient["unit_id"])
-        
-        if not ri['quantity']:
+
+        if ri["quantity"] is None:
             result.append(f"{ingredient['name']}: {unit}")
         else:
             result.append(f"{ingredient['name']}: {ri['quantity']} ({unit})")
-    
+
     return result
 
 
-def calcular_cantidad_total_receta(recipe_id):
+def calculate_recipe_total_quantity(recipe_id):
     ri_list = get_ingredientlist_from_recipe(recipe_id)
-    cantidades = list(
+    quantities = list(
         map(
             lambda ri: ri["quantity"],
             filter(lambda ri: ri["quantity"] is not None, ri_list),
         )
     )
-    if not cantidades:
+    if not quantities:
         return 0
-    return reduce(lambda acc, cantidad: acc + cantidad, cantidades)
+    return reduce(lambda acc, qty: acc + qty, quantities)
 
 
-def contar_recetas_en_plan(user_id):
+def count_recipes_in_plan(user_id):
     plan = get_user_plan(user_id)
     if not plan:
         return 0
-    mealtypes = ["desayuno", "almuerzo", "merienda", "cena"]
-    recetas_por_dia = list(
+    mealtypes = get_mealtype_list()
+    recipes_day = list(
         map(
             lambda day: reduce(lambda acc, mt: acc + len(day[mt]), mealtypes, 0),
             plan,
         )
     )
-    return reduce(lambda acc, n: acc + n, recetas_por_dia, 0)
+    return reduce(lambda acc, n: acc + n, recipes_day, 0)

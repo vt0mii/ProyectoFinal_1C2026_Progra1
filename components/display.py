@@ -19,12 +19,10 @@ def display_ingredients(user_id):
     if user_exists_id(user_id):
         my_ingredients = get_user_ingredients(user_id)
         if my_ingredients:
-            num = 1
             for ing in my_ingredients:
                 print(
                     f"{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])})"
                 )
-                num += 1
         return True
     return False
 
@@ -34,8 +32,8 @@ def display_plan(user_id):
         print(f"{RED}\n[!] El usuario {user_id} no tiene un plan.{END}")
         return
 
-    ancho_col = 22
-    tipos_comida = get_mealtype_list()
+    col_width = 22
+    meal_types = get_mealtype_list()
     user = get_user(user_id)
     plan = get_user_plan(user_id)
 
@@ -43,46 +41,46 @@ def display_plan(user_id):
         print(f"{RED}\n[!] No se pudo obtener el plan del usuario {user_id}.{END}")
         return
 
-    ancho_total = ancho_col * 7
-    nombre_usuario = user["username"].upper() if user else "DESCONOCIDO"
+    total_width = col_width * 7
+    username = user["username"].upper() if user else "UNKNOWN"
 
-    print(f"\n{CYAN}{'=' * ancho_total}{END}")
-    print(f"{CYAN}{'PLAN SEMANAL DE: ' + nombre_usuario:^{ancho_total}}{END}")
-    print(f"{CYAN}{'=' * ancho_total}{END}\n")
+    print(f"\n{CYAN}{'=' * total_width}{END}")
+    print(f"{CYAN}{'PLAN SEMANAL DE: ' + username:^{total_width}}{END}")
+    print(f"{CYAN}{'=' * total_width}{END}\n")
 
-    cabecera = "".join(
-        f"{(get_day_by_id(i) or f'DIA {i}').upper():<{ancho_col}}" for i in range(7)
+    header = "".join(
+        f"{(get_day_by_id(i) or f'DIA {i}').upper():<{col_width}}" for i in range(7)
     )
-    print(cabecera)
-    print(f"{'-' * ancho_total}")
+    print(header)
+    print(f"{'-' * total_width}")
 
-    for meal in tipos_comida:
-        max_recetas = max(len(plan[i][meal]) for i in range(7))
-        if max_recetas == 0:
-            fila = "".join(f"{'---':<{ancho_col}}" for _ in range(7))
-            print(f"{fila} | {meal.upper()}")
+    for meal in meal_types:
+        max_recipes = max(len(plan[i][meal]) for i in range(7))
+        if max_recipes == 0:
+            row = "".join(f"{'---':<{col_width}}" for _ in range(7))
+            print(f"{row} | {meal.upper()}")
             continue
 
-        for pos in range(max_recetas):
-            fila = ""
+        for pos in range(max_recipes):
+            row = ""
             for i in range(7):
                 recipe_ids = plan[i][meal]
                 if pos < len(recipe_ids):
-                    receta_data = get_recipe(recipe_ids[pos])
-                    if receta_data:
-                        nombre = receta_data["title"]
-                        nombre = (
-                            f"{nombre[:ancho_col - 3]}.."
-                            if len(nombre) > ancho_col - 3
-                            else nombre
+                    recipe_data = get_recipe(recipe_ids[pos])
+                    if recipe_data:
+                        name = recipe_data["title"]
+                        name = (
+                            f"{name[:col_width - 3]}.."
+                            if len(name) > col_width - 3
+                            else name
                         )
                     else:
-                        nombre = "ID No encontrado"
+                        name = "ID not found"
                 else:
-                    nombre = "---" if pos == 0 else ""
-                fila += f"{nombre:<{ancho_col}}"
+                    name = "---" if pos == 0 else ""
+                row += f"{name:<{col_width}}"
 
-            etiqueta = meal.upper() if pos == 0 else ""
-            print(f"{fila} | {etiqueta}")
+            label = meal.upper() if pos == 0 else ""
+            print(f"{row} | {label}")
 
-    print(f"{'-' * ancho_total}")
+    print(f"{'-' * total_width}")
