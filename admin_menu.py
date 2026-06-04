@@ -46,7 +46,7 @@ def stats_resumen_general():
     total_ri = len(data.recipe_ingredients)
     total_con_plan = len(data.recipe_plan)
     total_asignaciones_plan = reduce(
-        lambda acc, p: acc + f.contar_recetas_en_plan(p["user_id"]),
+        lambda acc, p: acc + f.count_recipes_in_plan(p["user_id"]),
         data.recipe_plan,
         0,
     )
@@ -121,7 +121,7 @@ def stats_recetas():
         min_rid = min(conteo_ri, key=lambda k: conteo_ri[k])
         max_rec = f.get_recipe(max_rid)
         min_rec = f.get_recipe(min_rid)
-        cant_total_max = f.calcular_cantidad_total_receta(max_rid)
+        cant_total_max = f.calculate_recipe_total_quantity(max_rid)
 
         print()
         print(f"{'Receta con mas ingredientes':<{W}}: {max_rec['title'] if max_rec else max_rid} ({conteo_ri[max_rid]} ings, total cantidad: {cant_total_max})")

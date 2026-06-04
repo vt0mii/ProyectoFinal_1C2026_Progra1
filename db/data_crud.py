@@ -429,3 +429,22 @@ def count_recipes_in_plan(user_id):
         )
     )
     return reduce(lambda acc, n: acc + n, recipes_day, 0)
+
+# Favoritos
+
+def fav_recipe(user, recipe):
+    fav_list = user["favourites"]["recipes"]
+    
+    if recipe["id"] not in fav_list:
+        fav_list.append(recipe["id"])
+        flag = False
+        i = 0
+        while not flag:
+            prob_user = users[i]
+            if prob_user["user_id"] == user["user_id"]:
+                prob_user["favourites"]["recipes"] = fav_list
+                flag = True
+            save_file("users.json", users)
+        return True
+    return False
+

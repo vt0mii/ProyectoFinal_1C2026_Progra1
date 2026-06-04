@@ -4,7 +4,7 @@ import db.data as data
 from db.data_crud import get_user_plan, get_mealtype_list
 
 
-def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=False):
+def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=False, fav=False):
     for i in range(len(menu)):
         print(f"{BOLD}{i + 1}{END} - {menu[i]}")
     if admin:
@@ -115,3 +115,8 @@ def get_shopping_list(user_id):
         result.append({"name": name, "quantity": quantity_str})
     
     return result
+
+def format_fav_recipe(recipe, favourites):
+    if recipe["id"] in favourites:
+        return f"{YELLOW}*{END} {recipe['title']}"
+    return recipe['title']

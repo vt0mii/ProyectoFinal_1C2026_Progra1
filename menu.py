@@ -5,7 +5,7 @@ import db.data as data
 import db.data_crud as f
 import components.display as d
 from lib.colors import *
-from lib.utils import menu_options
+from lib.utils import menu_options, format_fav_recipe
 
 
 def plan_menu(user_id):
@@ -301,9 +301,9 @@ def recetas_menu(user_id):
         elif selected == 1:
             user_recipes = f.get_user_recipes(user_id)
             if user_recipes:
-
+                favourites = data.user_cache["favourites"]["recipes"]
                 recipe_opt = menu_options(
-                    [r["title"] for r in user_recipes],
+                    [format_fav_recipe(r, favourites) for r in user_recipes],
                     "Seleccione la receta a ver: ",
                 )
                 if recipe_opt != 0:
@@ -319,7 +319,16 @@ def recetas_menu(user_id):
                             print(f"  - {nombre}")
                     else:
                         print(f"  {RED}Sin ingredientes cargados.{END}")
-                    input(f"\n{LIGHT_BLUE}Presione Enter para continuar...{END}")
+                    # Opcion favorito
+                    print(f"\n{YELLOW}Ingrese 1 para agregar a favoritos{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}")
+                    res = input()
+                    while res is not "" and res is not "1":
+                        res = input(f"\n{YELLOW}Ingrese 1 para agregar a favoritos{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}")
+                    if res == "1":
+                        if f.fav_recipe(data.user_cache, receta):
+                            print(f'{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}')
+                        else:
+                            print(f'{RED}Se ha producido un error.{END}')
             else:
                 print(f"\n{RED}{'X===X NO SE ENCUENTRAN RECETAS X===X':^40}{END}")
 
@@ -378,24 +387,28 @@ def recetas_menu(user_id):
         elif selected == 3:
             user_recipes = f.get_user_recipes(user_id)
             if user_recipes:
+                favourites = data.user_cache["favourites"]["recipes"]
                 recipe_opt = menu_options(
-                    [r["title"] for r in user_recipes],
-                    "Porfavor seleccione la receta que desea eliminar: ",
+                    [format_fav_recipe(r, favourites) for r in user_recipes],
+                    "Seleccione la receta a ver: ",
                 )
-                receta_a_eliminar = user_recipes[recipe_opt - 1]
-                result = f.delete_recipe(user_id, receta_a_eliminar["id"])
-                if result:
-                    print(
-                        f"\n{GREEN}La receta {receta_a_eliminar['title']} ha sido eliminada correctamente{END}"
-                    )
+                if recipe_opt is not 0:
+                    receta_a_eliminar = user_recipes[recipe_opt - 1]
+                    result = f.delete_recipe(user_id, receta_a_eliminar["id"])
+                    if result:
+                        print(
+                            f"\n{GREEN}La receta {receta_a_eliminar['title']} ha sido eliminada correctamente{END}"
+                        )
             else:
                 print(f"\n{RED}{"X===X NO SE ENCUENTRAN RECETAS X===X":^40}{END}")
 
         elif selected == 4:
             user_recipes = f.get_user_recipes(user_id)
+            print(user_recipes)
             if user_recipes:
+                favourites = data.user_cache["favourites"]["recipes"]
                 recipe_opt = menu_options(
-                    [r["title"] for r in user_recipes],
+                    [format_fav_recipe(r, favourites) for r in user_recipes],
                     "Seleccione la receta a editar: ",
                 )
                 if recipe_opt:

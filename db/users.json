@@ -3,30 +3,52 @@
         "user_id": 0,
         "username": "tomii",
         "password": "tomi",
-        "level": "admin"
+        "level": "admin",
+        "favourites": {
+            "recipes": [
+                3
+            ],
+            "ingredients": []
+        }
     },
     {
         "user_id": 1,
         "username": "test",
         "password": "test",
-        "level": "user"
+        "level": "user",
+        "favourites": {
+            "recipes": [],
+            "ingredients": []
+        }
     },
     {
         "user_id": 2,
         "username": "lucas",
         "password": "1234",
-        "level": "user"
+        "level": "user",
+        "favourites": {
+            "recipes": [],
+            "ingredients": []
+        }
     },
     {
         "user_id": 3,
         "username": "martina",
         "password": "abcd",
-        "level": "user"
+        "level": "user",
+        "favourites": {
+            "recipes": [],
+            "ingredients": []
+        }
     },
     {
         "user_id": 4,
         "username": "sofia",
         "password": "pass",
-        "level": "user"
-    }   
+        "level": "user",
+        "favourites": {
+            "recipes": [],
+            "ingredients": []
+        }
+    }
 ]
