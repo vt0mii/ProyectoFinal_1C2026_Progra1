@@ -120,3 +120,8 @@ def format_fav_recipe(recipe, favourites):
     if recipe["id"] in favourites:
         return f"{YELLOW}*{END} {recipe['title']}"
     return recipe['title']
+
+def format_fav_ingredient(ingredient, favourites):
+    if ingredient["id"] in favourites:
+        return f"{YELLOW}*{END} {ingredient['name']}"
+    return ingredient['name']

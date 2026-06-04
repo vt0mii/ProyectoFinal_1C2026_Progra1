@@ -448,3 +448,17 @@ def fav_recipe(user, recipe):
         return True
     return False
 
+def unfav_recipe(user, recipe):
+    fav_list = user["favourites"]["recipes"]
+    if recipe["id"] in fav_list:
+        fav_list.remove(recipe["id"])
+        flag = False
+        i = 0
+        while not flag:
+            prob_user = users[i]
+            if prob_user["user_id"] == user["user_id"]:
+                prob_user["favourites"]["recipes"] = fav_list
+                flag = True
+            save_file("users.json", users)
+        return True
+    return False
