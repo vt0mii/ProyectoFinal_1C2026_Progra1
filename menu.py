@@ -5,7 +5,7 @@ import db.data as data
 import db.data_crud as f
 import components.display as d
 from lib.colors import *
-from lib.utils import menu_options, format_fav_recipe
+from lib.utils import menu_options, format_fav_recipe, format_fav_ingredient
 
 
 def plan_menu(user_id):
@@ -166,7 +166,49 @@ def ingredientes_menu(user_id):
             flag = False
         
         elif selected == 1: # Ver Ingredientes
-            pass
+            user_ingredients = f.get_user_ingredients(user_id)
+            if user_ingredients:
+                favourites = data.user_cache["favourites"]["ingredients"]
+                recipe_opt = menu_options(
+                    [format_fav_ingredient(r, favourites) for r in user_ingredients],
+                    "Seleccione el ingrediente a ver: ",
+                )
+                if recipe_opt != 0:
+                    ingrediente = user_ingredients[recipe_opt - 1]
+                    category = f.get_category_by_id(ingrediente['category'])
+                    unit = f.get_unit_by_id(ingrediente['unit_id'])
+                    print(
+                        f"\n{CYAN}========== {ingrediente['name'].upper()} =========={END}"
+                    )
+                    print(f"{LIGHT_BLUE}Categoria:{END} {category}")
+                    print(f"{LIGHT_BLUE}Unidad:{END} {unit}")
+                        
+                    # Opcion favorito
+                    fav_state = True if ingrediente["id"] in favourites else False
+                    fav_msg = 'Ingrese 1 para agregar a favoritos'
+                    
+                    if fav_state:
+                        fav_msg = 'Ingrese 1 para eliminar de favoritos'
+                        
+                    msg = f'\n{YELLOW}{fav_msg}{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}: '
+                        
+                    res = input(msg)
+                    while res is not "" and res is not "1":
+                        res = input(msg)
+                        
+                    if res == "1":
+                        if fav_state:
+                            if f.fav_ingredient(data.user_cache, ingrediente, "remove"):
+                                print(f'{YELLOW}{BOLD}La receta se ha eliminado a favoritos{END}')
+                            else:
+                                print(f'{RED}Se ha producido un error.{END}')
+                        else:
+                            if f.fav_ingredient(data.user_cache, ingrediente, "add"):
+                                print(f'{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}')
+                            else:
+                                print(f'{RED}Se ha producido un error.{END}')
+            else:
+                print(f"\n{RED}{'X===X NO SE ENCUENTRAN RECETAS X===X':^40}{END}")
         
         elif selected == 2:  # Agregar Ingrediente
             nombre = input(f"{LIGHT_BLUE}Nombre del ingrediente: {END}")
@@ -327,7 +369,7 @@ def recetas_menu(user_id):
                     fav_state = True if receta["id"] in favourites else False
                     fav_msg = 'Ingrese 1 para agregar a favoritos'
                     
-                    if receta["id"] in favourites:
+                    if fav_state:
                         fav_msg = 'Ingrese 1 para eliminar de favoritos'
                     msg = f'\n{YELLOW}{fav_msg}{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}: '
                         
@@ -337,12 +379,12 @@ def recetas_menu(user_id):
                         
                     if res == "1":
                         if fav_state:
-                            if f.unfav_recipe(data.user_cache, receta):
+                            if f.fav_recipe(data.user_cache, receta, "remove"):
                                 print(f'{YELLOW}{BOLD}La receta se ha eliminado a favoritos{END}')
                             else:
                                 print(f'{RED}Se ha producido un error.{END}')
                         else:
-                            if f.fav_recipe(data.user_cache, receta):
+                            if f.fav_recipe(data.user_cache, receta, "add"):
                                 print(f'{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}')
                             else:
                                 print(f'{RED}Se ha producido un error.{END}')

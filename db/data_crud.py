@@ -32,6 +32,8 @@ def get_category_by_id(category_id):
             return c["name"]
     return None
 
+def get_categories():
+    return list(map(lambda c: c["name"], categories))
 
 def get_mealtype_list():
     return list(map(lambda mt: mt["name"], meal_types))
@@ -432,33 +434,42 @@ def count_recipes_in_plan(user_id):
 
 # Favoritos
 
-def fav_recipe(user, recipe):
+def fav_recipe(user, recipe, action="add"):
     fav_list = user["favourites"]["recipes"]
     
-    if recipe["id"] not in fav_list:
+    if action == "add" and recipe["id"] not in fav_list:
         fav_list.append(recipe["id"])
-        flag = False
-        i = 0
-        while not flag:
-            prob_user = users[i]
-            if prob_user["user_id"] == user["user_id"]:
-                prob_user["favourites"]["recipes"] = fav_list
-                flag = True
-            save_file("users.json", users)
-        return True
-    return False
-
-def unfav_recipe(user, recipe):
-    fav_list = user["favourites"]["recipes"]
-    if recipe["id"] in fav_list:
+    elif action == "remove" and recipe["id"] in fav_list:
         fav_list.remove(recipe["id"])
-        flag = False
-        i = 0
-        while not flag:
-            prob_user = users[i]
-            if prob_user["user_id"] == user["user_id"]:
-                prob_user["favourites"]["recipes"] = fav_list
-                flag = True
-            save_file("users.json", users)
-        return True
-    return False
+    else:
+        return False
+
+    flag = False
+    i = 0
+    while not flag:
+        if users[i]["user_id"] == user["user_id"]:
+            users[i]["favourites"]["recipes"] = fav_list
+            flag = True
+        i += 1
+    save_file("users.json", users)
+    return True
+
+def fav_ingredient(user, ingredient, action="add"):
+    fav_list = user["favourites"]["ingredients"]
+    
+    if action == "add" and ingredient["id"] not in fav_list:
+        fav_list.append(ingredient["id"])
+    elif action == "remove" and ingredient["id"] in fav_list:
+        fav_list.remove(ingredient["id"])
+    else:
+        return False
+
+    flag = False
+    i = 0
+    while not flag:
+        if users[i]["user_id"] == user["user_id"]:
+            users[i]["favourites"]["ingredients"] = fav_list
+            flag = True
+        i += 1
+    save_file("users.json", users)
+    return True

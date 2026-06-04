@@ -1,7 +1,7 @@
 from db.data_crud import *
 from components.validation import *
 from lib.colors import *
-
+import db.data as data
 
 def display_recipes(user_id):
     if user_exists_id(user_id):
@@ -19,11 +19,13 @@ def display_ingredients(user_id):
     if user_exists_id(user_id):
         my_ingredients = get_user_ingredients(user_id)
         if my_ingredients:
+            fav_ingredients = data.user_cache["favourites"]["ingredients"]
             for ing in my_ingredients:
                 category_name = get_category_by_id(ing.get("category"))
                 category = f" - {category_name}" if category_name else ""
+                star = f"{YELLOW}*{END} " if ing["id"] in fav_ingredients else ""
                 print(
-                    f"{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])}){category}"
+                    f"{star}{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])}){category}"
                 )
         return True
     return False
