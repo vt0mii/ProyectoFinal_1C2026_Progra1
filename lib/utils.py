@@ -125,3 +125,13 @@ def format_fav_ingredient(ingredient, favourites):
     if ingredient["id"] in favourites:
         return f"{YELLOW}*{END} {ingredient['name']}"
     return ingredient['name']
+
+def difficulty_str(recipe):
+    max_dif = 10
+    recipe_dif = recipe["difficulty"]
+    dif_str = ""
+    for i in range(0, recipe_dif):
+        dif_str += "▰"
+    for i in range(0, max_dif - recipe_dif):
+        dif_str += "▱"
+    return dif_str

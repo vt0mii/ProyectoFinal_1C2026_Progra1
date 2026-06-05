@@ -5,7 +5,12 @@ import db.data as data
 import db.data_crud as f
 import components.display as d
 from lib.colors import *
-from lib.utils import menu_options, format_fav_recipe, format_fav_ingredient
+from lib.utils import (
+    menu_options,
+    format_fav_recipe,
+    format_fav_ingredient,
+    difficulty_str,
+)
 
 
 def plan_menu(user_id):
@@ -164,8 +169,8 @@ def ingredientes_menu(user_id):
         selected = menu_options(INGREDIENT_OPTIONS)
         if selected == 0:  # Cancelar
             flag = False
-        
-        elif selected == 1: # Ver Ingredientes
+
+        elif selected == 1:  # Ver Ingredientes
             user_ingredients = f.get_user_ingredients(user_id)
             if user_ingredients:
                 favourites = data.user_cache["favourites"]["ingredients"]
@@ -175,41 +180,45 @@ def ingredientes_menu(user_id):
                 )
                 if recipe_opt != 0:
                     ingrediente = user_ingredients[recipe_opt - 1]
-                    category = f.get_category_by_id(ingrediente['category'])
-                    unit = f.get_unit_by_id(ingrediente['unit_id'])
+                    category = f.get_category_by_id(ingrediente["category"])
+                    unit = f.get_unit_by_id(ingrediente["unit_id"])
                     print(
                         f"\n{CYAN}========== {ingrediente['name'].upper()} =========={END}"
                     )
                     print(f"{LIGHT_BLUE}Categoria:{END} {category}")
                     print(f"{LIGHT_BLUE}Unidad:{END} {unit}")
-                        
+
                     # Opcion favorito
                     fav_state = True if ingrediente["id"] in favourites else False
-                    fav_msg = 'Ingrese 1 para agregar a favoritos'
-                    
+                    fav_msg = "Ingrese 1 para agregar a favoritos"
+
                     if fav_state:
-                        fav_msg = 'Ingrese 1 para eliminar de favoritos'
-                        
-                    msg = f'\n{YELLOW}{fav_msg}{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}: '
-                        
+                        fav_msg = "Ingrese 1 para eliminar de favoritos"
+
+                    msg = f"\n{YELLOW}{fav_msg}{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}: "
+
                     res = input(msg)
-                    while res is not "" and res is not "1":
+                    while res != "" and res != "1":
                         res = input(msg)
-                        
+
                     if res == "1":
                         if fav_state:
                             if f.fav_ingredient(data.user_cache, ingrediente, "remove"):
-                                print(f'{YELLOW}{BOLD}La receta se ha eliminado a favoritos{END}')
+                                print(
+                                    f"{YELLOW}{BOLD}La receta se ha eliminado a favoritos{END}"
+                                )
                             else:
-                                print(f'{RED}Se ha producido un error.{END}')
+                                print(f"{RED}Se ha producido un error.{END}")
                         else:
                             if f.fav_ingredient(data.user_cache, ingrediente, "add"):
-                                print(f'{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}')
+                                print(
+                                    f"{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}"
+                                )
                             else:
-                                print(f'{RED}Se ha producido un error.{END}')
+                                print(f"{RED}Se ha producido un error.{END}")
             else:
                 print(f"\n{RED}{'X===X NO SE ENCUENTRAN RECETAS X===X':^40}{END}")
-        
+
         elif selected == 2:  # Agregar Ingrediente
             nombre = input(f"{LIGHT_BLUE}Nombre del ingrediente: {END}")
             while not v.validate_alphabetic(nombre) or nombre == "":
@@ -343,7 +352,7 @@ def recetas_menu(user_id):
 
         if selected == 0:
             flag = False
-        elif selected == 1:
+        elif selected == 1:  # Ver recetas
             user_recipes = f.get_user_recipes(user_id)
             if user_recipes:
                 favourites = data.user_cache["favourites"]["recipes"]
@@ -357,6 +366,9 @@ def recetas_menu(user_id):
                     print(
                         f"\n{CYAN}========== {receta['title'].upper()} =========={END}"
                     )
+                    print(
+                        f"{LIGHT_BLUE}Dificultad: {END}{receta['difficulty']} {difficulty_str(receta)}"
+                    )
                     print(f"{LIGHT_BLUE}Instrucciones:{END} {receta['instructions']}")
                     print(f"{LIGHT_BLUE}Ingredientes:{END}")
                     if nombres_ingredientes:
@@ -364,30 +376,34 @@ def recetas_menu(user_id):
                             print(f"  - {nombre}")
                     else:
                         print(f"  {RED}Sin ingredientes cargados.{END}")
-                        
+
                     # Opcion favorito
                     fav_state = True if receta["id"] in favourites else False
-                    fav_msg = 'Ingrese 1 para agregar a favoritos'
-                    
+                    fav_msg = "Ingrese 1 para agregar a favoritos"
+
                     if fav_state:
-                        fav_msg = 'Ingrese 1 para eliminar de favoritos'
-                    msg = f'\n{YELLOW}{fav_msg}{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}: '
-                        
+                        fav_msg = "Ingrese 1 para eliminar de favoritos"
+                    msg = f"\n{YELLOW}{fav_msg}{END}\n{LIGHT_BLUE}Presione Enter para continuar...{END}: "
+
                     res = input(msg)
-                    while res is not "" and res is not "1":
+                    while res != "" and res != "1":
                         res = input(msg)
-                        
+
                     if res == "1":
                         if fav_state:
                             if f.fav_recipe(data.user_cache, receta, "remove"):
-                                print(f'{YELLOW}{BOLD}La receta se ha eliminado a favoritos{END}')
+                                print(
+                                    f"{YELLOW}{BOLD}La receta se ha eliminado a favoritos{END}"
+                                )
                             else:
-                                print(f'{RED}Se ha producido un error.{END}')
+                                print(f"{RED}Se ha producido un error.{END}")
                         else:
                             if f.fav_recipe(data.user_cache, receta, "add"):
-                                print(f'{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}')
+                                print(
+                                    f"{YELLOW}{BOLD}La receta se ha agregado a favoritos{END}"
+                                )
                             else:
-                                print(f'{RED}Se ha producido un error.{END}')
+                                print(f"{RED}Se ha producido un error.{END}")
             else:
                 print(f"\n{RED}{'X===X NO SE ENCUENTRAN RECETAS X===X':^40}{END}")
 
@@ -397,6 +413,14 @@ def recetas_menu(user_id):
             )
             while not v.validate_alphabetic(title) or title == "":
                 title = input(f"{LIGHT_BLUE}Ingrese un nombre valido: {END}")
+
+            difficulty = input(
+                f"{LIGHT_BLUE}Ingrese la dificultad de la receta (1-10):{END} "
+            )
+            while not v.validate_difficulty(int(difficulty)):
+                difficulty = input(
+                    f"{LIGHT_BLUE}Ingrese una dificultad valida (1-10):{END} "
+                )
 
             instructions = input(
                 f"{LIGHT_BLUE}Ingrese las instrucciones de la receta: {END}"
@@ -425,7 +449,7 @@ def recetas_menu(user_id):
                         "Seleccione el ingrediente, 0 para terminar: ",
                     )
 
-                f.add_recipe(user_id, title, instructions)
+                f.add_recipe(user_id, title, instructions, difficulty)
                 nueva_receta = f.get_user_recipes(user_id)
 
                 if nueva_receta:
@@ -451,7 +475,7 @@ def recetas_menu(user_id):
                     [format_fav_recipe(r, favourites) for r in user_recipes],
                     "Seleccione la receta a ver: ",
                 )
-                if recipe_opt is not 0:
+                if recipe_opt != 0:
                     receta_a_eliminar = user_recipes[recipe_opt - 1]
                     result = f.delete_recipe(user_id, receta_a_eliminar["id"])
                     if result:
@@ -474,7 +498,7 @@ def recetas_menu(user_id):
                     selected_recipe = user_recipes[recipe_opt - 1]
                     branch_opt = menu_options(
                         [
-                            "Editar datos (nombre e instrucciones)",
+                            "Editar datos (nombre, instrucciones, dificultad)",
                             "Editar Ingredientes",
                         ],
                         "Seleccione el item a editar: ",
@@ -483,7 +507,7 @@ def recetas_menu(user_id):
 
                     if branch_opt == 1:
                         print(
-                            f"{LIGHT_BLUE}Receta:{END} {selected_recipe["title"]}\n{LIGHT_BLUE}Instrucciones:{END} {selected_recipe["instructions"]}"
+                            f"{LIGHT_BLUE}Receta:{END} {selected_recipe["title"]}\n{LIGHT_BLUE}Instrucciones:{END} {selected_recipe['instructions']}\n{LIGHT_BLUE}Instrucciones:{END} {selected_recipe["instructions"]}"
                         )
 
                         new_recipe_name = input(
@@ -502,6 +526,14 @@ def recetas_menu(user_id):
                                 f"{LIGHT_BLUE}Ingrese unas instrucciones validas o Enter para saltear: {END}"
                             )
 
+                        new_difficulty = input(
+                            f"{LIGHT_BLUE}Ingrese la nueva dificultad (1-10) o Enter para saltear: {END}"
+                        )
+                        while not v.validate_difficulty(int(new_difficulty)):
+                            new_recipe_instructions = input(
+                                f"{LIGHT_BLUE}Ingrese una dificultad valida (1-10) o Enter para saltear: {END}"
+                            )
+
                         final_name = (
                             new_recipe_name
                             if new_recipe_name
@@ -512,12 +544,18 @@ def recetas_menu(user_id):
                             if new_recipe_instructions
                             else selected_recipe["instructions"]
                         )
+                        final_difficulty = (
+                            int(new_difficulty)
+                            if new_difficulty
+                            else selected_recipe["difficulty"]
+                        )
 
                         f.update_recipe(
                             user_id,
                             selected_recipe["id"],
                             final_name,
                             final_instructions,
+                            final_difficulty,
                         )
                         print(
                             f'{GREEN}Se han realizado los cambios a "{final_name}".{END}'

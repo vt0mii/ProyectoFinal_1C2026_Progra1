@@ -88,3 +88,5 @@ def display_plan(user_id):
             print(f"{row} | {label}")
 
     print(f"{'-' * total_width}")
+    
+

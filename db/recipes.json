@@ -3,54 +3,64 @@
         "id": 0,
         "user_id": 0,
         "title": "Ensalada de Zanahoria y Huevo",
-        "instructions": "Rallar la zanahoria, hervir un huevo 12min aprox., cortarlo y condimentar todo con aceite, sal y limon."
+        "instructions": "Rallar la zanahoria, hervir un huevo 12min aprox., cortarlo y condimentar todo con aceite, sal y limon.",
+        "difficulty": 1
     },
     {
         "id": 1,
         "user_id": 1,
         "title": "Zanahoria rallada",
-        "instructions": "Rallar la zanahoria."
+        "instructions": "Rallar la zanahoria.",
+        "difficulty": 1
     },
     {
         "id": 2,
         "user_id": 1,
         "title": "Tomate relleno",
-        "instructions": "Lorem Ipsum."
+        "instructions": "Lorem Ipsum.",
+        "difficulty": 1
     },
     {
         "id": 3,
         "user_id": 0,
         "title": "Burger",
-        "instructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+        "instructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+        "difficulty": 4
     },
     {
         "id": 4,
         "user_id": 2,
-        "name": "Tostadas con huevo"
+        "name": "Tostadas con huevo",
+        "difficulty": 1
     },
     {
         "id": 5,
         "user_id": 2,
-        "name": "Ensalada simple"
+        "name": "Ensalada simple",
+        "difficulty": 1
     },
     {
         "id": 6,
         "user_id": 3,
-        "name": "Arroz con tomate"
+        "name": "Arroz con tomate",
+        "difficulty": 1
     },
     {
         "id": 7,
         "user_id": 3,
-        "name": "Sandwich mixto"
+        "name": "Sandwich mixto",
+        "difficulty": 1
     },
     {
         "id": 8,
         "user_id": 4,
-        "name": "Pure con huevo"
+        "name": "Pure con huevo",
+        "difficulty": 1
     },
     {
         "id": 9,
         "user_id": 4,
-        "name": "Fideos con manteca"
+        "name": "Fideos con manteca",
+        "difficulty": 1
     }
 ]

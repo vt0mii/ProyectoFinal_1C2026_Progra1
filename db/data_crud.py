@@ -50,7 +50,7 @@ def get_category_list():
 # CRUD Recetas
 
 
-def add_recipe(user_id, title, instructions):
+def add_recipe(user_id, title, instructions, difficulty):
     if user_exists_id(user_id):
         newid = max((r["id"] for r in recipes), default=-1) + 1
         recipes.append(
@@ -59,6 +59,7 @@ def add_recipe(user_id, title, instructions):
                 "user_id": user_id,
                 "title": title,
                 "instructions": instructions,
+                'difficulty': difficulty
             }
         )
         save_file("recipes.json", recipes)
@@ -88,12 +89,13 @@ def delete_recipe(user_id, recipe_id):
     return False
 
 
-def update_recipe(user_id, recipe_id, title, instructions):
+def update_recipe(user_id, recipe_id, title, instructions, difficulty):
     if is_recipe_owner(user_id, recipe_id):
         recipe = get_recipe(recipe_id)
         if recipe is not None:
             recipe["title"] = title
             recipe["instructions"] = instructions
+            recipe['difficulty'] = difficulty
             save_file("recipes.json", recipes)
             return True
     return False
