@@ -171,15 +171,14 @@ def ingredientes_menu(user_id):
             flag = False
 
         elif selected == 1:  # Ver Ingredientes
-            user_ingredients = f.get_user_ingredients(user_id)
-            if user_ingredients:
+            if mis_ingredientes:
                 favourites = data.user_cache["favourites"]["ingredients"]
                 recipe_opt = menu_options(
-                    [format_fav_ingredient(r, favourites) for r in user_ingredients],
+                    [format_fav_ingredient(r, favourites) for r in mis_ingredientes],
                     "Seleccione el ingrediente a ver: ",
                 )
                 if recipe_opt != 0:
-                    ingrediente = user_ingredients[recipe_opt - 1]
+                    ingrediente = mis_ingredientes[recipe_opt - 1]
                     category = f.get_category_by_id(ingrediente["category"])
                     unit = f.get_unit_by_id(ingrediente["unit_id"])
                     print(
@@ -237,9 +236,10 @@ def ingredientes_menu(user_id):
 
         elif selected == 3:  # Eliminar Ingrediente
             if mis_ingredientes:
+                favourites = data.user_cache["favourites"]["ingredients"]
                 print(f"{CYAN}Mis ingredientes:{END}")
                 ingredient_opt = menu_options(
-                    [i["name"] for i in mis_ingredientes],
+                    [format_fav_ingredient(r, favourites) for r in mis_ingredientes],
                     "Por favor ingrese el numero del ingrediente a eliminar: ",
                 )
                 if ingredient_opt != 0:
@@ -262,8 +262,9 @@ def ingredientes_menu(user_id):
         elif selected == 4:  # Editar Ingrediente
             if mis_ingredientes:
                 print("Mis ingredientes:")
+                favourites = data.user_cache["favourites"]["ingredients"]
                 ingredient_opt = menu_options(
-                    [i["name"] for i in mis_ingredientes],
+                    [format_fav_ingredient(r, favourites) for r in mis_ingredientes],
                     "Por favor ingrese el numero del ingrediente a editar: ",
                 )
                 if ingredient_opt:
@@ -430,8 +431,9 @@ def recetas_menu(user_id):
             ingredient_opts = []
 
             if mis_ingredientes:
+                favourites = data.user_cache["favourites"]["ingredients"]
                 ingredient_opt = menu_options(
-                    [i["name"] for i in mis_ingredientes],
+                    [format_fav_ingredient(r, favourites) for r in mis_ingredientes],
                     "Seleccione el ingrediente, 0 para terminar: ",
                 )
                 while ingredient_opt != 0:
@@ -487,7 +489,6 @@ def recetas_menu(user_id):
 
         elif selected == 4:
             user_recipes = f.get_user_recipes(user_id)
-            print(user_recipes)
             if user_recipes:
                 favourites = data.user_cache["favourites"]["recipes"]
                 recipe_opt = menu_options(
@@ -569,8 +570,14 @@ def recetas_menu(user_id):
                         if edit_ing_opt == 1:
                             mis_ingredientes = f.get_user_ingredients(user_id)
                             if mis_ingredientes:
+                                favourites = data.user_cache["favourites"][
+                                    "ingredients"
+                                ]
                                 ingredient_opt = menu_options(
-                                    [i["name"] for i in mis_ingredientes],
+                                    [
+                                        format_fav_ingredient(r, favourites)
+                                        for r in mis_ingredientes
+                                    ],
                                     "Seleccione el ingrediente a agregar, 0 para terminar: ",
                                 )
                                 while ingredient_opt != 0:
@@ -592,10 +599,14 @@ def recetas_menu(user_id):
                                         cantidad,
                                     )
                                     ingredient_opt = menu_options(
-                                        [i["name"] for i in mis_ingredientes],
+                                        [
+                                            format_fav_ingredient(r, favourites)
+                                            for r in mis_ingredientes
+                                        ],
                                         "Seleccione el ingrediente a agregar, 0 para terminar: ",
                                     )
-                                print(
+                                if ingredient_opt != 0:
+                                    print(
                                     f'{RED}Ingredientes agregados a "{selected_recipe["title"]}".{END}'
                                 )
                             else:
@@ -609,6 +620,9 @@ def recetas_menu(user_id):
                             )
                             if recipe_ingredients:
                                 ingredient_names = []
+                                favourites = data.user_cache["favourites"][
+                                    "ingredients"
+                                ]
                                 for ri in recipe_ingredients:
                                     ing = f.get_ingredient(ri["ingredient_id"])
                                     nombre = (
@@ -622,11 +636,17 @@ def recetas_menu(user_id):
                                     cantidad = (
                                         ri["quantity"]
                                         if ri["quantity"] is not None
-                                        else "a gusto"
+                                        else ""
                                     )
-                                    ingredient_names.append(
-                                        f"{nombre} ({cantidad} {unit_name})"
-                                    )
+
+                                    if ri["ingredient_id"] in favourites:
+                                        ingredient_names.append(
+                                            f"{YELLOW}*{END} {nombre} ({cantidad} {unit_name})"
+                                        )
+                                    else:
+                                        ingredient_names.append(
+                                            f"{nombre} ({cantidad} {unit_name})"
+                                        )
 
                                 ingredient_opt = menu_options(
                                     ingredient_names,

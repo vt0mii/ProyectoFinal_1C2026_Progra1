@@ -20,13 +20,19 @@ def display_ingredients(user_id):
         my_ingredients = get_user_ingredients(user_id)
         if my_ingredients:
             fav_ingredients = data.user_cache["favourites"]["ingredients"]
+            
+            groups = {}
             for ing in my_ingredients:
-                category_name = get_category_by_id(ing.get("category"))
-                category = f" - {category_name}" if category_name else ""
-                star = f"{YELLOW}*{END} " if ing["id"] in fav_ingredients else ""
-                print(
-                    f"{star}{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])}){category}"
-                )
+                category_name = get_category_by_id(ing.get("category")) or "Sin categoría"
+                groups.setdefault(category_name, []).append(ing)
+        
+            for category_name, ingredients in groups.items():
+                print(f"\n{BOLD}── {category_name} ──{END}")
+                for ing in ingredients:
+                    star = f"{YELLOW}*{END} " if ing["id"] in fav_ingredients else ""
+                    print(
+                        f"  {star}{BOLD}ID {ing['id']:<2}{END}| {ing['name']} ({get_unit_by_id(ing['unit_id'])})"
+                    )
         return True
     return False
 

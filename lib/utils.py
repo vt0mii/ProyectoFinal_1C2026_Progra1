@@ -4,7 +4,7 @@ import db.data as data
 from db.data_crud import get_user_plan, get_mealtype_list
 
 
-def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=False, fav=False):
+def menu_options(menu, message="Ingrese la opcion deseada: ", zero=True, admin=False):
     for i in range(len(menu)):
         print(f"{BOLD}{i + 1}{END} - {menu[i]}")
     if admin:
