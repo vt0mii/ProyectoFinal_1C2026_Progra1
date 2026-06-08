@@ -52,5 +52,19 @@
             "recipes": [],
             "ingredients": []
         }
+    },
+    {
+        "user_id": 5,
+        "username": "juan",
+        "password": "perez",
+        "level": "user",
+        "favourites": {
+            "recipes": [
+                10
+            ],
+            "ingredients": [
+                18
+            ]
+        }
     }
 ]

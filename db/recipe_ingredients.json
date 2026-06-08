@@ -130,5 +130,11 @@
         "recipe_id": 9,
         "ingredient_id": 15,
         "quantity": 50
+    },
+    {
+        "id": 22,
+        "recipe_id": 10,
+        "ingredient_id": 18,
+        "quantity": 1.0
     }
 ]

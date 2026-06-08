@@ -62,5 +62,12 @@
         "user_id": 4,
         "name": "Fideos con manteca",
         "difficulty": 1
+    },
+    {
+        "id": 10,
+        "user_id": 5,
+        "title": "testt",
+        "instructions": "test de receta",
+        "difficulty": 6
     }
 ]

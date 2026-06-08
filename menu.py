@@ -36,10 +36,10 @@ def plan_menu(user_id):
                         False,
                     )
 
+                    favourites = data.user_cache["favourites"]["ingredients"]
                     recipe_selected = menu_options(
-                        [r["title"] for r in mis_recetas],
-                        "Seleccione la receta a agregar: ",
-                        False,
+                        [format_fav_recipe(r, favourites) for r in mis_recetas],
+                        "Seleccione el ingrediente a ver: ",
                     )
                     f.add_recipe_to_plan(
                         user_id,
@@ -68,8 +68,9 @@ def plan_menu(user_id):
                         user_id, int(day) - 1, int(mt) - 1
                     )
                     if selected_recipes:
+                        favourites = data.user_cache["favourites"]["ingredients"]
                         target = menu_options(
-                            [r["title"] for r in selected_recipes],
+                            [format_fav_recipe(r, favourites) for r in mis_recetas],
                             "Selecciona la receta a eliminar: ",
                             False,
                         )
@@ -108,8 +109,9 @@ def plan_menu(user_id):
                         user_id, int(day) - 1, int(mt) - 1
                     )
                     if selected_recipes:
+                        favourites = data.user_cache["favourites"]["ingredients"]
                         target = menu_options(
-                            [r["title"] for r in selected_recipes],
+                            [format_fav_recipe(r, favourites) for r in mis_recetas],
                             "Selecciona la receta a reemplazar: ",
                             False,
                         )
@@ -129,7 +131,7 @@ def plan_menu(user_id):
                         new_recipe_names = [r["title"] for r in new_recipe_list]
 
                         new_target = menu_options(
-                            new_recipe_names, "Selecciona la nueva receta: ", False
+                            [format_fav_recipe(r, favourites) for r in new_recipe_names], "Selecciona la nueva receta: ", False
                         )
                         new_recipe = new_recipe_list[new_target - 1]
 
@@ -451,7 +453,7 @@ def recetas_menu(user_id):
                         "Seleccione el ingrediente, 0 para terminar: ",
                     )
 
-                f.add_recipe(user_id, title, instructions, difficulty)
+                f.add_recipe(user_id, title, instructions, int(difficulty))
                 nueva_receta = f.get_user_recipes(user_id)
 
                 if nueva_receta:

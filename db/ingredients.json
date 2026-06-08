@@ -124,5 +124,12 @@
         "name": "Aceite",
         "unit_id": 0,
         "category": 5
+    },
+    {
+        "id": 18,
+        "user_id": 5,
+        "name": "test",
+        "unit_id": 0,
+        "category": 0
     }
 ]

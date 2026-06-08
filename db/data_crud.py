@@ -234,7 +234,7 @@ def add_user(name, password, level="user"):
     if not user_exists_name(name):
         newid = (max(u["user_id"] for u in users) + 1) if users else 0
         users.append(
-            {"user_id": newid, "username": name, "password": password, "level": level}
+            {"user_id": newid, "username": name, "password": password, "level": level, "favourites": {"recipes": [], "ingredients": []}}
         )
         save_file("users.json", users)
         return True
