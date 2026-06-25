@@ -66,4 +66,4 @@ validate_edit_name = lambda option: re.match(r"^[a-zA-Z ]*$", option)
 validate_admin = lambda user: user.get("level") == "admin"
 
 # Valida si la dificultad esta dentro del rango
-validate_difficulty = lambda diff: diff > 1 and diff <= 10
+validate_difficulty = lambda diff: diff >= 1 and diff <= 10
